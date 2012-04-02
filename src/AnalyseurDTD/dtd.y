@@ -14,16 +14,12 @@ int yylex(void);
 %%
 
 main 
-: dtd_opt
-;
-
-dtd_opt
-: dtd_opt
-| dtd_list_opt elementspec_opt
+: dtd_list_opt
 ;
 
 dtd_list_opt
 : dtd_list_opt ATTLIST IDENT att_definition_opt CLOSE            
+| dtd_list_opt elementspec
 | /* empty */                     
 ;
 
@@ -53,11 +49,6 @@ enum_list_plus
 enum_list
 : item_enum               
 | enum_list PIPE item_enum
-;
-
-elementspec_opt
-: elementspec_opt elementspec
-| /* vide */
 ;
 
 elementspec

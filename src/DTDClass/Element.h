@@ -1,17 +1,17 @@
 /*************************************************************************
-                           ELEMENT_ATT_BASE  -  description
+                           ELEMENT  -  description
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par fduranton, dbrian, recastrodiaz
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Interface du module <ElementAttBase> (fichier ElementAttBase.h) ---------
-#if ! defined ( ELEMENT_ATT_BASE_H )
-#define ELEMENT_ATT_BASE_H
+//---------- Interface du module <Element> (fichier Element.h) ---------
+#if ! defined ( ELEMENT_H )
+#define ELEMENT_H
 
 //------------------------------------------------------------------------
-// Rôle du module <ELEMENT_ATT_BASE>
+// Rôle du module <ELEMENT>
 //
 //
 //------------------------------------------------------------------------
@@ -21,14 +21,15 @@
 #include <string>
 #include <cstdlib>
 
-#include "Element.h"
+#include "ElementAttBase.h"
+#include "DtdBalise.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 
-class ElementAttBase
+class Element : public DtdBalise
 {
 
 //---------------------------------------------------- Fonctions publiques
@@ -38,18 +39,17 @@ class ElementAttBase
 // Contrat :
 //
 	public:
-		virtual ElementAttBase() = 0;
-		virtual ~ElementAttBase();
-
-		enum Cardinality { AST, PLUS, QMARK };
-		enum ContentSpec { EMPTY, ANY };
+		Element();
+		~Element();
 
 	protected:
-		// Element the attribute refers to
-		Element owner;
+		// Name of the element
+		std::string ident;
+		// Attribute name of the element
+		ElementAttBase* attributeReference;
 };
 
-#endif // ELEMENT_ATT_BASE_H
+#endif // ELEMENT_H
 
 
 

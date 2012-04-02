@@ -1,18 +1,18 @@
 /*************************************************************************
-                           ELEMENT_ATT_BASE  -  description
+                           ELEMENT  -  description
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par fduranton, dbrian, recastrodiaz
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation du module <ELEMENT_ATT_BASE> (fichier ElementAttBase.cpp) -----
+//---------- Réalisation du module <ELEMENT> (fichier Element.cpp) -----
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
 
 //------------------------------------------------------ Include personnel
-#include "ElementAttBase.h"
+#include "Element.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -40,11 +40,24 @@
 //{
 //} //----- fin de Nom
 
-ElementAttBase::~ElementAttBase ()
+Element::Element () : DtdBalise()
 // Algorithme :
 //
 {
-} //----- fin de ~ElementAttBase
+} //----- fin de Element
+
+Element::Element (std::string aIdent, ElementAttBase* refOnAttributeElem) : DtdBalise(), ident(aIdent)
+// Algorithme :
+//
+{
+	attributeReference = refOnAttributeElem;
+} //----- fin de Element
+
+Element::~Element ()
+// Algorithme :
+//
+{
+} //----- fin de ~Element
 
 
 

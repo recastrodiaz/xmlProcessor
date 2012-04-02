@@ -33,9 +33,9 @@
 // Contrat :
 //
 
-class DocXML { //abstract
+class DocXML {
 	public:
-		DocXML();
+		DocXML(Element unDoc);
 		virtual ~DocXML();
     
     private:

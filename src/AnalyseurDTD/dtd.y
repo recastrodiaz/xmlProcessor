@@ -102,13 +102,13 @@ liste_seq_opt
 ;
 
 mixed
-: OPENPAR PCDATA liste_mixed_opt CLOSEPAR AST
+: OPENPAR PCDATA liste_mixed_plus CLOSEPAR AST
 | OPENPAR PCDATA CLOSEPAR
 ;
 
-liste_mixed_opt
-: liste_mixed_opt PIPE IDENT
-| /* vide */
+liste_mixed_plus
+: liste_mixed_plus PIPE IDENT
+| PIPE IDENT
 ;
 
 item_enum

@@ -35,14 +35,14 @@
 
 class Balise : public Element { //abstract
 	public:
-		Balise();
+		Balise(unNom);
 		virtual ~Balise();
-		void getValue(); //pour récupérer le CDATA
+		void getValue();
 
 	private:
 		map<string, string> attributs;
 		vector<Element*> elements;
-		string name;
+ 		string nom;
 };
 
 #endif // ELEMENT_H

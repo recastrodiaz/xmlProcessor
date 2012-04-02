@@ -1,5 +1,5 @@
  /*************************************************************************
-                           BALISE  -  description
+                           DATA  -  description
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par atamborrino, nrabardeau, lardon
@@ -7,11 +7,11 @@
 *************************************************************************/
 
 //---------- Interface du module <Balise> (fichier Balise.h) ---------
-#if ! defined ( BALISE_H )
-#define BALISE_H
+#if ! defined ( DATA_H )
+#define DATA_H
 
 //------------------------------------------------------------------------
-// Rôle du module <BALISE>
+// Rôle du module <DATA>
 //
 //
 //------------------------------------------------------------------------
@@ -33,16 +33,14 @@
 // Contrat :
 //
 
-class Balise : public Element { //abstract
+class Data : public Element { //abstract
 	public:
-		Balise();
-		virtual ~Balise();
+		Data(uneValue);
+		virtual ~Data();
 		void getValue(); //pour récupérer le CDATA
 
 	private:
-		map<string, string> attributs;
-		vector<Element*> elements;
-		string name;
+		string value;
 };
 
 #endif // ELEMENT_H

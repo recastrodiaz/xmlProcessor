@@ -1,18 +1,18 @@
 /*************************************************************************
-                           DATA  -  description
+                           ElementAtt
                              -------------------
     début                : 02/04/2012
-    copyright            : (C) 2012 par nrabardeau, atamborrino, lardon
+    copyright            : (C) 2012 par rcastrodiaz, fduranton, dbrian
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation du module <DATA> (fichier Data.cpp) -----
+//---------- Réalisation du module <ElementAtt> (fichier ElementAtt.cpp) -----
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
 
 //------------------------------------------------------ Include personnel
-#include "Data.h"
+#include "ElementAtt.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -40,25 +40,19 @@
 //{
 //} //----- fin de Nom
 
-Data::Data (string uneValue) : Element(), value(uneValue)
+ElementAtt::ElementAtt (string ident) : Element(), nom(unNom)
 // Algorithme :
 //
 {
-} //----- fin de Nom
+} //----- fin de ElementAtt::ElementAtt
 
-Data::~Data ()
+ElementAtt::~ElementAtt ()
 // Algorithme :
 //
 {
-} //----- fin de Nom
 
-Data::getValue ()
-// Algorithme :
-//
-{
-    	cout << (**it).getValue() << endl;
-} //----- fin de Nom
+} //----- fin de ElementAtt::~ElementAtt
 
 
 
- 
+

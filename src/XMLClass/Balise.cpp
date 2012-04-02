@@ -44,8 +44,6 @@ Balise::Balise (string unNom) : Element(), nom(unNom)
 // Algorithme :
 //
 {
-	this.attributs = new map<string, string>();
-	this.elements = new vector<Element*>();
 } //----- fin de Nom
 
 Balise::~Balise ()

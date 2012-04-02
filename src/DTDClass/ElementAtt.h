@@ -1,17 +1,17 @@
- /*************************************************************************
-                           DATA  -  description
+/*************************************************************************
+                           ElementAtt
                              -------------------
     début                : 02/04/2012
-    copyright            : (C) 2012 par atamborrino, nrabardeau, lardon
+    copyright            : (C) 2012 par rcastrodiaz, fduranton, dbrian
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Interface du module <Balise> (fichier Balise.h) ---------
-#if ! defined ( DATA_H )
-#define DATA_H
+//---------- Interface du module <ElementAtt> (fichier ElementAtt.h) ---------
+#if ! defined ( ELEMENTATT_H )
+#define ELEMENTATT_H
 
 //------------------------------------------------------------------------
-// Rôle du module <DATA>
+// Rôle du module <ELEMENTATT>
 //
 //
 //------------------------------------------------------------------------
@@ -20,7 +20,7 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
 #include <stdlib>
-#include "Data.h"
+#include "ElementAttBase.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -33,17 +33,17 @@
 // Contrat :
 //
 
-class Data : public Element { //abstract
+class ElementAtt : public ElementAttBase { //abstract
 	public:
-		Data(uneValue);
-		virtual ~Data();
-		void getValue(); //pour récupérer le CDATA
+		ElementAtt();
+		virtual ~ElementAtt();
+
 
 	private:
-		string value;
+		string ident;
 };
 
-#endif // ELEMENT_H
+#endif // ELEMENTATT_H
 
 
 

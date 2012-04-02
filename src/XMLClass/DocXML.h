@@ -35,11 +35,13 @@
 
 class DocXML {
 	public:
-		DocXML(Element unDoc);
+		DocXML(Element unDoc, string unKeyword, string uneUrl);
 		virtual ~DocXML();
     
     private:
         Element doc;
+        string keyword;
+        string dtdUrl;
 };
 
 #endif // DOCXML_H

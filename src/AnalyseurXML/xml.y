@@ -15,14 +15,26 @@ string dtdUrl;
    ElementName * en;  /* le nom d'un element avec son namespace */
 }
 
+/*
+ %parse-param {
+    ElementName ** en; // recopie du poly mais pas trop compris
+    Element ** e;
+ }
+ */
+
 %token EQ SLASH CLOSE CLOSESPECIAL DOCTYPE
 %token <s> ENCODING STRING DATA COMMENT IDENT NSIDENT
 %token <en> NSSTART START STARTSPECIAL END NSEND
 
 %%
+/*
+ main
+   : document   { *en = $1; } // recopie du poly mais pas trop compris
+   ;
+ */
 
 document
- : declarations_opt xml_element misc_seq_opt 
+: declarations_opt xml_element misc_seq_opt    /* { (Balise*)*e = $2; } */
  ;
 misc_seq_opt
  : misc_seq_opt comment
@@ -38,7 +50,7 @@ declarations_opt
  ;
  
 declaration
- : DOCTYPE IDENT IDENT STRING CLOSE {dtdUrl = $4;}
+ : DOCTYPE IDENT IDENT STRING CLOSE {dtdUrl = $4;} /* { $$ = new DocXML($1,,$2,$4); } */
  ;
 
 attributs_opt
@@ -47,11 +59,11 @@ attributs_opt
  ;
 
 attribut
- : IDENT EQ STRING
+ : IDENT EQ STRING  /* ((Balise*)*e).addAttribut($1, $3); */
  ;
 
 xml_element
- : start attributs_opt empty_or_content 
+ : start attributs_opt empty_or_content     /* { $$ = new Balise(); } */
  ;
 start
  : START		
@@ -65,9 +77,9 @@ close_content_and_end
  : CLOSE	content_opt END 
  ;
 content_opt 
- : content_opt DATA		
+ : content_opt DATA		/* { ((Balise*)*e).addContent(new Data($2)); } */
  | content_opt comment        
- | content_opt xml_element      
+ | content_opt xml_element  /* { ((Balise*)*e).addContent($2); *e = *2; } */
  | /*empty*/         
  ;
 %%

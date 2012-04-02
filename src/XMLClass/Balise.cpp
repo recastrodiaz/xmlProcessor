@@ -71,5 +71,23 @@ Balise::getValue ()
 	}
 } //----- fin de Nom
 
+Balise::addAttribut (string label, string value)
+// Algorithme :
+//
+{
+	pair<map<string,string>::iterator,bool> ret;
+    ret = attributs.insert(pair<string, string>(label, value));
+    if (!ret.second) {
+        //TODO: traiter les erreurs : l'attribut existe déjà
+    }
+} //----- fin de Nom
+
+Balise::addContent (Element elem)
+// Algorithme :
+//
+{
+	elements.push_back(elem);
+} //----- fin de Nom
+
 
 

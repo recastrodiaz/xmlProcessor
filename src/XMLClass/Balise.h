@@ -38,6 +38,8 @@ class Balise : public Element {
 		Balise(string unNom);
 		virtual ~Balise();
 		void getValue();
+        void addAttribut(string label, string value);
+        void addContent(Element elem);
 
 	private:
 		map<string, string> attributs;

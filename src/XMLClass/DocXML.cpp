@@ -40,7 +40,7 @@
 //{
 //} //----- fin de Nom
 
-DocXML::DocXML (Element unDoc) : doc(unDoc) 
+DocXML::DocXML (Element unDoc, string unKeyword, string uneUrl) : doc(unDoc), keyword(unKeyword), dtdUrl(uneUrl) 
 // Algorithme :
 //
 {

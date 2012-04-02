@@ -38,8 +38,8 @@ class ElementAttBase
 		virtual ElementAttBase() = 0;
 		virtual ~ElementAttBase();
 
-		typedef enum Cardinalite ( ETOILE, PLUS );
-		typedef enum ContentSpec ( EMPTY, ANY );
+		enum Cardinalite { ETOILE, PLUS, QMARK };
+		enum ContentSpec { EMPTY, ANY };
 
 };
 

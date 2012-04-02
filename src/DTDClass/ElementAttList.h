@@ -1,17 +1,17 @@
 /*************************************************************************
-                           ElementAtt
+                           ElementAttList
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par recastrodiaz, fduranton, dbrian
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Interface du module <ElementAtt> (fichier ElementAtt.h) ---------
-#if ! defined ( ELEMENTATT_H )
-#define ELEMENTATT_H
+//---------- Interface du module <ElementAttList> (fichier ElementAttList.h) ---------
+#if ! defined ( ELEMENTATTLIST_H )
+#define ELEMENTATTLIST_H
 
 //------------------------------------------------------------------------
-// Rôle du module <ELEMENTATT>
+// Rôle du module <ELEMENTATTLIST>
 //
 //
 //------------------------------------------------------------------------
@@ -33,14 +33,15 @@
 // Contrat :
 //
 
-class ElementAtt : public ElementAttBase { //abstract
+class ElementAttList : public ElementAttBase { //abstract
 	public:
-		ElementAtt(string unIdent);
-		virtual ~ElementAtt();
-
+	    ElementAttList();
+		ElementAttList(ElementAttList::TypeAgregat unAgregat);
+		virtual ~ElementAttList();
+        enum TypeAgregat { PIPE, COMMA };
 
 	private:
-		string ident;
+		ElementAttList::TypeAgregat typeAgregat;
 };
 
 #endif // ELEMENTATT_H

@@ -3,9 +3,10 @@
 using namespace std;
 #include "commun.h"
 
-int yywrap(void);
-void yyerror(char *msg);
-int yylex(void);
+int xmlwrap(void);
+void xmlerror(char *msg);
+int xmllex(void);
+string dtdUrl;
 
 %}
 
@@ -37,11 +38,20 @@ declarations_opt
  ;
  
 declaration
- : DOCTYPE IDENT IDENT STRING CLOSE 
+ : DOCTYPE IDENT IDENT STRING CLOSE {dtdUrl = $4;}
+ ;
+
+attributs_opt
+ : attributs_opt attribut
+ | /*empty*/
+ ;
+
+attribut
+ : IDENT EQ STRING
  ;
 
 xml_element
- : start empty_or_content 
+ : start attributs_opt empty_or_content 
  ;
 start
  : START		
@@ -62,23 +72,31 @@ content_opt
  ;
 %%
 
+extern FILE* xmlin;
+
 int main(int argc, char **argv)
 {
   int err;
-
-  yydebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
-
-  err = yyparse();
+  FILE * file;
+  if (argv[1] != NULL)
+  {
+  	xmlin = fopen(argv[1],"r+");
+	if (xmlin == NULL)
+		return -1;
+  }
+  xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
+  err = xmlparse();
   if (err != 0) printf("Parse ended with %d error(s)\n", err);
   	else  printf("Parse ended with success\n", err);
+  fclose(xmlin);
   return 0;
 }
-int yywrap(void)
+int xmlwrap(void)
 {
   return 1;
 }
 
-void yyerror(char *msg)
+void xmlerror(char *msg)
 {
   fprintf(stderr, "%s\n", msg);
 }

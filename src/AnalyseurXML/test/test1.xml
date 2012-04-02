@@ -1,0 +1,6 @@
+<!DOCTYPE kikoo SYSTEM "Kikoo.dtd">
+<hello id='Alex'>
+	<hello txt='Noura'>
+	salut le monde !
+	</hello>
+</hello>

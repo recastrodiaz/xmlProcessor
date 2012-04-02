@@ -1,0 +1,266 @@
+<!doctype html public '-//W3C//DTD HTML Strict Experimental 19970428//EN'>
+<html version="-//W3C//DTD HTML Strict Experimental 19970428//EN">
+<head>
+<title>XML in C</title>
+<link href="../xml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>XML in C</h1>
+
+<h2>Status</h2>
+
+<p class="first">Personal thoughts on what the XML syntax should
+be. Compare with my earlier <a href="../notes"
+shape="rect">notes.</a></p>
+
+<div class="intro"><h2>Abstract</h2>
+
+<p class="first">XML is a base-language for expressing arbitrary
+structured data in text form. It consists of several modules: core
+syntax, meta-syntax, linking, style-bindings, and maybe more. Of these
+only the core syntax is common to all XML applications. Applications
+can choose to omit the other modules if they don't need them.</p>
+
+<p>This text describes one possible core syntax, using flex/bison
+specifications. The most important additions relative to the <a
+href="../../../TR/WD-xml-lang" shape="rect">XML-lang draft of 30 June
+1997</a> include: automatically ignored newlines, attribute defaults,
+and boolean attributes.</p>
+
+</div>
+
+<h2>Why this specification?</h2>
+
+<h3>Split the core syntax and the meta-syntax</h3>
+
+<p class="first">The core syntax of XML specifies a very general
+language within which all XML applications have to stay. Most
+applications will want to restrict this language, and XML provides an
+optional module with a meta-syntax for writing those restrictions. The
+restrictions are often referred to as a DTD, Document Type Definition,
+after SGML, where this term was introduced.</p>
+
+<p>In the <a href="../../../TR/WD-xml-lang" shape="rect">XML-lang
+draft of 30 June 1997</a> the core syntax and the meta-syntax are
+combined into a single draft. The linking module and the planned
+style-sheet binding modules are kept in separate draft. There are good
+reasons for keeping the core syntax and the meta-syntax separate:</p>
+
+<ol>
+<li><p>For consistency.</p></li>
+
+<li><p>Because the current meta-syntax is not very good and there are
+other proposals in separate documents (e.g., <a
+href="../9706/xml-data" shape="rect">XML-data</a>).</p></li>
+
+<li><p>Because it makes the draft easier to read.</p></li>
+
+<li><p>To allow one to be changed without the other.</p></li>
+</ol>
+
+<h3>"RE delenda est"</h3>
+
+<p class="first">This Latin phrase means "RE is to be deleted." It
+refers to a rule from SGML that specifies in which contexts an "RE"
+(Record-End, SGML-speak for a newline) is to be ignored. The precise
+rules in SGML are very complicated, but in general a newline is
+ignored after a start tag and before an end tag. This allows SGML
+documents to be somewhat pretty-printed, by starting tags on a new
+line.</p>
+
+<p>XML also has start and end tags, but none of the exceptions of
+SGML, so the "RE delenda rule" can be applied without any
+problems.</p>
+
+<p>In fact, looking at how people write XML and HTML, the rule good be
+generalized a bit, to say that a newline before and "&lt;" and after
+any "&gt;" is to be ignored, whether that "&lt;" is part of a start
+tag or not.</p>
+
+<p>There is a lot of confusion over this issue. The first applications
+that are based on XML seem to assume that not only one newline is
+ignored, but that all whitespace, even multiple lines, is to be
+ignored. While this allows even more "pretty printing", it also means
+that a lot of meaningful spaces have to be escaped (as &amp;32;).</p>
+
+<p>The 30 June draft of XML on the other hand says that <em>no</em>
+
+whitespace is to be ignored, not even a single newline.</p>
+
+<p>Most people meanwhile seem to agree that ignoring one newline is a
+good compromise. It allows tags to be put on separate lines, while not
+requiring meaningful whitespace to be escaped. That is therefore what
+the syntax below describes.</p>
+
+<h3>Default attributes</h3>
+
+<p class="first">Especially if an application uses the linking module,
+it will benefit a lot from being able to specify defaults for
+attributes. The 30 June draft relies on the meta-syntax to provide
+default attribute values. This is not a good idea, for several
+reasons:</p>
+
+<ol>
+<li><p>The meta-syntax is not very good and may change.</p></li>
+
+<li><p>Many application that could benefit from attribute defaults
+have no use for the rest of the meta-syntax (or cannot afford the cost
+and complexity of parsing the meta-syntax).</p></li>
+
+<li><p>Restricting the syntax and setting defaults are logically two
+very different things and should not be mixed so easily.</p></li>
+</ol>
+
+<p>The syntax below therefore includes an attribute defaulting
+mechanism that is part of the core syntax.</p>
+
+<h3>Boolean attributes</h3>
+
+<p class="first">All attributes in XML are by default string valued,
+although the meta-syntax should be able to restrict that. There are
+different proposals for doing that. One interesting one is <a
+href="http://www.textuality.com/xml/typing.html" shape="rect">Tim
+Bray's proposal</a></p>
+
+<p>But there is one very simple type that is useful in almost all
+applications and that can be added to the core syntax without
+complicating it, and that is booleans. The syntax below therefore
+includes boolean attributes as well as string-valued ones.</p>
+
+<h2>The code</h2>
+
+<p class="first">The code is in two parts: a flex tokenizer and a
+bison grammar. Also included are a test program and a makefile. Below
+is some documentation for each of them. To download all of them
+together, download this <a href="xml-in-c.tar.gz"
+shape="rect">tarfile.</a></p>
+
+<h3>Flex scanner</h3>
+
+<p class="first">(See the <a href="scanner.l"
+shape="rect">source</a>.)</p>
+
+<p>The actual scanner code is very short. After all, there are only 12
+tokens to be recognized. The code relies on a few macros that keep the
+code clear:</p>
+
+<dl>
+<dt>nl</dt>
+<dd>
+<p>A newline can be either a carriage return, a line feed, or
+both.</p></dd>
+
+<dt>ws</dt>
+<dd>
+<p>Whitespace is any sequence of one or more spaces, tabs, carriage
+returns or line feeds.</p></dd>
+
+<dt>open</dt>
+<dd>
+
+<p>The rule that a newline is to be ignored just before a "&lt;" is
+expressed by this macro, that combines and optional newline and a
+"&lt;".</p></dd>
+
+<dt>close</dt>
+<dd>
+<p>Same for the delimiter that signals the end of mark-up: a "&gt;"
+optionally followed by a newline.</p></dd>
+
+<dt>namestart</dt>
+<dd>
+<p>This represents all the characters that can start a name (element
+name, attribute name). This code doesn't try to deal with character
+encodings (most 8-bit encodings, as well as UTF-8 should work fine,
+though), and so it simply accepts all non-ASCII characters as name
+start characters. This is probably too lenient, but since all the
+delimiters in XML are from the ASCII set, it doesn't really
+matter.</p></dd>
+
+<dt>namechar</dt>
+<dd>
+<p>All the characters that are allowed in a name, after the first
+character. The same leniency as for namestart above.</p></dd>
+
+<dt>data</dt>
+<dd>
+<p>The data in an XML file, i.e., the characters between a start and
+end tag, are matched by this regular expression, that accepts all
+characters except a "&lt;", and only accepts a newline if it is not
+immediately followed by a "&lt;". There may be escaped characters in
+this data, of the form "&amp;#[0-9]+;" or "&amp;#x[0-9a-f]+;". This
+program doesn't expand them. To do that would require implementing the
+character encodings and the program currently doesn't do
+that.</p></dd>
+
+<dt>string</dt>
+<dd>
+<p>A string is something between double or single quotes. Like data,
+it may include escaped characters.</p></dd>
+
+</dl>
+
+<p class="first">The scanner works in one of two modes (start
+conditions). The INITIAL mode ignores white space and recognized
+names, strings, and most of the other tokens. It is active as the
+program starts and every time the tokenizer is in between "&lt;" and
+"&gt;".</p>
+
+<p>The CONTENT mode is entered after the "&gt;" of any start or end
+tag. In this mode only data, "&lt;", comments, and the start of an
+attribute defaults declaration are recognized.</p>
+
+<h3>Bison grammar</h3>
+
+<p class="first">(See the <a href="parser.y"
+shape="rect">source</a>.)</p>
+
+<p>The grammar contains just 13 productions, and it could have been
+shorter and clearer if Bison had accepted some common notations for
+grammars. The grammar that is actually intended is as follows:</p>
+
+<pre>
+document: prolog element misc*;
+prolog: VERSION? ENCODING? misc*;
+misc: COMMENT | attribute_decl;
+attribute_decl: ATTDEF NAME attribute+ ENDDEF;	
+element: START attribute* empty_or_content;
+empty_or_content: SLASH CLOSE | CLOSE content END NAME? CLOSE;
+content: (DATA | misc | element)*;
+attribute: NAME (EQ VALUE)?;
+</pre>
+
+<p class="first">... or just 8 productions.</p>
+
+<h3>Test application</h3>
+
+<p class="first">(See the <a href="main.c"
+shape="rect">source.</a>)</p>
+
+<p>The test application just calls the parser to parse standard
+input.</p>
+
+<hr>
+
+<address><a href="http://www.w3.org/pub/WWW/Style/CSS/Buttons"><img
+align=left border=0
+src="http://www.w3.org/pub/WWW/Style/CSS/Buttons/mwcos"></a> <a
+href="/people/bos" shape="rect">Bert Bos</a><br>
+
+$Date: 1997/07/09
+20:44:19 $</address>
+</body>
+<!-- Created: Wed Jul  9 18:23:12 MET DST 1997 -->
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-declaration:"~/SGML/html.decl"
+sgml-default-doctype-name:"html"
+sgml-minimize-attributes:t
+sgml-nofill-elements:("pre" "style" "br")
+sgml-live-element-indicator:t
+End:
+-->
+</html>
+ 

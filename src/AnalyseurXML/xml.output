@@ -1,0 +1,366 @@
+Terminaux qui ne sont utilisés
+
+   CLOSESPECIAL
+   ENCODING
+   NSIDENT
+   STARTSPECIAL
+   NSEND
+
+
+Grammaire
+
+    0 $accept: document $end
+
+    1 document: declarations_opt xml_element misc_seq_opt
+
+    2 misc_seq_opt: misc_seq_opt comment
+    3             | /* vide */
+
+    4 comment: COMMENT
+
+    5 declarations_opt: declaration
+    6                 | /* vide */
+
+    7 declaration: DOCTYPE IDENT IDENT STRING CLOSE
+
+    8 attributs_opt: attributs_opt attribut
+    9              | /* vide */
+
+   10 attribut: IDENT EQ STRING
+
+   11 xml_element: start attributs_opt empty_or_content
+
+   12 start: START
+   13      | NSSTART
+
+   14 empty_or_content: SLASH CLOSE
+   15                 | close_content_and_end CLOSE
+
+   16 close_content_and_end: CLOSE content_opt END
+
+   17 content_opt: content_opt DATA
+   18            | content_opt comment
+   19            | content_opt xml_element
+   20            | /* vide */
+
+
+Terminaux, suivis des règles où ils apparaissent
+
+$end (0) 0
+error (256)
+EQ (258) 10
+SLASH (259) 14
+CLOSE (260) 7 14 15 16
+CLOSESPECIAL (261)
+DOCTYPE (262) 7
+ENCODING (263)
+STRING (264) 7 10
+DATA (265) 17
+COMMENT (266) 4
+IDENT (267) 7 10
+NSIDENT (268)
+NSSTART (269) 13
+START (270) 12
+STARTSPECIAL (271)
+END (272) 16
+NSEND (273)
+
+
+Non-terminaux, suivis des règles où ils apparaissent
+
+$accept (19)
+    à gauche: 0
+document (20)
+    à gauche: 1, à droite: 0
+misc_seq_opt (21)
+    à gauche: 2 3, à droite: 1 2
+comment (22)
+    à gauche: 4, à droite: 2 18
+declarations_opt (23)
+    à gauche: 5 6, à droite: 1
+declaration (24)
+    à gauche: 7, à droite: 5
+attributs_opt (25)
+    à gauche: 8 9, à droite: 8 11
+attribut (26)
+    à gauche: 10, à droite: 8
+xml_element (27)
+    à gauche: 11, à droite: 1 19
+start (28)
+    à gauche: 12 13, à droite: 11
+empty_or_content (29)
+    à gauche: 14 15, à droite: 11
+close_content_and_end (30)
+    à gauche: 16, à droite: 15
+content_opt (31)
+    à gauche: 17 18 19 20, à droite: 16 17 18 19
+
+
+état 0
+
+    0 $accept: . document $end
+
+    DOCTYPE  décalage et aller à l'état 1
+
+    $défaut  réduction par utilisation de la règle 6 (declarations_opt)
+
+    document          aller à l'état 2
+    declarations_opt  aller à l'état 3
+    declaration       aller à l'état 4
+
+
+état 1
+
+    7 declaration: DOCTYPE . IDENT IDENT STRING CLOSE
+
+    IDENT  décalage et aller à l'état 5
+
+
+état 2
+
+    0 $accept: document . $end
+
+    $end  décalage et aller à l'état 6
+
+
+état 3
+
+    1 document: declarations_opt . xml_element misc_seq_opt
+
+    NSSTART  décalage et aller à l'état 7
+    START    décalage et aller à l'état 8
+
+    xml_element  aller à l'état 9
+    start        aller à l'état 10
+
+
+état 4
+
+    5 declarations_opt: declaration .
+
+    $défaut  réduction par utilisation de la règle 5 (declarations_opt)
+
+
+état 5
+
+    7 declaration: DOCTYPE IDENT . IDENT STRING CLOSE
+
+    IDENT  décalage et aller à l'état 11
+
+
+état 6
+
+    0 $accept: document $end .
+
+    $défaut  accepter
+
+
+état 7
+
+   13 start: NSSTART .
+
+    $défaut  réduction par utilisation de la règle 13 (start)
+
+
+état 8
+
+   12 start: START .
+
+    $défaut  réduction par utilisation de la règle 12 (start)
+
+
+état 9
+
+    1 document: declarations_opt xml_element . misc_seq_opt
+
+    $défaut  réduction par utilisation de la règle 3 (misc_seq_opt)
+
+    misc_seq_opt  aller à l'état 12
+
+
+état 10
+
+   11 xml_element: start . attributs_opt empty_or_content
+
+    $défaut  réduction par utilisation de la règle 9 (attributs_opt)
+
+    attributs_opt  aller à l'état 13
+
+
+état 11
+
+    7 declaration: DOCTYPE IDENT IDENT . STRING CLOSE
+
+    STRING  décalage et aller à l'état 14
+
+
+état 12
+
+    1 document: declarations_opt xml_element misc_seq_opt .
+    2 misc_seq_opt: misc_seq_opt . comment
+
+    COMMENT  décalage et aller à l'état 15
+
+    $défaut  réduction par utilisation de la règle 1 (document)
+
+    comment  aller à l'état 16
+
+
+état 13
+
+    8 attributs_opt: attributs_opt . attribut
+   11 xml_element: start attributs_opt . empty_or_content
+
+    SLASH  décalage et aller à l'état 17
+    CLOSE  décalage et aller à l'état 18
+    IDENT  décalage et aller à l'état 19
+
+    attribut               aller à l'état 20
+    empty_or_content       aller à l'état 21
+    close_content_and_end  aller à l'état 22
+
+
+état 14
+
+    7 declaration: DOCTYPE IDENT IDENT STRING . CLOSE
+
+    CLOSE  décalage et aller à l'état 23
+
+
+état 15
+
+    4 comment: COMMENT .
+
+    $défaut  réduction par utilisation de la règle 4 (comment)
+
+
+état 16
+
+    2 misc_seq_opt: misc_seq_opt comment .
+
+    $défaut  réduction par utilisation de la règle 2 (misc_seq_opt)
+
+
+état 17
+
+   14 empty_or_content: SLASH . CLOSE
+
+    CLOSE  décalage et aller à l'état 24
+
+
+état 18
+
+   16 close_content_and_end: CLOSE . content_opt END
+
+    $défaut  réduction par utilisation de la règle 20 (content_opt)
+
+    content_opt  aller à l'état 25
+
+
+état 19
+
+   10 attribut: IDENT . EQ STRING
+
+    EQ  décalage et aller à l'état 26
+
+
+état 20
+
+    8 attributs_opt: attributs_opt attribut .
+
+    $défaut  réduction par utilisation de la règle 8 (attributs_opt)
+
+
+état 21
+
+   11 xml_element: start attributs_opt empty_or_content .
+
+    $défaut  réduction par utilisation de la règle 11 (xml_element)
+
+
+état 22
+
+   15 empty_or_content: close_content_and_end . CLOSE
+
+    CLOSE  décalage et aller à l'état 27
+
+
+état 23
+
+    7 declaration: DOCTYPE IDENT IDENT STRING CLOSE .
+
+    $défaut  réduction par utilisation de la règle 7 (declaration)
+
+
+état 24
+
+   14 empty_or_content: SLASH CLOSE .
+
+    $défaut  réduction par utilisation de la règle 14 (empty_or_content)
+
+
+état 25
+
+   16 close_content_and_end: CLOSE content_opt . END
+   17 content_opt: content_opt . DATA
+   18            | content_opt . comment
+   19            | content_opt . xml_element
+
+    DATA     décalage et aller à l'état 28
+    COMMENT  décalage et aller à l'état 15
+    NSSTART  décalage et aller à l'état 7
+    START    décalage et aller à l'état 8
+    END      décalage et aller à l'état 29
+
+    comment      aller à l'état 30
+    xml_element  aller à l'état 31
+    start        aller à l'état 10
+
+
+état 26
+
+   10 attribut: IDENT EQ . STRING
+
+    STRING  décalage et aller à l'état 32
+
+
+état 27
+
+   15 empty_or_content: close_content_and_end CLOSE .
+
+    $défaut  réduction par utilisation de la règle 15 (empty_or_content)
+
+
+état 28
+
+   17 content_opt: content_opt DATA .
+
+    $défaut  réduction par utilisation de la règle 17 (content_opt)
+
+
+état 29
+
+   16 close_content_and_end: CLOSE content_opt END .
+
+    $défaut  réduction par utilisation de la règle 16 (close_content_and_end)
+
+
+état 30
+
+   18 content_opt: content_opt comment .
+
+    $défaut  réduction par utilisation de la règle 18 (content_opt)
+
+
+état 31
+
+   19 content_opt: content_opt xml_element .
+
+    $défaut  réduction par utilisation de la règle 19 (content_opt)
+
+
+état 32
+
+   10 attribut: IDENT EQ STRING .
+
+    $défaut  réduction par utilisation de la règle 10 (attribut)

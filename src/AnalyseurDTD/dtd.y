@@ -13,8 +13,14 @@ int yylex(void);
 %token <s> IDENT TOKENTYPE DECLARATION STRING
 %%
 
-main: dtd_list_opt 
-    ;
+main 
+: dtd_opt
+;
+
+dtd_opt
+: dtd_opt
+| dtd_list_opt elementspec_opt
+;
 
 dtd_list_opt
 : dtd_list_opt ATTLIST IDENT att_definition_opt CLOSE            
@@ -47,6 +53,11 @@ enum_list_plus
 enum_list
 : item_enum               
 | enum_list PIPE item_enum
+;
+
+elementspec_opt
+: elementspec_opt elementspec
+| /* vide */
 ;
 
 elementspec

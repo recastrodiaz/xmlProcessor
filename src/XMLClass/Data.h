@@ -33,9 +33,9 @@
 // Contrat :
 //
 
-class Data : public Element { //abstract
+class Data : public Element { 
 	public:
-		Data(uneValue);
+		Data(string uneValue);
 		virtual ~Data();
 		void getValue(); //pour récupérer le CDATA
 

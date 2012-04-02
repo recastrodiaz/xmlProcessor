@@ -1,18 +1,18 @@
 /*************************************************************************
-                           DATA  -  description
+                           DOCXML  -  description
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par nrabardeau, atamborrino, lardon
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation du module <DATA> (fichier Data.cpp) -----
+//---------- Réalisation du module <DOCXML> (fichier DocXML.cpp) -----
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
 
 //------------------------------------------------------ Include personnel
-#include "Data.h"
+#include "DocXML.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -40,25 +40,17 @@
 //{
 //} //----- fin de Nom
 
-Data::Data (string uneValue) : Element(), value(uneValue)
+DocXML::DocXML (Element unDoc) : doc(unDoc) 
 // Algorithme :
 //
 {
 } //----- fin de Nom
 
-Data::~Data ()
+DocXML::~DocXML ()
 // Algorithme :
 //
 {
 } //----- fin de Nom
 
-Data::getValue ()
-// Algorithme :
-//
-{
-    	cout << this.value << endl;
-} //----- fin de Nom
 
 
-
- 

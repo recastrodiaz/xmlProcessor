@@ -1,17 +1,17 @@
 /*************************************************************************
-                           BALISE  -  description
+                           DOCXML  -  description
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par atamborrino, nrabardeau, lardon
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Interface du module <Balise> (fichier Balise.h) ---------
-#if ! defined ( BALISE_H )
-#define BALISE_H
+//---------- Interface du module <DocXML> (fichier DocXML.h) ---------
+#if ! defined ( DOCXML_H )
+#define DOCXML_H
 
 //------------------------------------------------------------------------
-// Rôle du module <BALISE>
+// Rôle du module <ELEMENT>
 //
 //
 //------------------------------------------------------------------------
@@ -19,7 +19,7 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
-#include <stdlib>
+
 #include "Element.h"
 //------------------------------------------------------------- Constantes
 
@@ -33,19 +33,14 @@
 // Contrat :
 //
 
-class Balise : public Element {
+class DocXML { //abstract
 	public:
-		Balise(string unNom);
-		virtual ~Balise();
-		void getValue();
-
-	private:
-		map<string, string> attributs;
-		vector<Element*> elements;
- 		string nom;
+		DocXML();
+		virtual ~DocXML();
+    
+    private:
+        Element doc;
 };
 
-#endif // BALISE_H
-
-
+#endif // DOCXML_H
 

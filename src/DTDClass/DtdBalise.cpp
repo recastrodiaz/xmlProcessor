@@ -1,18 +1,18 @@
 /*************************************************************************
-                           ElementAttList
+                           DTD_BALISE  -  description
                              -------------------
     début                : 02/04/2012
-    copyright            : (C) 2012 par recastrodiaz, fduranton, dbrian
+    copyright            : (C) 2012 par fduranton, dbrian, recastrodiaz
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation du module <ElementAttList> (fichier ElementAttList.cpp) -----
+//---------- Réalisation du module <DTD_BALISE> (fichier DtdBalise.cpp) -----
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
 
 //------------------------------------------------------ Include personnel
-#include "ElementAttList.h"
+#include "DtdBalise.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -39,26 +39,17 @@
 //
 //{
 //} //----- fin de Nom
-ElementAttList::ElementAttList()
-	: ElementAttBase()
+
+DtdBalise::DtdBalise () 
 // Algorithme :
 //
 {
-}
-ElementAttList::ElementAttList(ElementAttList::TypeAgregat typeAgregat)
-	: ElementAttBase(), mTypeAgregat(typeAgregat)
+} //----- fin de Element
+
+DtdBalise::~DtdBalise () 
 // Algorithme :
 //
 {
-} //----- fin de ElementAtt::ElementAtt
-
-ElementAttList::~ElementAttList ()
-// Algorithme :
-//
-{
-
-} //----- fin de ElementAtt::~ElementAtt
-
-
+} //----- fin de Element
 
 

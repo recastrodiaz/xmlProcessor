@@ -1,0 +1,38 @@
+TARGET  := ../../bin/smagh 
+CSRCS   := 
+CXXSRCS := DtdDocument.cpp DtdBalise.cpp AttList.cpp AttDef.cpp Element.cpp ElementAttBase.cpp ElementAtt.cpp ElementAttList.cpp DtdTest.cpp 
+INCLUDE  = 
+LDFLAGS  = 
+LIBS     = 
+
+OBJS    := ${CXXSRCS:.cpp=.o} 
+OBJS    += ${CSRCS:.c=.o} 
+DEPS    := ${CXXSRCS:.cpp=.dep} 
+DEPS    += ${CSRCS:.c=.dep} 
+XDEPS   := $(wildcard ${DEPS}) 
+
+CXXFLAGS = -Wno-write-strings -O2 -Wall -fPIC
+
+.PHONY: all clean distclean 
+all:: ${TARGET} 
+
+ifneq (${XDEPS},) 
+include ${XDEPS} 
+endif 
+
+${TARGET}: ${OBJS} 
+	${CXX} ${LDFLAGS} -o $@ $^ ${LIBS} 
+
+ %.o: %.cpp
+	${CXX} ${INCLUDE} ${CXXFLAGS} -o $@ -c $< 
+	
+ %.o: %.c
+	${CXX} ${INCLUDE} ${CXXFLAGS} -o $@ -c $< 
+
+${DEPS}: %.dep: %.cpp Makefile 
+	${CXX} ${CXXFLAGS} -M $< > $@ 
+
+clean:: 
+	-rm -f *~ *.o *.dep ${TARGET} 
+
+distclean:: clean

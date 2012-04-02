@@ -40,17 +40,12 @@
 //{
 //} //----- fin de Nom
 
-Element::Element () : DtdBalise()
+Element::Element (std::string ident, ElementAttBase * attributeReference) 
+	: DtdBalise(), mIdent(ident)
 // Algorithme :
 //
 {
-} //----- fin de Element
-
-Element::Element (std::string aIdent, ElementAttBase* refOnAttributeElem) : DtdBalise(), ident(aIdent)
-// Algorithme :
-//
-{
-	attributeReference = refOnAttributeElem;
+	mAttributeReference = attributeReference;
 } //----- fin de Element
 
 Element::~Element ()

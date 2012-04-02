@@ -40,6 +40,12 @@
 //{
 //} //----- fin de Nom
 
+ElementAttBase::ElementAttBase ()
+// Algorithme :
+//
+{
+} //----- fin de ~ElementAttBase
+
 ElementAttBase::~ElementAttBase ()
 // Algorithme :
 //

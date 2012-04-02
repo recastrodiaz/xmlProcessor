@@ -1,18 +1,18 @@
 /*************************************************************************
-                           ElementAttList
+                           DTD_DOCUMENT  -  description
                              -------------------
     début                : 02/04/2012
-    copyright            : (C) 2012 par recastrodiaz, fduranton, dbrian
+    copyright            : (C) 2012 par fduranton, dbrian, recastrodiaz
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation du module <ElementAttList> (fichier ElementAttList.cpp) -----
+//---------- Réalisation du module <DTD_DOCUMENT> (fichier DtdDocument.cpp) -----
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
 
 //------------------------------------------------------ Include personnel
-#include "ElementAttList.h"
+#include "DtdDocument.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -39,26 +39,18 @@
 //
 //{
 //} //----- fin de Nom
-ElementAttList::ElementAttList()
-	: ElementAttBase()
+
+DtdDocument::DtdDocument () 
 // Algorithme :
 //
 {
-}
-ElementAttList::ElementAttList(ElementAttList::TypeAgregat typeAgregat)
-	: ElementAttBase(), mTypeAgregat(typeAgregat)
+} //----- fin de Element
+
+DtdDocument::~DtdDocument ()
 // Algorithme :
 //
 {
-} //----- fin de ElementAtt::ElementAtt
-
-ElementAttList::~ElementAttList ()
-// Algorithme :
-//
-{
-
-} //----- fin de ElementAtt::~ElementAtt
-
+} //----- fin de ~Element
 
 
 

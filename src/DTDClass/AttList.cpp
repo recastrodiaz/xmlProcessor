@@ -1,18 +1,18 @@
 /*************************************************************************
-                           ElementAttList
+                           ATT_LIST  -  description
                              -------------------
     début                : 02/04/2012
-    copyright            : (C) 2012 par recastrodiaz, fduranton, dbrian
+    copyright            : (C) 2012 par fduranton, dbrian, recastrodiaz
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation du module <ElementAttList> (fichier ElementAttList.cpp) -----
+//---------- Réalisation du module <ATT_LIST> (fichier AttList.cpp) -----
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
 
 //------------------------------------------------------ Include personnel
-#include "ElementAttList.h"
+#include "AttList.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -39,26 +39,18 @@
 //
 //{
 //} //----- fin de Nom
-ElementAttList::ElementAttList()
-	: ElementAttBase()
+
+AttList::AttList () : DtdBalise()
 // Algorithme :
 //
 {
-}
-ElementAttList::ElementAttList(ElementAttList::TypeAgregat typeAgregat)
-	: ElementAttBase(), mTypeAgregat(typeAgregat)
+} //----- fin de Element
+
+AttList::~AttList ()
 // Algorithme :
 //
 {
-} //----- fin de ElementAtt::ElementAtt
-
-ElementAttList::~ElementAttList ()
-// Algorithme :
-//
-{
-
-} //----- fin de ElementAtt::~ElementAtt
-
+} //----- fin de ~Element
 
 
 

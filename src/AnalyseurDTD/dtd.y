@@ -21,7 +21,6 @@ dtd_list_opt
 | /* empty */                     
 ;
 
-
 att_definition_opt
 : att_definition_opt attribute
 | /* empty */
@@ -48,6 +47,66 @@ enum_list_plus
 enum_list
 : item_enum               
 | enum_list PIPE item_enum
+;
+
+elementspec
+: ELEMENT IDENT contentspec CLOSE
+;
+
+contentspec
+: EMPTY
+| ANY
+| mixed
+| children
+;
+
+
+card_opt
+: QMARK 
+| PLUS
+| AST
+| /* vide */
+;
+
+children
+: choice_or_seq card_opt
+;
+
+choice_or_seq
+: choice | seq
+;
+
+cp
+: children 
+| IDENT card_opt
+;
+
+choice
+: OPENPAR cp liste_choice_plus CLOSEPAR
+;
+
+seq
+: OPENPAR cp liste_seq_opt CLOSEPAR
+;
+
+liste_choice_plus
+: liste_choice_plus PIPE cp
+| PIPE cp
+;
+
+liste_seq_opt
+: liste_seq_opt COMMA cp
+| /* vide */
+;
+
+mixed
+: OPENPAR PCDATA liste_mixed_opt CLOSEPAR AST
+| OPENPAR PCDATA CLOSEPAR
+;
+
+liste_mixed_opt
+: liste_mixed_opt PIPE IDENT
+| /* vide */
 ;
 
 item_enum

@@ -39,7 +39,7 @@ class ElementAttBase
 		virtual ~ElementAttBase();
 
 		typedef enum Cardinalite ( ETOILE, PLUS );
-		typedef enum ContentSpedc ( EMPTY, ANY );
+		typedef enum ContentSpec ( EMPTY, ANY );
 
 };
 

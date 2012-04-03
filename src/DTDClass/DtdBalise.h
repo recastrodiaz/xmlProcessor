@@ -35,11 +35,13 @@
 class DtdBalise
 {
 	public:
-		// TODO make abstract class !
 		DtdBalise();
+		DtdBalise(std::string ident);
 		virtual ~DtdBalise();
+		// Should be redefined in subclasses
+		virtual void print() = 0;
 
-	private:
+	protected:
 		std::string mIdent;
 
 };

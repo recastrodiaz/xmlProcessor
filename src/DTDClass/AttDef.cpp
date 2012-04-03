@@ -44,6 +44,20 @@ AttDef::AttDef () : DtdBalise()
 // Algorithme :
 //
 {
+	mElement = 0;
+	mAttList = 0;
+	mAttType = TODO;
+	mDefaultDec = IMPLIED;
+} //----- fin de Element
+
+AttDef::AttDef (Element* aElement, AttList* aAttList) : DtdBalise()
+// Algorithme :
+//
+{
+	mElement = aElement;
+	mAttList = aAttList;
+	mAttType = TODO;
+	mDefaultDec = IMPLIED;
 } //----- fin de Element
 
 AttDef::~AttDef ()

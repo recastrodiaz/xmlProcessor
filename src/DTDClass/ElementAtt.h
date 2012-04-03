@@ -37,6 +37,8 @@ class ElementAtt : public ElementAttBase
 	public:
 		ElementAtt( std::string ident );
 		virtual ~ElementAtt();
+		
+		void print();
 
 
 	private:

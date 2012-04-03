@@ -18,10 +18,9 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
-#include <string>
-#include <list>
 
 #include "Element.h"
+#include "AttList.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -35,10 +34,14 @@
 // Contrat :
 //
 
+class Element;
+class AttList;
+
 class AttDef : public DtdBalise
 {
 	public:
 		AttDef();
+		AttDef( Element* aElement, AttList* aAttList); //TODO: Enum(s) a passer en parametre
 		~AttDef();
 		
 		enum AttType { TODO };
@@ -46,6 +49,7 @@ class AttDef : public DtdBalise
 
 	private:
 		Element * mElement;
+		AttList * mAttList; // why not?
 		AttType mAttType;
 		DefaultDec mDefaultDec;
 

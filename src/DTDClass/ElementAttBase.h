@@ -26,6 +26,7 @@
 //------------------------------------------------------------------ Types
 
 //////////////////////////////////////////////////////////////////  PUBLIC
+class Element;
 
 class ElementAttBase
 {
@@ -38,16 +39,16 @@ class ElementAttBase
 //
 	public:
 		ElementAttBase();
-		// TODO make class abstract !
 		virtual ~ElementAttBase();
+		// Should be redefined in subclasses
+		virtual void print() = 0;
 
 		enum Cardinality { AST, PLUS, QMARK };
 		enum ContentSpec { EMPTY, ANY };
 
 	protected:
 		// Element the attribute refers to
-		// TODO fix mutual inclusion
-		// Element owner;
+		Element * owner;
 };
 
 #endif // ELEMENT_ATT_BASE_H

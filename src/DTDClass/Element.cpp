@@ -40,12 +40,24 @@
 //{
 //} //----- fin de Nom
 
-Element::Element (std::string ident, ElementAttBase * attributeReference) 
-	: DtdBalise(), mIdent(ident)
+void Element::print()
+{
+}
+
+Element::Element () 
+	: DtdBalise(), mAttList (), mAttDef ()
 // Algorithme :
 //
 {
-	mAttributeReference = attributeReference;
+	mAttributeReference = 0;
+} //----- fin de Element
+
+Element::Element (std::string aIdent, ElementAttBase * aAttributeReference, std::vector <AttList*> aAttListVector, std::vector <AttDef*> aAttDefVector) 
+	: DtdBalise(aIdent), mAttList (aAttListVector), mAttDef (aAttDefVector)
+// Algorithme :
+//
+{
+	mAttributeReference = aAttributeReference;
 } //----- fin de Element
 
 Element::~Element ()

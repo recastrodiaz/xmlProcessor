@@ -7,8 +7,8 @@
 *************************************************************************/
 
 //---------- Interface du module <ElementAttList> (fichier ElementAttList.h) ---------
-#if ! defined ( ELEMENTATTLIST_H )
-#define ELEMENTATTLIST_H
+#if ! defined ( ELEMENT_ATT_LIST_H )
+#define ELEMENT_ATT_LIST_H
 
 //------------------------------------------------------------------------
 // Rôle du module <ELEMENTATTLIST>
@@ -18,7 +18,8 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
-#include <string>
+#include <vector>
+
 #include "ElementAttBase.h"
 //------------------------------------------------------------- Constantes
 
@@ -35,18 +36,20 @@
 class ElementAttList : public ElementAttBase 
 {
 	public:
-		
-		enum TypeAgregat { PIPE, COMMA };
-	
-		ElementAttList();
-		ElementAttList( ElementAttList::TypeAgregat typeAgregat);
-		virtual ~ElementAttList();
 
+		enum TypeAgregat { PIPE, COMMA };
+		
+		ElementAttList();
+		ElementAttList(ElementAttList::TypeAgregat aTypeAgregat, std::vector <ElementAttBase*> aElementAttBase = std::vector <ElementAttBase*>() );
+		virtual ~ElementAttList();
+		
+		void print();
 	private:
 		ElementAttList::TypeAgregat mTypeAgregat;
+		std::vector <ElementAttBase*> mElementAttBase;
 };
 
-#endif // ELEMENTATT_H
+#endif // ELEMENT_ATT_LIST_H
 
 
 

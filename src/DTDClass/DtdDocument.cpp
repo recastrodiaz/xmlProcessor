@@ -46,6 +46,12 @@ DtdDocument::DtdDocument ()
 {
 } //----- fin de Element
 
+DtdDocument::DtdDocument (std::string aName) : mName (aName), mBalises () 
+// Algorithme :
+//
+{
+} //----- fin de Element
+
 DtdDocument::~DtdDocument ()
 // Algorithme :
 //

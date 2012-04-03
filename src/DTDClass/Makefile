@@ -1,4 +1,4 @@
-TARGET  := ../../bin/smagh 
+TARGET  := dtdExe
 CSRCS   := 
 CXXSRCS := DtdDocument.cpp DtdBalise.cpp AttList.cpp AttDef.cpp Element.cpp ElementAttBase.cpp ElementAtt.cpp ElementAttList.cpp DtdTest.cpp 
 INCLUDE  = 
@@ -22,6 +22,7 @@ endif
 
 ${TARGET}: ${OBJS} 
 	${CXX} ${LDFLAGS} -o $@ $^ ${LIBS} 
+	-rm -f *~ *.o *.dep 
 
  %.o: %.cpp
 	${CXX} ${INCLUDE} ${CXXFLAGS} -o $@ -c $< 

@@ -40,10 +40,22 @@
 //{
 //} //----- fin de Nom
 
-AttList::AttList () : DtdBalise()
+void AttList::Print()
+{
+}
+
+AttList::AttList () : DtdBalise(), mAttDefs ()
 // Algorithme :
 //
 {
+	mElement = NULL;
+} //----- fin de Element
+
+AttList::AttList (std::string aIdent, Element* aElement) : DtdBalise(aIdent), mAttDefs ()
+// Algorithme :
+//
+{
+	mElement = aElement;
 } //----- fin de Element
 
 AttList::~AttList ()

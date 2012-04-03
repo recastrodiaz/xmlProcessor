@@ -40,8 +40,12 @@
 //{
 //} //----- fin de Nom
 
-ElementAtt::ElementAtt (std::string ident) : 
-	ElementAttBase(), mIdent( ident )
+void ElementAtt::print()
+{
+}
+
+ElementAtt::ElementAtt (std::string ident) 
+	: ElementAttBase(), mIdent( ident )
 // Algorithme :
 //
 {

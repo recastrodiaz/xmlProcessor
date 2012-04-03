@@ -41,7 +41,7 @@ class DtdDocument
 		~DtdDocument();
 
 	private:
-		std::list<DtdBalise> mBalises;
+		std::list<DtdBalise *> mBalises;
 
 };
 

@@ -22,6 +22,7 @@
 #include <list>
 
 #include "AttDef.h"
+#include "DtdBalise.h"
 #include "Element.h"
 
 //------------------------------------------------------------- Constantes

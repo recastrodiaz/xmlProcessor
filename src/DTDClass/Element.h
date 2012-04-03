@@ -39,14 +39,14 @@ class Element : public DtdBalise
 // Contrat :
 //
 	public:
-		Element();
+		Element( std::string ident, ElementAttBase * attributeReference );
 		~Element();
 
 	protected:
 		// Name of the element
-		std::string ident;
+		std::string mIdent;
 		// Attribute name of the element
-		ElementAttBase* attributeReference;
+		ElementAttBase * mAttributeReference;
 };
 
 #endif // ELEMENT_H

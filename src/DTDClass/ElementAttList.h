@@ -19,7 +19,6 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
-#include <stdlib>
 #include "ElementAttBase.h"
 //------------------------------------------------------------- Constantes
 
@@ -33,15 +32,18 @@
 // Contrat :
 //
 
-class ElementAttList : public ElementAttBase { //abstract
+class ElementAttList : public ElementAttBase 
+{
 	public:
-	    ElementAttList();
-		ElementAttList(ElementAttList::TypeAgregat unAgregat);
+		
+		enum TypeAgregat { PIPE, COMMA };
+	
+		ElementAttList();
+		ElementAttList( ElementAttList::TypeAgregat typeAgregat);
 		virtual ~ElementAttList();
-        enum TypeAgregat { PIPE, COMMA };
 
 	private:
-		ElementAttList::TypeAgregat typeAgregat;
+		ElementAttList::TypeAgregat mTypeAgregat;
 };
 
 #endif // ELEMENTATT_H

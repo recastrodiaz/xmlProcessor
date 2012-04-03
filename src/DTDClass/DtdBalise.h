@@ -35,8 +35,9 @@
 class DtdBalise
 {
 	public:
-		virtual DtdBalise() = 0;
-		virtual ~DtdBalise() = 0;
+		// TODO make abstract class !
+		DtdBalise();
+		virtual ~DtdBalise();
 
 	private:
 		std::string mIdent;

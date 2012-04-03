@@ -19,9 +19,8 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
-#include <cstdlib>
 
-#include "Element.h"
+// #include "Element.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -38,7 +37,8 @@ class ElementAttBase
 // Contrat :
 //
 	public:
-		virtual ElementAttBase() = 0;
+		ElementAttBase();
+		// TODO make class abstract !
 		virtual ~ElementAttBase();
 
 		enum Cardinality { AST, PLUS, QMARK };
@@ -46,7 +46,8 @@ class ElementAttBase
 
 	protected:
 		// Element the attribute refers to
-		Element owner;
+		// TODO fix mutual inclusion
+		// Element owner;
 };
 
 #endif // ELEMENT_ATT_BASE_H

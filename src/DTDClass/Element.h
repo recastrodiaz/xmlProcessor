@@ -18,16 +18,20 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
-#include <string>
-#include <cstdlib>
+#include <vector>
 
 #include "ElementAttBase.h"
 #include "DtdBalise.h"
+#include "AttList.h"
+#include "AttDef.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
 
 //////////////////////////////////////////////////////////////////  PUBLIC
+class AttDef;
+class AttList;
+class ElementAttBase;
 
 class Element : public DtdBalise
 {
@@ -40,13 +44,20 @@ class Element : public DtdBalise
 //
 	public:
 		Element();
+		Element(std::string aIdent, ElementAttBase * aAttributeReference, 
+			std::vector <AttList*> aAttListVector = std::vector <AttList*>(),
+			std::vector <AttDef*> aAttDefVector = std::vector <AttDef*>() );
 		~Element();
 
+		void Print();
+
 	protected:
-		// Name of the element
-		std::string ident;
 		// Attribute name of the element
-		ElementAttBase* attributeReference;
+		ElementAttBase* mAttributeReference;
+		// List of attributes of the element
+		std::vector <AttList*> mAttList;
+		// Vector of attributes definitions of the element
+		std::vector <AttDef*> mAttDef;
 };
 
 #endif // ELEMENT_H

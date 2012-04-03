@@ -19,9 +19,10 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
-#include <list>
+#include <vector>
 
 #include "AttDef.h"
+#include "DtdBalise.h"
 #include "Element.h"
 
 //------------------------------------------------------------- Constantes
@@ -36,16 +37,20 @@
 // Contrat :
 //
 
+class AttDef;
+
 class AttList : public DtdBalise
 {
 	public:
 		AttList();
+		AttList(std::string aIdent, Element* aElement);
 		~AttList();
+		
+		void Print();
 
 	private:
-		std::list<AttDef> mAttDefs;
-		Element * mElement;
-		
+		Element* mElement;
+		std::vector<AttDef*> mAttDefs;
 
 };
 

@@ -39,14 +39,19 @@
 //
 //{
 //} //----- fin de Nom
+
+void ElementAttList::Print()
+{
+}
+
 ElementAttList::ElementAttList()
 	: ElementAttBase()
 // Algorithme :
 //
 {
 }
-ElementAttList::ElementAttList(ElementAttList::TypeAgregat typeAgregat)
-	: ElementAttBase(), mTypeAgregat(typeAgregat)
+ElementAttList::ElementAttList(ElementAttList::TypeAgregat aTypeAgregat, std::vector <ElementAttBase*> aElementAttBase)
+	: ElementAttBase(), mTypeAgregat(aTypeAgregat), mElementAttBase (aElementAttBase)
 // Algorithme :
 //
 {

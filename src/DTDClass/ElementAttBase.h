@@ -27,6 +27,7 @@
 //------------------------------------------------------------------ Types
 
 //////////////////////////////////////////////////////////////////  PUBLIC
+class Element;
 
 class ElementAttBase
 {
@@ -38,15 +39,17 @@ class ElementAttBase
 // Contrat :
 //
 	public:
-		virtual ElementAttBase() = 0;
+		ElementAttBase();
 		virtual ~ElementAttBase();
+		// Should be redefined in subclasses
+		virtual void Print() = 0;
 
 		enum Cardinality { AST, PLUS, QMARK };
 		enum ContentSpec { EMPTY, ANY };
 
 	protected:
 		// Element the attribute refers to
-		Element owner;
+		Element * owner;
 };
 
 #endif // ELEMENT_ATT_BASE_H

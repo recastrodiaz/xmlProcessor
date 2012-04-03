@@ -35,10 +35,13 @@
 class DtdBalise
 {
 	public:
-		virtual DtdBalise() = 0;
-		virtual ~DtdBalise() = 0;
+		DtdBalise();
+		DtdBalise(std::string aIdent);
+		virtual ~DtdBalise();
+		// Should be redefined in subclasses
+		virtual void Print() = 0;
 
-	private:
+	protected:
 		std::string mIdent;
 
 };

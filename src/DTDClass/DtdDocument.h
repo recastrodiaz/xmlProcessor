@@ -19,7 +19,8 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
-#include <list>
+#include <vector>
+#include <string>
 
 #include "DtdBalise.h"
 //------------------------------------------------------------- Constantes
@@ -38,10 +39,12 @@ class DtdDocument
 {
 	public:
 		DtdDocument();
+		DtdDocument(std::string aName);
 		~DtdDocument();
 
 	private:
-		std::list<DtdBalise> mBalises;
+		std::string mName;
+		std::vector<DtdBalise*> mBalises;
 
 };
 

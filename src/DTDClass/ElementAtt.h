@@ -19,7 +19,7 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
-#include <stdlib>
+#include <cstdlib>
 #include "ElementAttBase.h"
 //------------------------------------------------------------- Constantes
 
@@ -33,14 +33,16 @@
 // Contrat :
 //
 
-class ElementAtt : public ElementAttBase { //abstract
+class ElementAtt : public ElementAttBase {
 	public:
-		ElementAtt(string unIdent);
+		ElementAtt(std::string aIdent);
 		virtual ~ElementAtt();
+		
+		void Print();
 
 
 	private:
-		string ident;
+		std::string mIdent;
 };
 
 #endif // ELEMENTATT_H

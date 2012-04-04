@@ -33,6 +33,7 @@ int dtdlex(void);
 	ElementAttList * tElementAttList;
 	std::list<ElementAttBase * > * tListElementAttBase;
 	ElementAttBase::Cardinality tCard; 
+	std::list<ElementAttBase *> * tListOfElementAttBase;
 }
 
 %parse-param { DtdDocument ** dtdDocument }
@@ -58,8 +59,8 @@ int dtdlex(void);
 %type <tElementAttList> choice
 %type <tElementAttList> seq
 %type <tElementAttList> cp
-%type <tElementAttList> list_choice_plus
-%type <tElementAttList> list_seq_opt
+%type <tListOfElementAttBase> list_choice_plus
+%type <tListOfElementAttBase> list_seq_opt
 %type <s> default_declaration
 %%
 
@@ -138,13 +139,13 @@ contentspec
 : EMPTY													{	$$ = new ElementAtt( std::string( "EMPTY" ) ); }
 | ANY													{	$$ = new ElementAtt( std::string( "ANY" ) ); }
 | mixed													{	$$ = $1; }
-| children
+| children												{	$$ = $1; }
 ;
 
 mixed
-: OPENPAR PCDATA list_mixed_plus CLOSEPAR AST			{	$$ = new ElementAttList( ElementAttList::A_NONE );
+: OPENPAR PCDATA list_mixed_plus CLOSEPAR AST			{	// $$ = new ElementAttList( ElementAttList::A_NONE );
 															$$->setCardinality( ElementAttList::C_AST );
-															$$->push_back( $3 ); }
+															/* $$->push_back( $3 ); */}
 | OPENPAR PCDATA CLOSEPAR								{	$$ = new ElementAttList( ElementAttList::A_NONE ); 
 															$$->push_back( new ElementAtt( std::string( "#PCDATA" ) )); }
 ;
@@ -174,30 +175,52 @@ choice_or_seq
 ;
 
 choice
-: OPENPAR cp list_choice_plus CLOSEPAR					{	$$ = new ElementAttList( ElementAttList::A_PIPE ) ; /*TODO $2 $3 ???*/}
+: OPENPAR cp list_choice_plus CLOSEPAR					{	$$ = new ElementAttList( ElementAttList::A_PIPE ) ;
+															$$->push_back( $2 );
+															std::list<ElementAttBase *>::iterator it = $3->begin();
+															for( ; it != $3->end(); it++)
+															{
+																// TODO vérifier si *it n'a qu'un seul elementAttBase	
+																// si oui -> faire un ElementAtt plutôt qu'un ElementAttList
+																$$->push_back( *it );
+															}
+															// delete $3;
+														}
 ;
 
 seq
-: OPENPAR cp list_seq_opt CLOSEPAR						{	$$ = new ElementAttList( ElementAttList::A_COMMA ) ; /*TODO $2 $3 ???*/}
+: OPENPAR cp list_seq_opt CLOSEPAR						{	$$ = new ElementAttList( ElementAttList::A_COMMA ) ;
+															$$->push_back( $2 );
+															std::list<ElementAttBase *>::iterator it = $3->begin();
+															for( ; it != $3->end(); it++)
+															{
+																// TODO vérifier si *it n'a qu'un seul elementAttBase	
+																// si oui -> faire un ElementAtt plutôt qu'un ElementAttList
+																$$->push_back( *it );
+															}
+															// delete $3;
+														}
 ;
 
 cp
 : children 												{ 	$$ = $1; }
 | IDENT card_opt										{	$$ = new ElementAttList( ElementAttList::A_NONE ) ;
-															$$->push_back( new ElementAtt( std::string($1) )); }
+															ElementAtt * e = new ElementAtt( std::string($1) );
+															e->setCardinality( $2 );
+															$$->push_back( e ); }
 ;
 
 list_choice_plus
 : list_choice_plus PIPE cp								{	$$ = $1; 
 															$$->push_back( $3 ); }
-| PIPE cp												{	$$ = new ElementAttList( ElementAttList::A_PIPE ) ; 
+| PIPE cp												{	$$ = new std::list<ElementAttBase *>() ; 
 															$$->push_back( $2 ); }
 ;
 
 list_seq_opt
 : list_seq_opt COMMA cp									{	$$ = $1; 
 															$$->push_back( $3 ); }
-| /* vide */											{	$$ = new ElementAttList( ElementAttList::A_COMMA ); }
+| /* vide */											{	$$ = new std::list<ElementAttBase *>() ;  }
 ;
 
 %%

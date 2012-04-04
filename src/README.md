@@ -1,13 +1,10 @@
 #Grammaire & Langage
 
 ##Compiling AnalyseurXML
-cd src/AnalyseurXML
-make
+cd src/AnalyseurXML && make
 
 ##Compiling AnalyseurDTD
-cd src/AnalyseurDTD
-make
+cd src/AnalyseurDTD && make
 
 ##Building AnalyseurXMLDTD
-cd src/
-make
+cd src/ && make

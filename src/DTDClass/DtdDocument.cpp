@@ -14,6 +14,8 @@
 //------------------------------------------------------ Include personnel
 #include "DtdDocument.h"
 
+using namespace std;
+
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
 
@@ -60,5 +62,15 @@ for(std::list <DtdBalise *>::iterator i=mBalises.begin();i!=mBalises.end();i++)
   }
   
 } //----- fin de Print()
+
+void DtdDocument::GenerateRE()
+{
+  // Iterating over all the elements
+  for (list<DtdBalise *> it = mBalises.begin(); it != mBalises.end(); it++)
+  {
+  //  re[*it.
+  }
+  
+}
 
 

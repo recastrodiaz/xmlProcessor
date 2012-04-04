@@ -1,6 +1,6 @@
 TARGET  := dtdExe
 CSRCS   := 
-CXXSRCS := DtdDocument.cpp DtdBalise.cpp AttList.cpp AttDef.cpp Element.cpp ElementAttBase.cpp ElementAtt.cpp ElementAttList.cpp DtdTest.cpp 
+CXXSRCS := DtdDocument.cpp DtdBalise.cpp AttList.cpp AttDef.cpp DtdElement.cpp ElementAttBase.cpp ElementAtt.cpp ElementAttList.cpp DtdTest.cpp 
 INCLUDE  = 
 LDFLAGS  = 
 LIBS     = 
@@ -24,8 +24,8 @@ ${TARGET}: ${OBJS}
 	${CXX} ${LDFLAGS} -o $@ $^ ${LIBS} 
 	-rm -f *~ *.o *.dep 
 
- %.o: %.cpp
-	${CXX} ${INCLUDE} ${CXXFLAGS} -o $@ -c $< 
+ %.o: %.cpp %.c
+	g++ ${INCLUDE} ${CXXFLAGS} -o $@ -c $< 
 	
  %.o: %.c
 	${CXX} ${INCLUDE} ${CXXFLAGS} -o $@ -c $< 

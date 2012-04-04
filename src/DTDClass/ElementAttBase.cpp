@@ -1,12 +1,12 @@
 /*************************************************************************
-                           ELEMENT_ATT_BASE  -  description
+                           DtdElement_ATT_BASE  -  description
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par fduranton, dbrian, recastrodiaz
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation du module <ELEMENT_ATT_BASE> (fichier ElementAttBase.cpp) -----
+//---------- Réalisation du module <DtdElement_ATT_BASE> (fichier ElementAttBase.cpp) -----
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
@@ -45,16 +45,22 @@ ElementAttBase::ElementAttBase () : mCardinality(ElementAttBase::C_NONE)
 //
 {
 } //----- fin de ~ElementAttBase
+
 ElementAttBase::ElementAttBase (ElementAttBase::Cardinality cardinality) : mCardinality(cardinality)
 // Algorithme :
 //
 {
 } //----- fin de ~ElementAttBase
+
 ElementAttBase::~ElementAttBase ()
 // Algorithme :
 //
 {
 } //----- fin de ~ElementAttBase
 
+void ElementAttBase::setCardinality( ElementAttBase::Cardinality cardinality )
+{
+	mCardinality = cardinality;
+}
 
 

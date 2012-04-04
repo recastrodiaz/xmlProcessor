@@ -1,26 +1,30 @@
 %{
 #include <string>
 #include <list>
+#include <cstring>
+
+
 #include "../commun.h"
 
 #include "../DTDClass/AttDef.h"
 #include "../DTDClass/AttList.h"
 #include "../DTDClass/DtdBalise.h"
 #include "../DTDClass/DtdDocument.h"
-#include "../DTDClass/Element.h"
+#include "../DTDClass/DtdElement.h"
 #include "../DTDClass/ElementAtt.h"
 #include "../DTDClass/ElementAttBase.h"
 #include "../DTDClass/ElementAttList.h"
 
 extern FILE* dtdin;
-void dtderror(char *msg);
+void dtderror( DtdDocument ** dtdDocument, char *msg );
 int dtdwrap(void);
 int dtdlex(void);
 %}
 
 %union { 
 	char * s; 
-	std::list<AttDef > * tAttDefList;
+	DtdBalise * tDtdBalise;
+	std::list<AttDef *> * tAttDefList;
 	ElementAttBase * tElementAttBase;
 	std::list<std::string> * tListAttType; 
 	std::list<DtdBalise *> * tListDtdBalise;
@@ -39,20 +43,20 @@ int dtdlex(void);
 %type <tListDtdBalise> dtd_list_opt
 %type <tAttDefList> att_definition_opt
 %type <tAttDef> attribute
-%type <tListAttType> att_type
-%type <tListAttType> enumerate
+%type <s> att_type
+/*%type <??> enumerate 
 %type <tListAttType> enum_list_plus
 %type <tListAttType> enum_list
-%type <s> item_enum
-%type <tElementAtt> elementspec
+%type <s> item_enum */
+%type <tDtdBalise> elementspec
 %type <tElementAttBase> contentspec
 %type <tElementAttList> mixed
-%type <tElementAttBase> children
-%type <tListElementAttBase> list_mixed_plus
+%type <tElementAttList> children
+%type <tElementAttList> list_mixed_plus
 %type <tCard> card_opt
-%type <tListElementAttBase> choice_or_seq
-%type <tListElementAttBase> choice
-%type <tListElementAttBase> seq
+%type <tElementAttList> choice_or_seq
+%type <tElementAttList> choice
+%type <tElementAttList> seq
 %type <tElementAttList> cp
 %type <tElementAttList> list_choice_plus
 %type <tElementAttList> list_seq_opt
@@ -65,7 +69,7 @@ main
 
 dtd_list_opt
 : dtd_list_opt ATTLIST IDENT att_definition_opt CLOSE	{	$$ = $1;
-															AttList * attList = new AttList($4 );
+															AttList * attList = new AttList( $4 );
 															$$->push_back( attList );
 															(* dtdDocument)->addElementLinkToAttList( $3, attList ); }
 | dtd_list_opt elementspec								{ 	$$ = $1;
@@ -76,52 +80,58 @@ dtd_list_opt
 att_definition_opt
 : att_definition_opt attribute							{	$$ = $1; 
 															$$->push_back( $2 ); }
-| /* empty */											{	$$ = new std::list<AttDef>(); }
+| /* empty */											{	$$ = new std::list<AttDef *>(); }
 ;
 
 attribute
-: IDENT att_type default_declaration					{ 	$$ = new AttDef( $1, $2, $3 ); }
+: IDENT att_type default_declaration					{ 	$$ = new AttDef( std::string($2), std::string($3) ); 
+															(*dtdDocument)->addElementLinkToAttDef( $1, $$ ); }
 ;
 
 att_type
-: CDATA    												{	$$ = new std::list<std::string>();
-															$$->push_back( std::string("CDATA") ); }
-| TOKENTYPE												{	$$ = new std::list<std::string>();
-															$$->push_back( std::string($1) ); }
-| enumerate												{	$$ = $1; }	/* N'est jamais utilisé */
+: CDATA    												{	/*$$ = new std::list<std::string>();
+															$$->push_back( std::string("CDATA") );*/
+															char * str = (char*)malloc( 5 + 1 );
+															strcpy( str, "CDATA"); 
+															$$ = str; }
+| TOKENTYPE												{	/*$$ = new std::list<std::string>();
+															$$->push_back( std::string($1) );*/
+															$$ = $1; }
+/*| enumerate												{	$$ = $1; }	/* N'est jamais utilisé */
 ;
 
 default_declaration
 : DECLARATION											{	$$ = $1;	}
 | STRING     											{	$$ = $1;	}
-| FIXED STRING 											{	char * str = malloc( 7 + strlen($2) + 1);
+| FIXED STRING 											{	char * str = (char*)malloc( 7 + strlen($2) + 1);
 															strcpy( str, "#FIXED ");
 															strcat( str, $2 );
 															$$ = str;
 															free($2); /* TODO free STRINGs */ }
 ;
-
+/*
 enumerate
 : OPENPAR enum_list_plus CLOSEPAR						{	$$ = $2 ); }
 ;
 
 enum_list_plus
 : enum_list PIPE item_enum								{	$$ = $1;
-															$1->push_back( std::string($3)); /* TODO PIPE */}
+															$1->push_back( std::string($3)); }
 ;
 enum_list
 : item_enum              								{	$$ = new std::list<std::string>();
 															$$->push_back( std::string($1) ); }
 | enum_list PIPE item_enum								{	$$ = $1;
-															$$->push_back( std::string($3) ); /*TODO PIPE*/}
+															$$->push_back( std::string($3) ); }
 ;
 
 item_enum
 : IDENT													{ 	$$ = $1; }
 ;
+*/
 
 elementspec
-: ELEMENT IDENT contentspec CLOSE						{	$$ = new Element( $2, $3 ); }
+: ELEMENT IDENT contentspec CLOSE						{	$$ = new DtdElement( std::string($2), $3 ); }
 ;
 
 contentspec
@@ -132,22 +142,23 @@ contentspec
 ;
 
 mixed
-: OPENPAR PCDATA list_mixed_plus CLOSEPAR AST			{	$$ = new ElementAttList( ElementAttList::C_AST );  /*TODO C_AST*/
+: OPENPAR PCDATA list_mixed_plus CLOSEPAR AST			{	$$ = new ElementAttList( ElementAttList::A_NONE );
+															$$->setCardinality( ElementAttList::C_AST );
 															$$->push_back( $3 ); }
 | OPENPAR PCDATA CLOSEPAR								{	$$ = new ElementAttList( ElementAttList::A_NONE ); 
-															$$->push_back( new ElementAtt( std::string( "#PCDATA" ) ); }
+															$$->push_back( new ElementAtt( std::string( "#PCDATA" ) )); }
 ;
 
 list_mixed_plus
 : list_mixed_plus PIPE IDENT							{	$$ = $1;
 															$$->push_back( new ElementAtt( std::string($3) )); }
-| PIPE IDENT											{	$$ = new ElementAttList( ElementAttList::PIPE );
+| PIPE IDENT											{	$$ = new ElementAttList( ElementAttList::A_PIPE );
 															$$->push_back( new ElementAtt( std::string($2) )); }
 ;
 
 children
-: choice_or_seq card_opt								{	$$ = new ElementAttList( $1 )) ; 
-															$$->push_back( $2 ); }
+: choice_or_seq card_opt								{	$$ = $1 ;
+															$$->setCardinality( $2 );  }
 ;
 
 card_opt
@@ -163,24 +174,24 @@ choice_or_seq
 ;
 
 choice
-: OPENPAR cp list_choice_plus CLOSEPAR					{	$$ = new ElementAttList( $3, ElementAttList::A_PIPE )) ; /*TODO $2 ???*/}
+: OPENPAR cp list_choice_plus CLOSEPAR					{	$$ = new ElementAttList( ElementAttList::A_PIPE ) ; /*TODO $2 $3 ???*/}
 ;
 
 seq
-: OPENPAR cp list_seq_opt CLOSEPAR						{	$$ = new ElementAttList( $3, ElementAttList::A_COMMA )) ; /*TODO $2 ???*/}
+: OPENPAR cp list_seq_opt CLOSEPAR						{	$$ = new ElementAttList( ElementAttList::A_COMMA ) ; /*TODO $2 $3 ???*/}
 ;
 
 cp
 : children 												{ 	$$ = $1; }
-| IDENT card_opt										{	$$ = new ElementAttList( ElementAttList::A_NONE )) ;
-															$$->push_back( new ElementAtt( std::string($1) ); }
+| IDENT card_opt										{	$$ = new ElementAttList( ElementAttList::A_NONE ) ;
+															$$->push_back( new ElementAtt( std::string($1) )); }
 ;
 
 list_choice_plus
 : list_choice_plus PIPE cp								{	$$ = $1; 
 															$$->push_back( $3 ); }
-| PIPE cp												{	$$ = new ElementAttList( ElementAttList::A_PIPE )) ; 
-															$$->push_back( $2 ) }
+| PIPE cp												{	$$ = new ElementAttList( ElementAttList::A_PIPE ) ; 
+															$$->push_back( $2 ); }
 ;
 
 list_seq_opt
@@ -212,7 +223,7 @@ int dtdwrap(void)
   return 1;
 }
 
-void dtderror(char *msg)
+void dtderror( DtdDocument ** dtdDocument, char *msg )
 {
   fprintf(stderr, "%s\n", msg);
 }

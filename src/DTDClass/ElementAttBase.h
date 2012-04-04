@@ -43,10 +43,12 @@ class ElementAttBase
 
 
 	    ElementAttBase();
-		ElementAttBase(ElementAttBase::Cardinality cardinality  );
+		ElementAttBase( ElementAttBase::Cardinality cardinality );
 		virtual ~ElementAttBase();
 		// Devrait être redéfinie dans les sous-classes
 		virtual void Print() = 0;
+
+		void setCardinality( ElementAttBase::Cardinality cardinality );
 
 
 	protected:

@@ -52,20 +52,20 @@ AttDef::AttDef () : DtdBalise()
 //
 {
 
-} //----- fin de Element
+} //----- fin de DtdElement
 
 AttDef::AttDef(std::string aAttType, std::string aDefaultDec ) 
 	: DtdBalise(), mElement(NULL),mAttType(aAttType), mDefaultDec(aDefaultDec)
 // Algorithme :
 //
 {
-} //----- fin de Element
+} //----- fin de DtdElement
 
 AttDef::~AttDef ()
 // Algorithme :
 //
 {
-} //----- fin de ~Element
+} //----- fin de ~DtdElement
 
 
 

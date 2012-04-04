@@ -21,6 +21,7 @@
 #include <string>
 
 #include "Element.h"
+#include "Balise.h"
 using namespace std;
 //------------------------------------------------------------- Constantes
 
@@ -37,12 +38,14 @@ using namespace std;
 class DocXML {
 	public:
 		DocXML();
-		DocXML(string unRoot, string unKeyword, string uneUrl);
+		DocXML(Balise* unRoot, string unKeyword, string uneUrl);
 		virtual ~DocXML();
-		bool verifyValidity(DtdDocument & docDtd);
+        void Print();
+		//bool verifyValidity(DtdDocument & docDtd);
+
     
     private:
-        string root;
+        Balise* root;
         string keyword;
         string dtdUrl;
 };

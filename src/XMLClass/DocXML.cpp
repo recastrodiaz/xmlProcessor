@@ -10,9 +10,12 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
+#include <iostream>
 
 //------------------------------------------------------ Include personnel
 #include "DocXML.h"
+
+using namespace std;
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -40,7 +43,7 @@
 //{
 //} //----- fin de Nom
 
-DocXML::DocXML (string unRoot, string unKeyword, string uneUrl) : root(unRoot), keyword(unKeyword), dtdUrl(uneUrl) 
+DocXML::DocXML (Balise* unRoot, string unKeyword, string uneUrl) : root(unRoot), keyword(unKeyword), dtdUrl(uneUrl) 
 // Algorithme :
 //
 {
@@ -52,9 +55,17 @@ DocXML::~DocXML ()
 {
 } //----- fin de Nom
 
-//bool verifyValidity(DtdDocument & docDtd)
-//{
-//}
+
+void DocXML::Print()
+// Algorithme :
+//
+{
+    this->root->Print();
+} //----- fin de Nom
 
 
+/*bool verifyValidity(DtdDocument & docDtd)
+{
+}
+ */
 

@@ -41,17 +41,54 @@ using namespace std;
 
 class Balise : public Element {
 	public:
-		Balise(string unNom);
-		virtual ~Balise();
+		Balise(string unNom, string unNs = "");
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+		
+        virtual ~Balise();
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+    
 		void Print();
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+    
         void addAttribut(string label, string value);
-	void addListAttributs(mapSS *uneListeAttributs);
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+    
+        void addListAttributs(mapSS *uneListeAttributs);
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+    
         void addContent(vecE* elem);
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+    
+        void setEmpty(bool unEmpty);
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
 
 	private:
 		mapSS attributs;
 		vecE elements;
  		string nom;
+        string ns;
+        bool empty;
 };
 
 #endif // BALISE_H

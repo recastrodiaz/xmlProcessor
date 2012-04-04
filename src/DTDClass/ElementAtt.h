@@ -19,6 +19,7 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
+#include <iostream>
 #include "ElementAttBase.h"
 //------------------------------------------------------------- Constantes
 
@@ -35,14 +36,15 @@
 class ElementAtt : public ElementAttBase 
 {
 	public:
-		ElementAtt( std::string ident );
+		ElementAtt( std::string ident, ElementAttBase::Cardinality card = ElementAttBase::NONE);
+
 		virtual ~ElementAtt();
 		
-		void print();
+		void Print();
 
 
 	private:
-		std::string mIdent;
+		std::string contentSpec;
 };
 
 #endif // ELEMENTATT_H

@@ -13,6 +13,8 @@
 
 //------------------------------------------------------ Include personnel
 #include "Data.h"
+#include <iostream>
+using namespace std;
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -52,11 +54,11 @@ Data::~Data ()
 {
 } //----- fin de Nom
 
-Data::getValue ()
+void Data::Print ()
 // Algorithme :
 //
 {
-    	cout << this.value << endl;
+    	cout << this->value << endl;
 } //----- fin de Nom
 
 

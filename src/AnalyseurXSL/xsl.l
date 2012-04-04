@@ -6,7 +6,7 @@
 #include "../XMLClass/DocXML.h"
 #include "../XMLClass/Balise.h"
 #include "../XMLClass/Data.h"
-#include "xml.tab.h"
+#include "xsl.tab.h"
 
 static char* skipSpace(char *s) {
   char *buf;
@@ -100,18 +100,18 @@ closespecial "?>"{nl}?
 <INITIAL>"="		{ return EQ;}
 <INITIAL>{close}	{ BEGIN(CONTENT); return CLOSE;}
 <INITIAL>{closespecial}	{ return CLOSESPECIAL;}
-<INITIAL>{name}		{ xmllval.s = strdup(xmltext); return IDENT;}
-<INITIAL>{nsname}		{ xmllval.s = strdup(xmltext); return NSIDENT;}
-<INITIAL>{string}	{ xmllval.s = strdup(getString(xmltext)); return STRING;}
+<INITIAL>{name}		{ xsllval.s = strdup(xsltext); return IDENT;}
+<INITIAL>{nsname}		{ xsllval.s = strdup(xsltext); return NSIDENT;}
+<INITIAL>{string}	{ xsllval.s = strdup(getString(xsltext)); return STRING;}
 
-{openspecial}{ws}?{name}	{ BEGIN(INITIAL); char * tmp = word(xmltext); xmllval.en = new ElementName("",tmp); free(tmp); return STARTSPECIAL;}
-{open}{ws}?{name}	{ BEGIN(INITIAL); char * tmp = word(xmltext); xmllval.en = new ElementName("",tmp); free(tmp); return START;}
-{open}{ws}?{nsname}	{ BEGIN(INITIAL); char *tmp1 = nameSpace(xmltext); char * tmp2 = split_namespace(xmltext); xmllval.en = new ElementName(tmp1,tmp2); free(tmp1); free(tmp2); return NSSTART;}
-{open}"/"{name}		{BEGIN(INITIAL); char * tmp = word(xmltext); xmllval.en = new ElementName("",tmp); free(tmp); return END;}
-{open}"/"{nsname}		{BEGIN(INITIAL); char *tmp1 = nameSpace(xmltext); char * tmp2 = split_namespace(xmltext); xmllval.en = new ElementName(tmp1,tmp2); free(tmp1); free(tmp2); return NSEND;}
-{comment}		{ xmllval.s = strdup(xmltext); return COMMENT;}
+{openspecial}{ws}?{name}	{ BEGIN(INITIAL); char * tmp = word(xsltext); xsllval.en = new ElementName("",tmp); free(tmp); return STARTSPECIAL;}
+{open}{ws}?{name}	{ BEGIN(INITIAL); char * tmp = word(xsltext); xsllval.en = new ElementName("",tmp); free(tmp); return START;}
+{open}{ws}?{nsname}	{ BEGIN(INITIAL); char *tmp1 = nameSpace(xsltext); char * tmp2 = split_namespace(xsltext); xsllval.en = new ElementName(tmp1,tmp2); free(tmp1); free(tmp2); return NSSTART;}
+{open}"/"{name}		{BEGIN(INITIAL); char * tmp = word(xsltext); xsllval.en = new ElementName("",tmp); free(tmp); return END;}
+{open}"/"{nsname}		{BEGIN(INITIAL); char *tmp1 = nameSpace(xsltext); char * tmp2 = split_namespace(xsltext); xsllval.en = new ElementName(tmp1,tmp2); free(tmp1); free(tmp2); return NSEND;}
+{comment}		{ xsllval.s = strdup(xsltext); return COMMENT;}
 
-<CONTENT>{ws}?{pcdata}		{ xmllval.s = strdup(skipSpace(xmltext)); return DATA;}
+<CONTENT>{ws}?{pcdata}		{ xsllval.s = strdup(skipSpace(xsltext)); return DATA;}
 
-.			{ fprintf(stderr, "!ERROR(%c)\n", *xmltext);}
+.			{ fprintf(stderr, "!ERROR(%c)\n", *xsltext);}
 

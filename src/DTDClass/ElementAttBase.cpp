@@ -40,12 +40,16 @@
 //{
 //} //----- fin de Nom
 
-ElementAttBase::ElementAttBase ()
+ElementAttBase::ElementAttBase () : mCardinality(ElementAttBase::NONE)
 // Algorithme :
 //
 {
 } //----- fin de ~ElementAttBase
-
+ElementAttBase::ElementAttBase (ElementAttBase::Cardinality cardinality) : mCardinality(cardinality)
+// Algorithme :
+//
+{
+} //----- fin de ~ElementAttBase
 ElementAttBase::~ElementAttBase ()
 // Algorithme :
 //

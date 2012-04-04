@@ -40,12 +40,35 @@
 //{
 //} //----- fin de Nom
 
-void ElementAtt::print()
+void ElementAtt::Print()
 {
-}
+    std::cout << contentSpec ;
 
-ElementAtt::ElementAtt (std::string ident) 
-	: ElementAttBase(), mIdent( ident )
+
+    char card;
+    switch(mCardinality)
+    {
+    	case ElementAttBase::NONE:break;
+    	case ElementAttBase::AST:
+    		card = '*';
+    	break;
+    	case ElementAttBase::PLUS:
+    	    card = '+';
+    	break;
+    	case ElementAttBase::QMARK:
+    	    card = '?';
+    	break;
+
+    }
+  if (mCardinality != ElementAttBase::NONE)
+  {
+    std::cout << card;
+  }
+
+
+} //----- fin de ElementAtt::Print()
+ElementAtt::ElementAtt (std::string content, ElementAttBase::Cardinality card )
+	: ElementAttBase(card), contentSpec( content )
 // Algorithme :
 //
 {

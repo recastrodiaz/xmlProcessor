@@ -19,8 +19,14 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
-#include <stdlib>
+#include <map>
+#include <vector>
+#include <cstdlib>
+
+#include "../commun.h"
 #include "Element.h"
+
+using namespace std;
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -35,16 +41,54 @@
 
 class Balise : public Element {
 	public:
-		Balise(string unNom);
-		virtual ~Balise();
-		void getValue();
+		Balise(string unNom, string unNs = "");
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+		
+        virtual ~Balise();
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+    
+		void Print();
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+    
         void addAttribut(string label, string value);
-        void addContent(Element elem);
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+    
+        void addListAttributs(mapSS *uneListeAttributs);
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+    
+        void addContent(vecE* elem);
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+    
+        void setEmpty(bool unEmpty);
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
 
 	private:
-		map<string, string> attributs;
-		vector<Element*> elements;
+		mapSS attributs;
+		vecE elements;
  		string nom;
+        string ns;
+        bool empty;
 };
 
 #endif // BALISE_H

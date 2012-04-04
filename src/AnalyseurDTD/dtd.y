@@ -52,13 +52,13 @@ int dtdlex(void);
 %type <tDtdBalise> elementspec
 %type <tElementAttBase> contentspec
 %type <tElementAttList> mixed
-%type <tElementAttList> children
+%type <tElementAttBase> children
 %type <tElementAttList> list_mixed_plus
 %type <tCard> card_opt
-%type <tElementAttList> choice_or_seq
-%type <tElementAttList> choice
-%type <tElementAttList> seq
-%type <tElementAttList> cp
+%type <tElementAttBase> choice_or_seq
+%type <tElementAttBase> choice
+%type <tElementAttBase> seq
+%type <tElementAttBase> cp
 %type <tListOfElementAttBase> list_choice_plus
 %type <tListOfElementAttBase> list_seq_opt
 %type <s> default_declaration
@@ -175,30 +175,38 @@ choice_or_seq
 ;
 
 choice
-: OPENPAR cp list_choice_plus CLOSEPAR					{	$$ = new ElementAttList( ElementAttList::A_PIPE ) ;
-															$$->push_back( $2 );
+: OPENPAR cp list_choice_plus CLOSEPAR					{	
+															$$ = new ElementAttList( ElementAttList::A_PIPE ) ;
+															((ElementAttList *)$$)->push_back( $2 );
 															std::list<ElementAttBase *>::iterator it = $3->begin();
+														
 															for( ; it != $3->end(); it++)
 															{
-																// TODO vérifier si *it n'a qu'un seul elementAttBase	
-																// si oui -> faire un ElementAtt plutôt qu'un ElementAttList
-																$$->push_back( *it );
+																((ElementAttList *)$$)->push_back( *it );
 															}
-															// delete $3;
+															delete $3;
 														}
 ;
 
 seq
-: OPENPAR cp list_seq_opt CLOSEPAR						{	$$ = new ElementAttList( ElementAttList::A_COMMA ) ;
-															$$->push_back( $2 );
-															std::list<ElementAttBase *>::iterator it = $3->begin();
-															for( ; it != $3->end(); it++)
+: OPENPAR cp list_seq_opt CLOSEPAR						{	/*if( $3->size() == 0 )
 															{
-																// TODO vérifier si *it n'a qu'un seul elementAttBase	
-																// si oui -> faire un ElementAtt plutôt qu'un ElementAttList
-																$$->push_back( *it );
+																// TODO constructeur par copie
+																//$$ = $2...;
 															}
-															// delete $3;
+															else
+															{*/
+																$$ = new ElementAttList( ElementAttList::A_COMMA ) ;
+																((ElementAttList *)$$)->push_back( $2 );
+																std::list<ElementAttBase *>::iterator it = $3->begin();
+																for( ; it != $3->end(); it++)
+																{
+																	// TODO vérifier si *it n'a qu'un seul elementAttBase	
+																	// si oui -> faire un ElementAtt plutôt qu'un ElementAttList
+																	((ElementAttList *)$$)->push_back( *it );
+																}
+															/*}*/
+															delete $3;
 														}
 ;
 
@@ -207,7 +215,7 @@ cp
 | IDENT card_opt										{	$$ = new ElementAttList( ElementAttList::A_NONE ) ;
 															ElementAtt * e = new ElementAtt( std::string($1) );
 															e->setCardinality( $2 );
-															$$->push_back( e ); }
+															((ElementAttList *)$$)->push_back( e ); }
 ;
 
 list_choice_plus

@@ -26,6 +26,7 @@
 #include "DtdBalise.h"
 #include "AttList.h"
 #include "AttDef.h"
+#include "DtdElement.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------td::list<DtdBalise* Types
@@ -38,33 +39,22 @@ class DtdDocument
 {
 	public:
 
-		struct ElementLinkToAttList
-		{
-			std::string elementName;
-			AttList * attList;
-		};
-
-		struct ElementLinkToAttDef
-		{
-			std::string elementName;
-			AttDef * attDef;
-		};
-
-		DtdDocument( std::list<DtdBalise *> * );
+		DtdDocument();
 		~DtdDocument();
-		void addElementLinkToAttList( std::string elementName, AttList * attList );
-		void addElementLinkToAttDef ( std::string elementName, AttDef * attDef);
+		void setBalises( std::list<DtdBalise *> * balises );
+		void addElementByName( std::string elementName, DtdElement * element );
 		void Print();
 		void GenerateRE();
 
 	private:
+	
 		std::list<DtdBalise *> * mBalises;
 		
 		// a map matching the names of dtd elements with their RE
 		std::map<std::string,std::string> re;
 
-		std::list<ElementLinkToAttList> mElementToLinkToAttList;
-		std::list<ElementLinkToAttDef>  mElementLinkToAttDef;
+		// Contains all DtdElements, searchable by name
+		std::map<std::string, DtdElement *>  mElementsByName;
 };
 
 #endif // DTD_DOCUMENT_H

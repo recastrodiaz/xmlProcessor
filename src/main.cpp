@@ -20,22 +20,21 @@ extern string dtdURL;
 extern int xmldebug;
 extern int dtddebug;
 int xmlparse(DocXML ** doc);
-int dtdparse(DtdDocument ** dtdDocument);
+int dtdparse(DtdDocument * dtdDocument);
 
 extern FILE * xmlin;
 extern FILE * dtdin;
 
-void testPrintBalise(){
-    Balise* b1 = new Balise ("test", "eheh");
-    mapSS* attr = new mapSS();
-    (*attr)["id1"]="kikoo";
-    (*attr)["id2"]="lol";
-    b1->addListAttributs (attr);
-    b1->setEmpty(false);
-    cout<<"b1 : "<<endl;
-    b1->Print();
-    
-         
+void testPrintBalise()
+{
+	Balise* b1 = new Balise ("test", "eheh");
+	mapSS* attr = new mapSS();
+	(*attr)["id1"]="kikoo";
+	(*attr)["id2"]="lol";
+	b1->addListAttributs (attr);
+	b1->setEmpty(false);
+	cout<<"b1 : "<<endl;
+	b1->Print();
 }
 
 int main(int argc, char **argv)
@@ -80,7 +79,7 @@ int main(int argc, char **argv)
 	}
 
 	// dtddebug = 1; // pour désactiver l'affichage de l'exécution du parser LALR, commenter cette ligne
-	DtdDocument * dtdDocument;
+	DtdDocument dtdDocument;
 	if (dtdin != NULL){
 		err = dtdparse( &dtdDocument );
 		if (err != 0) 
@@ -90,7 +89,7 @@ int main(int argc, char **argv)
 		else
 		{
 			printf("Parse ended with success\n", err);
-			dtdDocument->Print();
+			dtdDocument.Print();
 		}
 	}
 	else

@@ -34,6 +34,7 @@
 // Contrat :
 //
 
+class DtdDocument;
 class DtdElement;
 class AttList;
 
@@ -41,7 +42,7 @@ class AttDef : public DtdBalise
 {
 	public:
 		AttDef();
-		AttDef( std::string aAttType, std::string aDefaultDec );
+		AttDef( std::string elementName, std::string aAttType, std::string aDefaultDec );
 		~AttDef();
 		
 		void Print();
@@ -50,8 +51,11 @@ class AttDef : public DtdBalise
 
 	private:
 		DtdElement * mElement;
+		std::string mElementName;
 		std::string mAttType;
 		std::string mDefaultDec;
+		
+		friend class DtdDocument;
 };
 
 #endif // ATT_LIST_H

@@ -16,7 +16,7 @@
 #include "../DTDClass/ElementAttList.h"
 
 extern FILE* dtdin;
-void dtderror( DtdDocument ** dtdDocument, char *msg );
+void dtderror( DtdDocument * dtdDocument, char *msg );
 int dtdwrap(void);
 int dtdlex(void);
 %}
@@ -36,7 +36,7 @@ int dtdlex(void);
 	std::list<ElementAttBase *> * tListOfElementAttBase;
 }
 
-%parse-param { DtdDocument ** dtdDocument }
+%parse-param { DtdDocument * dtdDocument }
 
 %token ELEMENT ATTLIST CLOSE OPENPAR CLOSEPAR COMMA PIPE FIXED EMPTY ANY PCDATA AST QMARK PLUS CDATA
 %token <s> IDENT TOKENTYPE DECLARATION STRING
@@ -65,14 +65,13 @@ int dtdlex(void);
 %%
 
 main 
-: dtd_list_opt											{ 	* dtdDocument = new DtdDocument( $1 ); }
+: dtd_list_opt											{ 	dtdDocument->setBalises( $1 ); }
 ;
 
 dtd_list_opt
 : dtd_list_opt ATTLIST IDENT att_definition_opt CLOSE	{	$$ = $1;
-															AttList * attList = new AttList( $4 );
-															$$->push_back( attList );
-															/*(* dtdDocument)->addElementLinkToAttList( std::string($3), attList ); /* TODO use this */ }
+															AttList * attList = new AttList( std::string($3), $4 );
+															$$->push_back( attList ); }
 | dtd_list_opt elementspec								{ 	$$ = $1;
 															$$->push_back( $2 ); }
 | /* empty */											{	$$ = new std::list<DtdBalise *>(); }
@@ -85,8 +84,7 @@ att_definition_opt
 ;
 
 attribute
-: IDENT att_type default_declaration					{ 	$$ = new AttDef( std::string($2), std::string($3) ); 
-															/*(*dtdDocument)->addElementLinkToAttDef( std::string($1), $$ ); /* TODO use this */ }
+: IDENT att_type default_declaration					{ 	$$ = new AttDef( std::string($1), std::string($2), std::string($3) ); }
 ;
 
 att_type
@@ -132,7 +130,9 @@ item_enum
 */
 
 elementspec
-: ELEMENT IDENT contentspec CLOSE						{	$$ = new DtdElement( std::string($2), $3 ); }
+: ELEMENT IDENT contentspec CLOSE						{	DtdElement * element = new DtdElement( std::string($2), $3 );
+															dtdDocument->addElementByName( std::string($2), element ); 
+															$$ = element; }
 ;
 
 contentspec
@@ -231,7 +231,7 @@ int main(int argc, char **argv)
 	
 	dtddebug = 1; // pour désactiver l'affichage de l'exécution du parser LALR, commenter cette ligne
 	
-	DtdDocument * dtdDocument;
+	DtdDocument dtdDocument();
 	err = dtdparse( &dtdDocument );
 	if (err != 0) printf("Parse ended with %d error(s)\n", err);
 		else  printf("Parse ended with success\n", err);
@@ -246,7 +246,7 @@ int dtdwrap(void)
   return 1;
 }
 
-void dtderror( DtdDocument ** dtdDocument, char *msg )
+void dtderror( DtdDocument * dtdDocument, char *msg )
 {
   fprintf(stderr, "%s\n", msg);
 }

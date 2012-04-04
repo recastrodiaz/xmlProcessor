@@ -45,7 +45,7 @@ void AttList::Print()
 	std::cout << "<!ATTLIST ";
 	if( mElement )
 	{
-		std::cout << mElement->GetName();
+		std::cout << mElement->GetName() << " ";
 	}
 	else
 	{
@@ -58,8 +58,8 @@ void AttList::Print()
 	std::cout << ">";
 }
 
-AttList::AttList(std::list<AttDef*> * aAttDefs) 
-	: DtdBalise(), mElement(NULL), mAttDefs (aAttDefs)
+AttList::AttList(std::string elementName, std::list<AttDef*> * aAttDefs) 
+	: DtdBalise(), mElement(NULL), mElementName(elementName), mAttDefs (aAttDefs)
 // Algorithme :
 //
 {
@@ -70,6 +70,11 @@ AttList::~AttList ()
 //
 {
 } //----- fin de ~DtdElement
+
+const std::list<AttDef*> * AttList::getAttDefs() const
+{
+	return mAttDefs;
+}
 
 
 

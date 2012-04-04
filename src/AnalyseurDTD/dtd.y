@@ -1,8 +1,10 @@
 %{
-
-void yyerror(char *msg);
-int yywrap(void);
-int yylex(void);
+#include "../commun.h"
+using namespace std;
+extern FILE* dtdin;
+void dtderror(char *msg);
+int dtdwrap(void);
+int dtdlex(void);
 %}
 
 %union { 
@@ -121,23 +123,27 @@ default_declaration
 | FIXED STRING 
 ;
 %%
+
+/*
 int main(int argc, char **argv)
 {
   int err;
 
-  yydebug = 1; // pour désactiver l'affichage de l'exécution du parser LALR, commenter cette ligne
+  dtddebug = 1; // pour désactiver l'affichage de l'exécution du parser LALR, commenter cette ligne
 
-  err = yyparse();
+  err = dtdparse();
   if (err != 0) printf("Parse ended with %d error(s)\n", err);
         else  printf("Parse ended with success\n", err);
   return 0;
 }
-int yywrap(void)
+*/
+
+int dtdwrap(void)
 {
   return 1;
 }
 
-void yyerror(char *msg)
+void dtderror(char *msg)
 {
   fprintf(stderr, "%s\n", msg);
 }

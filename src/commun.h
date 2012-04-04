@@ -6,9 +6,11 @@ using namespace std;
 #include <utility>
 #include <string>
 
+
 typedef pair<string,string> Attribut;
 typedef list<Attribut> AttList;
-typedef pair<string,string> ElementName; /* TODO Qu'est ce que cela contient ?*/
+typedef pair<string,string> ElementName;
+
 
 #ifdef DEBUG
 #define debug(x) (x)

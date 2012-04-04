@@ -1,12 +1,15 @@
 %{
-
+#include "../commun.h"
+#include <stdio.h>
+#include <string.h>
 using namespace std;
-#include "commun.h"
 
+string dtdURL;
+extern FILE* xmlin;
 int xmlwrap(void);
 void xmlerror(char *msg);
 int xmllex(void);
-string dtdUrl;
+
 
 %}
 
@@ -50,7 +53,7 @@ declarations_opt
  ;
  
 declaration
- : DOCTYPE IDENT IDENT STRING CLOSE {dtdUrl = $4;} /* { $$ = new DocXML($1,,$2,$4); } */
+ : DOCTYPE IDENT IDENT STRING CLOSE {printf("$4 : %s\n",$4);dtdURL=string($4);} /* { $$ = new DocXML($1,,$2,$4); } */
  ;
 
 attributs_opt
@@ -84,8 +87,8 @@ content_opt
  ;
 %%
 
-extern FILE* xmlin;
 
+/*
 int main(int argc, char **argv)
 {
   int err;
@@ -103,6 +106,8 @@ int main(int argc, char **argv)
   fclose(xmlin);
   return 0;
 }
+*/
+
 int xmlwrap(void)
 {
   return 1;

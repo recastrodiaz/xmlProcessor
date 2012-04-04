@@ -1,13 +1,19 @@
 %{
 #include "../commun.h"
+#include "../XMLClass/Element.h"
+#include "../XMLClass/DocXML.h"
+#include "../XMLClass/Balise.h"
+#include "../XMLClass/Data.h"
 #include <stdio.h>
 #include <string.h>
 using namespace std;
 
+
+
 string dtdURL;
 extern FILE* xmlin;
 int xmlwrap(void);
-void xmlerror(char *msg);
+void xmlerror(DocXML** doc, char *msg);
 int xmllex(void);
 
 
@@ -16,29 +22,40 @@ int xmllex(void);
 %union {
    char * s;
    ElementName * en;  /* le nom d'un element avec son namespace */
+   DocXML * doc;
+   Balise * tag;
+   vecS * dec_opt;
+   mapSS * att_opt;
+   vecE * cont_opt;
+
 }
 
-/*
- %parse-param {
-    ElementName ** en; // recopie du poly mais pas trop compris
-    Element ** e;
- }
- */
+
+%parse-param { DocXML ** doc} 
 
 %token EQ SLASH CLOSE CLOSESPECIAL DOCTYPE
 %token <s> ENCODING STRING DATA COMMENT IDENT NSIDENT
 %token <en> NSSTART START STARTSPECIAL END NSEND
 
+%type <doc> document
+%type <tag> xml_element 
+%type <dec_opt> declarations_opt
+%type <att_opt> attributs_opt
+%type <cont_opt> content_opt
+%type <en> start
+%type <cont_opt> close_content_and_end
+%type <cont_opt> empty_or_content
+
 %%
-/*
+
  main
-   : document   { *en = $1; } // recopie du poly mais pas trop compris
+   : document   { *doc = $1; } // recopie du poly mais pas trop compris
    ;
- */
 
 document
-: declarations_opt xml_element misc_seq_opt    /* { (Balise*)*e = $2; } */
+: declarations_opt xml_element misc_seq_opt    { $$ = new DocXML(((vecS)(*$1))[0], ((vecS)(*$1))[1], ((vecS)(*$1))[2]); }
  ;
+
 misc_seq_opt
  : misc_seq_opt comment
  | /*empty*/
@@ -48,42 +65,34 @@ comment
  ;
 
 declarations_opt
- : declaration
- | /*empty*/
- ;
- 
-declaration
- : DOCTYPE IDENT IDENT STRING CLOSE {printf("$4 : %s\n",$4);dtdURL=string($4);} /* { $$ = new DocXML($1,,$2,$4); } */
+ : DOCTYPE IDENT IDENT STRING CLOSE { dtdURL=string($4); (*$$).push_back(string($2)); (*$$).push_back(string($3)); (*$$).push_back(string($4)); free($2); free($3); free($4); }
+ | /*empty*/ { $$ = new vecS(); }
  ;
 
 attributs_opt
- : attributs_opt attribut
- | /*empty*/
- ;
-
-attribut
- : IDENT EQ STRING  /* ((Balise*)*e).addAttribut($1, $3); */
- ;
+ : attributs_opt IDENT EQ STRING { $$ = $1; (*$$)[string($2)] = string($4); free($2); free($4) }
+ | /*empty*/ { $$ = new mapSS();}
+;
 
 xml_element
- : start attributs_opt empty_or_content     /* { $$ = new Balise(); } */
+ : start attributs_opt empty_or_content      { $$ = new Balise($1->second); (*$$).addListAttributs($2); (*$$).addContent($3); } 
  ;
 start
- : START		
- | NSSTART	
+ : START	{ $$ =  $1; }	
+ | NSSTART	{ $$ = $1; }
  ;
 empty_or_content
- : SLASH CLOSE	
- | close_content_and_end CLOSE 
+ : SLASH CLOSE	{ $$ = new vecE(); }
+ | close_content_and_end CLOSE { $$ = $1; } 
  ;
 close_content_and_end
- : CLOSE	content_opt END 
+ : CLOSE content_opt END { $$ = $2; }
  ;
 content_opt 
- : content_opt DATA		/* { ((Balise*)*e).addContent(new Data($2)); } */
- | content_opt comment        
- | content_opt xml_element  /* { ((Balise*)*e).addContent($2); *e = *2; } */
- | /*empty*/         
+ : content_opt DATA	{ $$ = $1; (*$$).push_back(new Data(string($2))); }
+ | content_opt comment
+ | content_opt xml_element   { $$ = $1; (*$$).push_back($2); }
+ | /*empty*/	{ $$ = new vecE(); }
  ;
 %%
 
@@ -113,7 +122,7 @@ int xmlwrap(void)
   return 1;
 }
 
-void xmlerror(char *msg)
+void xmlerror(DocXML ** doc, char *msg)
 {
   fprintf(stderr, "%s\n", msg);
 }

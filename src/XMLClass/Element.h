@@ -35,7 +35,7 @@ class Element { //abstract
 	public:
 		Element();
 		virtual ~Element();
-		virtual void getValue() = 0; //pour récupérer le CDATA
+		virtual void Print() = 0; //pour récupérer le CDATA
 };
 
 #endif // ELEMENT_H

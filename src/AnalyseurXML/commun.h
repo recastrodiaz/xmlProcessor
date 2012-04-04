@@ -9,7 +9,7 @@ using namespace std;
 
 typedef pair<string,string> Attribut;
 typedef list<Attribut> AttList;
-typedef pair<string,string> ElementName;
+typedef pair<string,string> ElementName; /* TODO Qu'est ce que cela contient ?*/
 
 
 #ifdef DEBUG

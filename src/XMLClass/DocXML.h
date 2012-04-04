@@ -21,6 +21,7 @@
 #include <string>
 
 #include "Element.h"
+using namespace std;
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -35,11 +36,13 @@
 
 class DocXML {
 	public:
-		DocXML(Element unDoc, string unKeyword, string uneUrl);
+		DocXML();
+		DocXML(string unRoot, string unKeyword, string uneUrl);
 		virtual ~DocXML();
+		bool verifyValidity(DtdDocument & docDtd);
     
     private:
-        Element doc;
+        string root;
         string keyword;
         string dtdUrl;
 };

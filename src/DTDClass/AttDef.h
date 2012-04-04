@@ -41,18 +41,17 @@ class AttDef : public DtdBalise
 {
 	public:
 		AttDef();
-		AttDef( Element* aElement, AttList* aAttList); //TODO: Enum(s) a passer en parametre
+		AttDef( Element* aElement, std::string aAttType, std::string aDefaultDec );
 		~AttDef();
 		
-		enum AttType { TODO };
-		enum DefaultDec { IMPLIED, REQUIRED };
+		void Print();
+		//enum AttType { TODO };
+		//enum DefaultDec { IMPLIED, REQUIRED };
 
 	private:
 		Element * mElement;
-		AttList * mAttList; // why not?
-		AttType mAttType;
-		DefaultDec mDefaultDec;
-
+		std::string mAttType;
+		std::string mDefaultDec;
 };
 
 #endif // ATT_LIST_H

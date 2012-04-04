@@ -19,8 +19,10 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
-#include <stdlib>
+#include <cstdlib>
 #include "Data.h"
+#include "Element.h"
+#include "../commun.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -33,11 +35,11 @@
 // Contrat :
 //
 
-class Data : public Element { 
+class Data : public Element {
 	public:
 		Data(string uneValue);
 		virtual ~Data();
-		void getValue(); //pour récupérer le CDATA
+		void Print(); //pour récupérer le CDATA
 
 	private:
 		string value;

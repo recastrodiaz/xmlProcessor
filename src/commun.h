@@ -5,11 +5,18 @@ using namespace std;
 #include <list>
 #include <utility>
 #include <string>
+#include <vector>
+#include <map>
+#include "XMLClass/Element.h"
 
 
-typedef pair<string,string> Attribut;
-typedef list<Attribut> AttList;
+//typedef pair<string,string> Attribut;
+//typedef list<Attribut> AttList;
 typedef pair<string,string> ElementName;
+
+typedef vector<Element*> vecE;
+typedef map<string,string> mapSS;
+typedef vector<string> vecS;
 
 
 #ifdef DEBUG

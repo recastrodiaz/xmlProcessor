@@ -19,8 +19,9 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
-#include <vector>
+#include <list>
 #include <string>
+#include <map>
 
 #include "DtdBalise.h"
 //------------------------------------------------------------- Constantes
@@ -29,22 +30,21 @@
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-// type Nom ( liste de paramètres );
-// Mode d'emploi :
-//
-// Contrat :
-//
+
 
 class DtdDocument
 {
 	public:
 		DtdDocument();
-		DtdDocument(std::string aName);
 		~DtdDocument();
+		void Print();
+		void GenerateRE();
 
 	private:
-		std::string mName;
-		std::vector<DtdBalise *> mBalises;
+		std::list<DtdBalise *> mBalises;
+		
+		// a map matching the names of dtd elements with their RE
+		std::map<std::string,std::string> re;
 };
 
 #endif // DTD_DOCUMENT_H

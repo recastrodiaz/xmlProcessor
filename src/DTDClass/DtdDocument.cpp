@@ -14,6 +14,8 @@
 //------------------------------------------------------ Include personnel
 #include "DtdDocument.h"
 
+using namespace std;
+
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
 
@@ -46,17 +48,29 @@ DtdDocument::DtdDocument ()
 {
 } //----- fin de Element
 
-DtdDocument::DtdDocument (std::string aName) : mName (aName), mBalises () 
-// Algorithme :
-//
-{
-} //----- fin de Element
-
 DtdDocument::~DtdDocument ()
 // Algorithme :
 //
 {
 } //----- fin de ~Element
+void DtdDocument::Print ()
+// Algorithme :
+{
+for(std::list <DtdBalise *>::iterator i=mBalises.begin();i!=mBalises.end();i++)
+  {
+   (*i)->Print();
+  }
+  
+} //----- fin de Print()
 
+void DtdDocument::GenerateRE()
+{
+  // Iterating over all the elements
+  for (list<DtdBalise *> it = mBalises.begin(); it != mBalises.end(); it++)
+  {
+  //  re[*it.
+  }
+  
+}
 
 

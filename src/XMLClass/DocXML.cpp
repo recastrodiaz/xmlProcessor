@@ -40,7 +40,7 @@
 //{
 //} //----- fin de Nom
 
-DocXML::DocXML (Element unDoc, string unKeyword, string uneUrl) : doc(unDoc), keyword(unKeyword), dtdUrl(uneUrl) 
+DocXML::DocXML (string unRoot, string unKeyword, string uneUrl) : root(unRoot), keyword(unKeyword), dtdUrl(uneUrl) 
 // Algorithme :
 //
 {
@@ -51,6 +51,10 @@ DocXML::~DocXML ()
 //
 {
 } //----- fin de Nom
+
+bool verifyValidity(DtdDocument & docDtd)
+{
+}
 
 
 

@@ -19,7 +19,7 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
-#include <vector>
+#include <list>
 
 #include "AttDef.h"
 #include "DtdBalise.h"
@@ -43,14 +43,14 @@ class AttList : public DtdBalise
 {
 	public:
 		AttList();
-		AttList(std::string aIdent, Element* aElement);
+		AttList(Element* aElement, std::list<AttDef*> aAttDefs = std::list<AttDef*>() );
 		~AttList();
 		
 		void Print();
 
 	private:
 		Element* mElement;
-		std::vector<AttDef*> mAttDefs;
+		std::list<AttDef*> mAttDefs;
 
 };
 

@@ -72,5 +72,14 @@ Element::~Element ()
 {
 } //----- fin de ~Element
 
+std::string Element::GetName()
+{
+    return mIdent;
+}
+
+std::string GetRe()
+{
+    return mAttributeReference->GetRe();
+}
 
 

@@ -44,7 +44,7 @@ class DtdDocument
 		std::list<DtdBalise *> * mBalises;
 		
 		// a map matching the names of dtd elements with their RE
-		std::map<std::string,std::string> re;
+		std::map<std::string,std::string> mRe;
 };
 
 #endif // DTD_DOCUMENT_H

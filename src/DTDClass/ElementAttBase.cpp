@@ -56,5 +56,3 @@ ElementAttBase::~ElementAttBase ()
 {
 } //----- fin de ~ElementAttBase
 
-
-

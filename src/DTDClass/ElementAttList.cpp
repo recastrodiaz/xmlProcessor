@@ -91,6 +91,29 @@ ElementAttList::~ElementAttList ()
 
 } //----- fin de ElementAtt::~ElementAtt
 
+ElementAttList::GetRe()
+{ 
+    std::string agregat;
+    if (mTypeAgregat == ElementAttList::PIPE)
+    {
+      agregat = "|";
+    }
+    else // COMMA
+    {
+      agregat = "";
+    }
+    
+    std::string re("(");
+    for(std::list <ElementAttBase *>::iterator it=mElementAttBase.begin();it!=mElementAttBase.end();it++)
+    {
+      re += (*it)->GetRe();
+      if(it != mElementAttBase.end())
+          re += aggregat;
+    }
+    re += ")";
+    return re;
+}
+
 
 
 

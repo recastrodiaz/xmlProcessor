@@ -3,8 +3,7 @@
 #include "main.h"
 using namespace std;
 
-//extern string dtdURL;
-extern char dtdURL[16];
+extern string dtdURL;
 extern int xmldebug;
 extern int dtddebug;
 int xmlparse();
@@ -36,11 +35,10 @@ int err;
 
 }
   	else  
-{printf("Parse ended with success\n", err);
-printf("dtdurl : %s\n",dtdURL);
-//dtdin = fopen(dtdURL.c_str(),"r+");
-	//dtdin = fopen("rap1.dtd","r+");
-	dtdin = fopen(dtdURL,"r+");
+{
+	printf("Parse ended with success\n", err);
+	printf("dtdurl : %s\n",dtdURL.c_str());
+	dtdin = fopen(dtdURL.c_str(),"r+");
 }
   fclose(xmlin);
 

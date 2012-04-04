@@ -4,8 +4,7 @@
 #include <string.h>
 using namespace std;
 
-//string dtdURL;
-char dtdURL[16];
+string dtdURL;
 extern FILE* xmlin;
 int xmlwrap(void);
 void xmlerror(char *msg);
@@ -54,7 +53,7 @@ declarations_opt
  ;
  
 declaration
- : DOCTYPE IDENT IDENT STRING CLOSE {printf("$4 : %s\n",$4);strcpy(dtdURL,$4);} /* { $$ = new DocXML($1,,$2,$4); } */
+ : DOCTYPE IDENT IDENT STRING CLOSE {printf("$4 : %s\n",$4);dtdURL=string($4);} /* { $$ = new DocXML($1,,$2,$4); } */
  ;
 
 attributs_opt

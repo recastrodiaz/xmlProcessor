@@ -42,28 +42,27 @@
 
 void ElementAtt::Print()
 {
-    std::cout << contentSpec ;
+	std::cout << contentSpec ;
 
-
-    char card;
+    char card = '\0';
     switch(mCardinality)
     {
-    	case ElementAttBase::NONE:break;
-    	case ElementAttBase::AST:
+    	case ElementAttBase::C_NONE:
+			break;
+    	case ElementAttBase::C_AST:
     		card = '*';
-    	break;
-    	case ElementAttBase::PLUS:
+    		break;
+    	case ElementAttBase::C_PLUS:
     	    card = '+';
-    	break;
-    	case ElementAttBase::QMARK:
+    		break;
+    	case ElementAttBase::C_QMARK:
     	    card = '?';
-    	break;
-
+    		break;
     }
-  if (mCardinality != ElementAttBase::NONE)
-  {
-    std::cout << card;
-  }
+	if (mCardinality != ElementAttBase::C_NONE)
+	{
+		std::cout << card;
+	}
 
 
 } //----- fin de ElementAtt::Print()

@@ -44,7 +44,7 @@ void ElementAttList::Print()
 {
   // Selection du séparateur
   char agregat;
-  if (mTypeAgregat == ElementAttList::PIPE)
+  if (mTypeAgregat == ElementAttList::A_PIPE)
   {
     agregat = '|';
   }

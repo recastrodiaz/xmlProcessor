@@ -42,7 +42,7 @@ using namespace std;
 //{
 //} //----- fin de Nom
 
-DtdDocument::DtdDocument ( std::list<DtdBalise *> balises ) 
+DtdDocument::DtdDocument ( std::list<DtdBalise *> * balises ) 
 	: mBalises( balises )
 // Algorithme :
 //
@@ -55,6 +55,25 @@ DtdDocument::~DtdDocument ()
 {
 	// TODO delete mBalises
 } //----- fin de ~Element
+
+void DtdDocument::addElementLinkToAttList ( char * elementName, AttList * attList)
+// Algorithme :
+{
+	ElementLinkToAttList e;
+	e.elementName = std::string(elementName);
+	e.attList = attList;
+	mElementToLinkToAttList.push_back( e );
+} //----- fin de addElementLinkToAttList()
+
+void DtdDocument::addElementLinkToAttDef ( char * elementName, AttDef * attDef)
+// Algorithme :
+{
+	ElementLinkToAttDef e;
+	e.elementName = std::string(elementName);
+	e.attDef = attDef;
+	mElementLinkToAttDef.push_back( e );
+} //----- fin de addElementLinkToAttDef()
+
 void DtdDocument::Print ()
 // Algorithme :
 {

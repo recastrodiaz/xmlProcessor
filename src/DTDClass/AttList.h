@@ -42,8 +42,7 @@ class AttDef;
 class AttList : public DtdBalise
 {
 	public:
-		AttList();
-		AttList(Element* aElement, std::list<AttDef*> aAttDefs = std::list<AttDef*>() );
+		AttList(std::list<AttDef*> aAttDefs = std::list<AttDef*>() );
 		~AttList();
 		
 		void Print();

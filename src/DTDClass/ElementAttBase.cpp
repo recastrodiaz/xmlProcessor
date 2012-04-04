@@ -40,7 +40,7 @@
 //{
 //} //----- fin de Nom
 
-ElementAttBase::ElementAttBase () : mCardinality(ElementAttBase::NONE)
+ElementAttBase::ElementAttBase () : mCardinality(ElementAttBase::C_NONE)
 // Algorithme :
 //
 {

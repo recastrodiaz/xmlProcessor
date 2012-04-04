@@ -50,18 +50,11 @@ void AttList::Print()
 	std::cout << ">";
 }
 
-AttList::AttList () : DtdBalise(), mAttDefs ()
+AttList::AttList(std::list<AttDef*> aAttDefs) 
+	: DtdBalise(), mElement(NULL), mAttDefs (aAttDefs)
 // Algorithme :
 //
 {
-	mElement = NULL;
-} //----- fin de Element
-
-AttList::AttList(Element* aElement, std::list<AttDef*> aAttDefs) : DtdBalise(), mElement(aElement), mAttDefs (aAttDefs)
-// Algorithme :
-//
-{
-	mElement = aElement;
 } //----- fin de Element
 
 AttList::~AttList ()

@@ -65,7 +65,9 @@ main
 
 dtd_list_opt
 : dtd_list_opt ATTLIST IDENT att_definition_opt CLOSE	{	$$ = $1;
-															$$->push_back( new AttList($3, $4 )); }
+															AttList * attList = new AttList($4 );
+															$$->push_back( attList );
+															(* dtdDocument)->addElementLinkToAttList( $3, attList ); }
 | dtd_list_opt elementspec								{ 	$$ = $1;
 															$$->push_back( $2 ); }
 | /* empty */											{	$$ = new std::list<DtdBalise *>(); }

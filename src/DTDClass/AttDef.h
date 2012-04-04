@@ -41,7 +41,7 @@ class AttDef : public DtdBalise
 {
 	public:
 		AttDef();
-		AttDef( Element* aElement, std::string aAttType, std::string aDefaultDec );
+		AttDef( std::string aAttType, std::string aDefaultDec );
 		~AttDef();
 		
 		void Print();

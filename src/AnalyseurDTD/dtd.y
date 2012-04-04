@@ -201,7 +201,7 @@ list_seq_opt
 ;
 
 %%
-
+/*
 int main(int argc, char **argv)
 {
 	int err;
@@ -217,7 +217,7 @@ int main(int argc, char **argv)
 
 	return 0;
 }
-
+*/
 int dtdwrap(void)
 {
   return 1;

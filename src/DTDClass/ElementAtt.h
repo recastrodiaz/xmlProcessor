@@ -36,7 +36,7 @@
 class ElementAtt : public ElementAttBase 
 {
 	public:
-		ElementAtt( std::string ident, ElementAttBase::Cardinality card = ElementAttBase::NONE);
+		ElementAtt( std::string ident, ElementAttBase::Cardinality card = ElementAttBase::C_NONE);
 
 		virtual ~ElementAtt();
 		

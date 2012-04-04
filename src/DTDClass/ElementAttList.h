@@ -38,10 +38,10 @@ class ElementAttList : public ElementAttBase
 {
 	public:
 
-		enum TypeAgregat { PIPE, COMMA, NONE };
+		enum TypeAgregat { A_PIPE, A_COMMA, A_NONE };
 
 		ElementAttList();
-		ElementAttList(ElementAttList::TypeAgregat aTypeAgregat = ElementAttList::NONE, std::list <ElementAttBase*> aElementAttBase = std::list <ElementAttBase*>(), ElementAttBase::Cardinality card = ElementAttBase::NONE );
+		ElementAttList(ElementAttList::TypeAgregat aTypeAgregat = ElementAttList::A_NONE, std::list <ElementAttBase*> aElementAttBase = std::list <ElementAttBase*>(), ElementAttBase::Cardinality card = ElementAttBase::C_NONE );
 		virtual ~ElementAttList();
 		
 		void Print();

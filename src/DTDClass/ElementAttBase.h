@@ -39,7 +39,7 @@ class ElementAttBase
 //
 	public:
 
-	    enum Cardinality { NONE ,AST, PLUS, QMARK };
+	    enum Cardinality { C_NONE, C_AST, C_PLUS, C_QMARK };
 
 
 	    ElementAttBase();

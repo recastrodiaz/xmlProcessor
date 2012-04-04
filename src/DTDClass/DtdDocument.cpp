@@ -42,7 +42,8 @@ using namespace std;
 //{
 //} //----- fin de Nom
 
-DtdDocument::DtdDocument () 
+DtdDocument::DtdDocument ( std::list<DtdBalise *> balises ) 
+	: mBalises( balises )
 // Algorithme :
 //
 {
@@ -52,25 +53,26 @@ DtdDocument::~DtdDocument ()
 // Algorithme :
 //
 {
+	// TODO delete mBalises
 } //----- fin de ~Element
 void DtdDocument::Print ()
 // Algorithme :
 {
-for(std::list <DtdBalise *>::iterator i=mBalises.begin();i!=mBalises.end();i++)
-  {
-   (*i)->Print();
-  }
+	for(std::list <DtdBalise *>::iterator it = mBalises->begin(); it != mBalises->end(); it++)
+	{
+		(*it)->Print();
+	}
   
 } //----- fin de Print()
 
 void DtdDocument::GenerateRE()
 {
-  // Iterating over all the elements
-  for (list<DtdBalise *> it = mBalises.begin(); it != mBalises.end(); it++)
-  {
-  //  re[*it.
-  }
-  
+	// Iterating over all the elements
+	for (std::list<DtdBalise *>::iterator it = mBalises->begin(); it != mBalises->end(); it++)
+	{
+		//  re[*it.
+	}
+
 }
 
 

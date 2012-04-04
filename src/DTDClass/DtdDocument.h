@@ -26,7 +26,7 @@
 #include "DtdBalise.h"
 //------------------------------------------------------------- Constantes
 
-//------------------------------------------------------------------ Types
+//------------------------------------------------------------------td::list<DtdBalise* Types
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
@@ -35,13 +35,13 @@
 class DtdDocument
 {
 	public:
-		DtdDocument();
+		DtdDocument( std::list<DtdBalise *> );
 		~DtdDocument();
 		void Print();
 		void GenerateRE();
 
 	private:
-		std::list<DtdBalise *> mBalises;
+		std::list<DtdBalise *> * mBalises;
 		
 		// a map matching the names of dtd elements with their RE
 		std::map<std::string,std::string> re;

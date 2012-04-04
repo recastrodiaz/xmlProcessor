@@ -3,6 +3,18 @@
 %{
 #include <ctype.h>
 #include <string.h>
+#include <string>
+#include <list>
+
+#include "../DTDClass/AttDef.h"
+#include "../DTDClass/AttList.h"
+#include "../DTDClass/DtdBalise.h"
+#include "../DTDClass/DtdDocument.h"
+#include "../DTDClass/Element.h"
+#include "../DTDClass/ElementAtt.h"
+#include "../DTDClass/ElementAttBase.h"
+#include "../DTDClass/ElementAttList.h"
+
 #include "dtd.tab.h"
 
 static char* skipSpace(char *s) {

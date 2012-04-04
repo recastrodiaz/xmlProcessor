@@ -81,6 +81,11 @@ ElementAtt::~ElementAtt ()
 
 } //----- fin de ElementAtt::~ElementAtt
 
+std::string ElementAtt::GetRe()
+{
+    return contentSpec;
+}
+
 
 
 

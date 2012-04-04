@@ -41,6 +41,7 @@ class ElementAtt : public ElementAttBase
 		virtual ~ElementAtt();
 		
 		void Print();
+		std::string GetRe();
 
 
 	private:

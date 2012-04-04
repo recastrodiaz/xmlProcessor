@@ -52,9 +52,9 @@ DocXML::~DocXML ()
 {
 } //----- fin de Nom
 
-bool verifyValidity(DtdDocument & docDtd)
-{
-}
+//bool verifyValidity(DtdDocument & docDtd)
+//{
+//}
 
 
 

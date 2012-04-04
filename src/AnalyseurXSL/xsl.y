@@ -11,10 +11,10 @@ using namespace std;
 
     bool empty=false;
 string dtdURL;
-extern FILE* xmlin;
-int xmlwrap(void);
-void xmlerror(DocXML** doc, char *msg);
-int xmllex(void);
+extern FILE* xslin;
+int xslwrap(void);
+void xslerror(DocXML** doc, char *msg);
+int xsllex(void);
 
 
 %}
@@ -75,7 +75,7 @@ attributs_opt
 ;
 
 xml_element
-: start attributs_opt empty_or_content      { $$ = new Balise($1->second, $1->first); (*$$).addListAttributs($2); (*$$).addContent($3); $$->setEmpty(empty);} 
+: start attributs_opt empty_or_content      { $$ = new Balise($1->second); (*$$).addListAttributs($2); (*$$).addContent($3); $$->setEmpty(empty);} 
  ;
 start
  : START	{ $$ =  $1; }	
@@ -104,25 +104,25 @@ int main(int argc, char **argv)
   FILE * file;
   if (argv[1] != NULL)
   {
-  	xmlin = fopen(argv[1],"r+");
-	if (xmlin == NULL)
+  	xslin = fopen(argv[1],"r+");
+	if (xslin == NULL)
 		return -1;
   }
-  xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
-  err = xmlparse();
+  xsldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
+  err = xslparse();
   if (err != 0) printf("Parse ended with %d error(s)\n", err);
   	else  printf("Parse ended with success\n", err);
-  fclose(xmlin);
+  fclose(xslin);
   return 0;
 }
 */
 
-int xmlwrap(void)
+int xslwrap(void)
 {
   return 1;
 }
 
-void xmlerror(DocXML ** doc, char *msg)
+void xslerror(DocXML ** doc, char *msg)
 {
   fprintf(stderr, "%s\n", msg);
 }

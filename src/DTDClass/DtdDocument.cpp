@@ -80,8 +80,8 @@ void DtdDocument::Print ()
 	for(std::list <DtdBalise *>::iterator it = mBalises->begin(); it != mBalises->end(); it++)
 	{
 		(*it)->Print();
+		std::cout << std::endl;
 	}
-  
 } //----- fin de Print()
 
 void DtdDocument::GenerateRE()
@@ -91,7 +91,6 @@ void DtdDocument::GenerateRE()
 	{
 		//  re[*it.
 	}
-
 }
 
 

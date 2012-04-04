@@ -60,6 +60,7 @@ class Element : public DtdBalise
 		std::list <AttList*> mAttList;
 		// Vector of attributes definitions of the element
 		std::list <AttDef*> mAttDef;
+		// String that identify the Element
 		std::string mIdent;
 };
 

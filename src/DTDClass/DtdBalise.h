@@ -36,13 +36,11 @@ class DtdBalise
 {
 	public:
 		DtdBalise();
-		DtdBalise(std::string ident);
-		virtual ~DtdBalise();
-		// Should be redefined in subclasses
-		virtual void print() = 0;
 
-	protected:
-		std::string mIdent;
+		virtual ~DtdBalise();
+		// Doit être redéfini dans les classes filles
+		virtual void Print() = 0;
+
 
 };
 

@@ -18,7 +18,8 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
-#include <vector>
+#include <list>
+#include <iostream>
 
 #include "ElementAttBase.h"
 #include "DtdBalise.h"
@@ -45,19 +46,21 @@ class Element : public DtdBalise
 	public:
 		Element();
 		Element(std::string aIdent, ElementAttBase * aAttributeReference, 
-			std::vector <AttList*> aAttListVector = std::vector <AttList*>(),
-			std::vector <AttDef*> aAttDefVector = std::vector <AttDef*>() );
+			std::list <AttList*> aAttListVector = std::list <AttList*>(),
+			std::list <AttDef*> aAttDefVector = std::list <AttDef*>() );
 		~Element();
 
-		void print();
+		void Print();
+		std::string GetName();
 
 	protected:
 		// Attribute name of the element
 		ElementAttBase * mAttributeReference;
 		// List of attributes of the element
-		std::vector <AttList*> mAttList;
+		std::list <AttList*> mAttList;
 		// Vector of attributes definitions of the element
-		std::vector <AttDef*> mAttDef;
+		std::list <AttDef*> mAttDef;
+		std::string mIdent;
 };
 
 #endif // ELEMENT_H

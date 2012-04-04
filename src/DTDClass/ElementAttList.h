@@ -18,7 +18,8 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
-#include <vector>
+#include <list>
+#include <iostream>
 
 #include "ElementAttBase.h"
 //------------------------------------------------------------- Constantes
@@ -38,15 +39,15 @@ class ElementAttList : public ElementAttBase
 	public:
 
 		enum TypeAgregat { PIPE, COMMA };
-		
+
 		ElementAttList();
-		ElementAttList(ElementAttList::TypeAgregat aTypeAgregat, std::vector <ElementAttBase*> aElementAttBase = std::vector <ElementAttBase*>() );
+		ElementAttList(ElementAttList::TypeAgregat aTypeAgregat, std::list <ElementAttBase*> aElementAttBase = std::list <ElementAttBase*>(), ElementAttBase::Cardinality card = ElementAttBase::NONE );
 		virtual ~ElementAttList();
 		
-		void print();
+		void Print();
 	private:
 		ElementAttList::TypeAgregat mTypeAgregat;
-		std::vector <ElementAttBase*> mElementAttBase;
+		std::list <ElementAttBase*> mElementAttBase;
 };
 
 #endif // ELEMENT_ATT_LIST_H

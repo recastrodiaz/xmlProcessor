@@ -40,10 +40,16 @@
 //{
 //} //----- fin de Nom
 
-void Element::print()
+void Element::Print()
 {
-}
-
+  std::cout << "<!ELEMENT " << mIdent << " ";
+  mAttributeReference->Print();
+  std::cout << ">";
+}//----- Element::Print()
+std::string Element::GetName()
+{
+  return mIdent;
+}//----- Element::Print()
 Element::Element () 
 	: DtdBalise(), mAttList (), mAttDef ()
 // Algorithme :
@@ -52,8 +58,8 @@ Element::Element ()
 	mAttributeReference = 0;
 } //----- fin de Element
 
-Element::Element (std::string aIdent, ElementAttBase * aAttributeReference, std::vector <AttList*> aAttListVector, std::vector <AttDef*> aAttDefVector) 
-	: DtdBalise(aIdent), mAttList (aAttListVector), mAttDef (aAttDefVector)
+Element::Element (std::string aIdent, ElementAttBase * aAttributeReference, std::list <AttList*> aAttListVector, std::list <AttDef*> aAttDefVector)
+	: DtdBalise(),mIdent(aIdent), mAttList (aAttListVector), mAttDef (aAttDefVector)
 // Algorithme :
 //
 {

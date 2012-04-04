@@ -46,11 +46,7 @@ DtdBalise::DtdBalise ()
 {
 } //----- fin de Element
 
-DtdBalise::DtdBalise (std::string aIdent) : mIdent (aIdent) 
-// Algorithme :
-//
-{
-} //----- fin de Element
+
 
 DtdBalise::~DtdBalise () 
 // Algorithme :

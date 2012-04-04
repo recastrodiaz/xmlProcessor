@@ -19,7 +19,7 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
-#include <vector>
+#include <list>
 #include <string>
 
 #include "DtdBalise.h"
@@ -39,12 +39,11 @@ class DtdDocument
 {
 	public:
 		DtdDocument();
-		DtdDocument(std::string aName);
 		~DtdDocument();
+		void Print();
 
 	private:
-		std::string mName;
-		std::vector<DtdBalise *> mBalises;
+		std::list<DtdBalise *> mBalises;
 };
 
 #endif // DTD_DOCUMENT_H

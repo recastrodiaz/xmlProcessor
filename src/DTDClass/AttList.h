@@ -23,7 +23,7 @@
 
 #include "AttDef.h"
 #include "DtdBalise.h"
-#include "Element.h"
+#include "DtdElement.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -38,19 +38,19 @@
 //
 
 class AttDef;
+class DtdElement;
 
 class AttList : public DtdBalise
 {
 	public:
-		AttList();
-		AttList(Element* aElement, std::list<AttDef*> aAttDefs = std::list<AttDef*>() );
+		AttList(std::list<AttDef*> * aAttDefs = new std::list<AttDef*>() );
 		~AttList();
 		
 		void Print();
 
 	private:
-		Element* mElement;
-		std::list<AttDef*> mAttDefs;
+		DtdElement* mElement;
+		std::list<AttDef*> * mAttDefs;
 
 };
 

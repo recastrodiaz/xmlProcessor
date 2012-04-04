@@ -39,7 +39,7 @@ class DtdBalise
 
 		virtual ~DtdBalise();
 		// Doit être redéfini dans les classes filles
-		virtual void Print() = 0;
+		virtual void Print() {}// = 0;
 
 
 };

@@ -1,18 +1,18 @@
 /*************************************************************************
-                           ELEMENT  -  description
+                           DtdElement  -  description
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par fduranton, dbrian, recastrodiaz
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation du module <ELEMENT> (fichier Element.cpp) -----
+//---------- Réalisation du module <DtdElement> (fichier DtdElement.cpp) -----
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
 
 //------------------------------------------------------ Include personnel
-#include "Element.h"
+#include "DtdElement.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -40,37 +40,39 @@
 //{
 //} //----- fin de Nom
 
-void Element::Print()
+void DtdElement::Print()
 {
-  std::cout << "<!ELEMENT " << mIdent << " ";
-  mAttributeReference->Print();
-  std::cout << ">";
-}//----- Element::Print()
-std::string Element::GetName()
+	std::cout << "<!DtdElement " << mIdent << " ";
+	mAttributeReference->Print();
+	std::cout << ">";
+}//----- DtdElement::Print()
+
+std::string DtdElement::GetName()
 {
-  return mIdent;
-}//----- Element::Print()
-Element::Element () 
+	return mIdent;
+}//----- DtdElement::GetName()
+
+DtdElement::DtdElement () 
 	: DtdBalise(), mAttList (), mAttDef ()
 // Algorithme :
 //
 {
 	mAttributeReference = 0;
-} //----- fin de Element
+} //----- fin de DtdElement
 
-Element::Element (std::string aIdent, ElementAttBase * aAttributeReference, std::list <AttList*> aAttList, std::list <AttDef*> aAttDef)
+DtdElement::DtdElement (std::string aIdent, ElementAttBase * aAttributeReference, std::list <AttList*> aAttList, std::list <AttDef*> aAttDef)
 	: DtdBalise(),mIdent(aIdent), mAttList (aAttList), mAttDef (aAttDef), mAttributeReference(aAttributeReference)
 // Algorithme :
 //
 {
 
-} //----- fin de Element
+} //----- fin de DtdElement
 
-Element::~Element ()
+DtdElement::~DtdElement ()
 // Algorithme :
 //
 {
-} //----- fin de ~Element
+} //----- fin de ~DtdElement
 
 std::string Element::GetName()
 {

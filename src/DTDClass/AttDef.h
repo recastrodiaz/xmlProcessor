@@ -19,7 +19,7 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
 
-#include "Element.h"
+#include "DtdElement.h"
 #include "AttList.h"
 
 //------------------------------------------------------------- Constantes
@@ -34,14 +34,14 @@
 // Contrat :
 //
 
-class Element;
+class DtdElement;
 class AttList;
 
 class AttDef : public DtdBalise
 {
 	public:
 		AttDef();
-		AttDef( Element* aElement, std::string aAttType, std::string aDefaultDec );
+		AttDef( std::string aAttType, std::string aDefaultDec );
 		~AttDef();
 		
 		void Print();
@@ -49,7 +49,7 @@ class AttDef : public DtdBalise
 		//enum DefaultDec { IMPLIED, REQUIRED };
 
 	private:
-		Element * mElement;
+		DtdElement * mElement;
 		std::string mAttType;
 		std::string mDefaultDec;
 };

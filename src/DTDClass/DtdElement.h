@@ -1,17 +1,17 @@
 /*************************************************************************
-                           ELEMENT  -  description
+                           DtdElement  -  description
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par fduranton, dbrian, recastrodiaz
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Interface du module <Element> (fichier Element.h) ---------
-#if ! defined ( ELEMENT_H )
-#define ELEMENT_H
+//---------- Interface du module <DtdElement> (fichier DtdElement.h) ---------
+#if ! defined ( DtdElement_H )
+#define DtdElement_H
 
 //------------------------------------------------------------------------
-// Rôle du module <ELEMENT>
+// Rôle du module <DtdElement>
 //
 //
 //------------------------------------------------------------------------
@@ -34,7 +34,7 @@ class AttDef;
 class AttList;
 class ElementAttBase;
 
-class Element : public DtdBalise
+class DtdElement : public DtdBalise
 {
 
 //---------------------------------------------------- Fonctions publiques
@@ -44,28 +44,28 @@ class Element : public DtdBalise
 // Contrat :
 //
 	public:
-		Element();
-		Element(std::string aIdent, ElementAttBase * aAttributeReference, 
+		DtdElement();
+		DtdElement(std::string aIdent, ElementAttBase * aAttributeReference, 
 			std::list <AttList*> aAttList = std::list <AttList*>(),
 			std::list <AttDef*> aAttDef = std::list <AttDef*>() );
-		~Element();
+		~DtdElement();
 
 		void Print();
 		std::string GetName();
 		std::string GetRe();
 
 	protected:
-		// Attribute name of the element
+		// Attribute name of the DtdElement
 		ElementAttBase * mAttributeReference;
-		// List of attributes of the element
+		// List of attributes of the DtdElement
 		std::list <AttList*> mAttList;
-		// Vector of attributes definitions of the element
+		// Vector of attributes definitions of the DtdElement
 		std::list <AttDef*> mAttDef;
-		// String that identify the Element
+		// String that identify the DtdElement
 		std::string mIdent;
 };
 
-#endif // ELEMENT_H
+#endif // DtdElement_H
 
 
 

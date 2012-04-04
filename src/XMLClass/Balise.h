@@ -19,8 +19,14 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
-#include <stdlib>
+#include <map>
+#include <vector>
+#include <cstdlib>
+
+#include "../commun.h"
 #include "Element.h"
+
+using namespace std;
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -37,13 +43,14 @@ class Balise : public Element {
 	public:
 		Balise(string unNom);
 		virtual ~Balise();
-		void getValue();
+		void Print();
         void addAttribut(string label, string value);
-        void addContent(Element elem);
+	void addListAttributs(mapSS *uneListeAttributs);
+        void addContent(vecE* elem);
 
 	private:
-		map<string, string> attributs;
-		vector<Element*> elements;
+		mapSS attributs;
+		vecE elements;
  		string nom;
 };
 

@@ -2,7 +2,10 @@
 %option noyywrap
 
 %{
-#include "commun.h"
+#include "../commun.h"
+#include "../XMLClass/DocXML.h"
+#include "../XMLClass/Balise.h"
+#include "../XMLClass/Data.h"
 #include "xml.tab.h"
 
 static char* skipSpace(char *s) {

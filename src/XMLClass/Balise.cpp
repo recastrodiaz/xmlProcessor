@@ -13,6 +13,8 @@
 
 //------------------------------------------------------ Include personnel
 #include "Balise.h"
+#include <iostream>
+using namespace std;
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -50,43 +52,53 @@ Balise::~Balise ()
 // Algorithme :
 //
 {
-	vector<Element*>::iterator it;
-	for (vector<Element*>::iterator it = elements.begin(); it!=elements.end(); ++it) {
-    		delete **it;
+	vecE::iterator it;
+	for (vecE::iterator it = elements.begin(); it!=elements.end(); ++it) {
+    		delete (*it);
 	}
-	delete elements;
-	delete attributs;
+	delete &elements;
+	delete &attributs;
 	
 
 
 } //----- fin de Nom
 
-Balise::getValue ()
+void Balise::Print ()
 // Algorithme :
 //
 {
-	vector<Element*>::iterator it;
-	for (vector<Element*>::iterator it = elements.begin(); it!=elements.end(); ++it) {
-    		cout << (**it).getValue() << endl;
+	vecE::iterator it;
+	for (vecE::iterator it = elements.begin(); it!=elements.end(); ++it) {
+    		(*it)->Print();
 	}
 } //----- fin de Nom
 
-Balise::addAttribut (string label, string value)
+void Balise::addAttribut (string label, string value)
 // Algorithme :
 //
 {
-	pair<map<string,string>::iterator,bool> ret;
+    pair<mapSS::iterator,bool> ret;
     ret = attributs.insert(pair<string, string>(label, value));
     if (!ret.second) {
         //TODO: traiter les erreurs : l'attribut existe déjà
     }
 } //----- fin de Nom
 
-Balise::addContent (Element elem)
+void Balise::addListAttributs (mapSS *uneListeAttributs)
 // Algorithme :
 //
 {
-	elements.push_back(elem);
+	for (mapSS::iterator it=(*uneListeAttributs).begin(); it != (*uneListeAttributs).end(); it++)
+		addAttribut (it->first, it->second);
+
+} //----- fin de Nom
+
+void Balise::addContent (vecE* elem)
+// Algorithme :
+//
+{
+	for ( vecE::iterator it = (*elem).begin(); it != (*elem).end(); it++)
+		elements.push_back(*it);
 } //----- fin de Nom
 
 

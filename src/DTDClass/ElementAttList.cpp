@@ -67,7 +67,10 @@ void ElementAttList::Print()
   std::cout << ")";
 
 } //----- fin de ElementAttList::Print()
-
+void ElementAttList::push_back(ElementAttBase * elem)
+{
+	mElementAttBase.push_back(elem);
+}
 ElementAttList::ElementAttList()
 	: ElementAttBase()
 // Algorithme :

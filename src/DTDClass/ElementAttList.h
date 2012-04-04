@@ -45,6 +45,7 @@ class ElementAttList : public ElementAttBase
 		virtual ~ElementAttList();
 		
 		void Print();
+		void push_back(ElementAttBase * elem);
 	private:
 		ElementAttList::TypeAgregat mTypeAgregat;
 		std::list <ElementAttBase*> mElementAttBase;

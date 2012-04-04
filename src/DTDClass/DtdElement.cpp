@@ -42,7 +42,7 @@
 
 void DtdElement::Print()
 {
-	std::cout << "<!DtdElement " << mIdent << " ";
+	std::cout << "<!ELEMENT " << mIdent << " ";
 	mAttributeReference->Print();
 	std::cout << ">";
 }//----- DtdElement::Print()

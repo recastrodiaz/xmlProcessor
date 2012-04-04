@@ -56,7 +56,7 @@ DtdDocument::~DtdDocument ()
 void DtdDocument::Print ()
 // Algorithme :
 {
-for(std::list <DtdBalise *>::iterator i=mBalises.begin();i!=mBalises.end();i++)
+for(std::list <DtdBalise *>::iterator i=mBalises->begin();i!=mBalises->end();i++)
   {
    (*i)->Print();
   }
@@ -66,7 +66,7 @@ for(std::list <DtdBalise *>::iterator i=mBalises.begin();i!=mBalises.end();i++)
 void DtdDocument::GenerateRE()
 {
   // Iterating over all the elements
-  for (list<DtdBalise *> it = mBalises.begin(); it != mBalises.end(); it++)
+  for (list<DtdBalise *>::iterator it = mBalises->begin(); it != mBalises->end(); it++)
   {
   //  re[*it.
   }

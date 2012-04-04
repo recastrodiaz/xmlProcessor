@@ -1,8 +1,8 @@
 XMLPATH := AnalyseurXML/
 DTDPATH := AnalyseurDTD/
-SRC:= main.cpp XMLClass/*.cpp
+SRC:= main.cpp XMLClass/*.cpp DTDClass/*.cpp
 #OBJ:= *.o
-OBJ:= main.o Element.o DocXML.o Balise.o Data.o 
+OBJ:= main.o Element.o DocXML.o Balise.o Data.o DtdDocument.o DtdBalise.o DtdElement.o AttList.o AttDef.o ElementAttBase.o ElementAtt.o ElementAttList.o
 #${DTDPATH}*.y ${DTDPATH}*.l ${XMLPATH}*.y ${XMLPATH}*.l 
 
 all: analyseXMLDTD

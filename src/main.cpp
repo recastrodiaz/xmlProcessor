@@ -40,8 +40,10 @@ int err;
 	
 
   //xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
- DocXML ** doc;
- err = xmlparse(doc);
+ DocXML * doc;
+printf("Before xmlparse\n");
+ err = xmlparse(&doc);
+printf("After xmlparse\n");
   if (err != 0){
  printf("Parse ended with %d error(s)\n", err);
 

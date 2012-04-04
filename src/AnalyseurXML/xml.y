@@ -65,7 +65,7 @@ comment
  ;
 
 declarations_opt
- : DOCTYPE IDENT IDENT STRING CLOSE { dtdURL=string($4); (*$$).push_back(string($2)); (*$$).push_back(string($3)); (*$$).push_back(string($4)); free($2); free($3); free($4); }
+ : DOCTYPE IDENT IDENT STRING CLOSE { dtdURL=string($4); $$ = new vecS(); (*$$).push_back(string($2)); (*$$).push_back(string($3)); (*$$).push_back(string($4)); free($2); free($3); free($4); }
  | /*empty*/ { $$ = new vecS(); }
  ;
 
@@ -90,7 +90,7 @@ close_content_and_end
  ;
 content_opt 
  : content_opt DATA	{ $$ = $1; (*$$).push_back(new Data(string($2))); }
- | content_opt comment
+ | content_opt comment	{ $$ = $1; }
  | content_opt xml_element   { $$ = $1; (*$$).push_back($2); }
  | /*empty*/	{ $$ = new vecE(); }
  ;

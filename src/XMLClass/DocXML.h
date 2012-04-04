@@ -39,7 +39,7 @@ class DocXML {
 		DocXML();
 		DocXML(string unRoot, string unKeyword, string uneUrl);
 		virtual ~DocXML();
-		//bool verifyValidity(DtdDocument & docDtd);
+		bool verifyValidity(DtdDocument & docDtd);
     
     private:
         string root;

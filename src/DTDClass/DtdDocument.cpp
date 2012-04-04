@@ -13,6 +13,7 @@
 
 //------------------------------------------------------ Include personnel
 #include "DtdDocument.h"
+#include "Element.h"
 
 using namespace std;
 
@@ -73,7 +74,7 @@ void DtdDocument::GenerateRE()
 	   Element* element = dynamic_cast<Element*>(*it);
        if(element != 0) 
        {
-          mRe[element.GetName()] = element.GetRe();  
+          mRe[element->GetName()] = element->GetRe();
        }
 	}
 

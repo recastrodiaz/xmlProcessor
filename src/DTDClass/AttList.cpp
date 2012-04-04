@@ -47,7 +47,7 @@ void AttList::Print()
 	{
        (*i)->Print();
 	}
-
+	std::cout << ">";
 }
 
 AttList::AttList () : DtdBalise(), mAttDefs ()

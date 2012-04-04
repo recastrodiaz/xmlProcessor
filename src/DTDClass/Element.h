@@ -46,8 +46,8 @@ class Element : public DtdBalise
 	public:
 		Element();
 		Element(std::string aIdent, ElementAttBase * aAttributeReference, 
-			std::list <AttList*> aAttListVector = std::list <AttList*>(),
-			std::list <AttDef*> aAttDefVector = std::list <AttDef*>() );
+			std::list <AttList*> aAttList = std::list <AttList*>(),
+			std::list <AttDef*> aAttDef = std::list <AttDef*>() );
 		~Element();
 
 		void Print();

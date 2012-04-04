@@ -39,25 +39,21 @@
 //
 //{
 //} //----- fin de Nom
-
+void AttDef::Print()
+{
+	std::cout << mElement->GetName() << " " << mAttType << " " << mDefaultDec;
+}
 AttDef::AttDef () : DtdBalise()
 // Algorithme :
 //
 {
-	mElement = 0;
-	mAttList = 0;
-	mAttType = TODO;
-	mDefaultDec = IMPLIED;
+
 } //----- fin de Element
 
-AttDef::AttDef (Element* aElement, AttList* aAttList) : DtdBalise()
+AttDef::AttDef(Element* aElement,std::string aAttType, std::string aDefaultDec ) : DtdBalise(), mElement(aElement),mAttType(aAttType), mDefaultDec(aDefaultDec)
 // Algorithme :
 //
 {
-	mElement = aElement;
-	mAttList = aAttList;
-	mAttType = TODO;
-	mDefaultDec = IMPLIED;
 } //----- fin de Element
 
 AttDef::~AttDef ()

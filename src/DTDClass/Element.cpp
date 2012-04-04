@@ -58,12 +58,12 @@ Element::Element ()
 	mAttributeReference = 0;
 } //----- fin de Element
 
-Element::Element (std::string aIdent, ElementAttBase * aAttributeReference, std::list <AttList*> aAttListVector, std::list <AttDef*> aAttDefVector)
-	: DtdBalise(),mIdent(aIdent), mAttList (aAttListVector), mAttDef (aAttDefVector)
+Element::Element (std::string aIdent, ElementAttBase * aAttributeReference, std::list <AttList*> aAttList, std::list <AttDef*> aAttDef)
+	: DtdBalise(),mIdent(aIdent), mAttList (aAttList), mAttDef (aAttDef), mAttributeReference(aAttributeReference)
 // Algorithme :
 //
 {
-	mAttributeReference = aAttributeReference;
+
 } //----- fin de Element
 
 Element::~Element ()

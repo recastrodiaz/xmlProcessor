@@ -41,7 +41,7 @@ class DocXML {
 		DocXML(Balise* unRoot, string unKeyword, string uneUrl);
 		virtual ~DocXML();
         void Print();
-		//bool verifyValidity(DtdDocument & docDtd);
+		bool verifyValidity(DtdDocument & docDtd);
 
     
     private:

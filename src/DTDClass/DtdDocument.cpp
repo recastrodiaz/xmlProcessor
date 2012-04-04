@@ -13,7 +13,7 @@
 
 //------------------------------------------------------ Include personnel
 #include "DtdDocument.h"
-#include "Element.h"
+#include "DtdElement.h"
 
 using namespace std;
 
@@ -90,13 +90,18 @@ void DtdDocument::GenerateRE()
 	// Iterating over all the elements
 	for (std::list<DtdBalise *>::iterator it = mBalises->begin(); it != mBalises->end(); it++)
 	{
-	   Element* element = dynamic_cast<Element*>(*it);
+	   DtdElement* element = dynamic_cast<DtdElement*>(*it);
        if(element != 0) 
        {
           mRe[element->GetName()] = element->GetRe();
        }
 	}
 
+}
+
+bool DtdDocument::CheckXmlElementValidity (std::string dtdElementName, std::string xmlString )
+{
+	// TODO
 }
 
 

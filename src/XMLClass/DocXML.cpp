@@ -64,8 +64,9 @@ void DocXML::Print()
 } //----- fin de Nom
 
 
-/*bool verifyValidity(DtdDocument & docDtd)
+bool verifyValidity(DtdDocument & docDtd)
 {
+	root.verifyValidity(docDtd);
 }
- */
+
 

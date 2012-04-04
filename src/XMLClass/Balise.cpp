@@ -147,5 +147,10 @@ void Balise::setEmpty(bool unEmpty)
 	this->empty = unEmpty;
 } //----- fin de setEmpty
 
+bool Balise::verifyValidity(DtdDocument & docDtd)
+{
+	// CheckXmlElementValidity
+}
+
 
 

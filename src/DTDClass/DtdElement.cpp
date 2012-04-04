@@ -47,11 +47,6 @@ void DtdElement::Print()
 	std::cout << ">";
 }//----- DtdElement::Print()
 
-std::string DtdElement::GetName()
-{
-	return mIdent;
-}//----- DtdElement::GetName()
-
 DtdElement::DtdElement () 
 	: DtdBalise(), mAttList (), mAttDef ()
 // Algorithme :
@@ -74,12 +69,12 @@ DtdElement::~DtdElement ()
 {
 } //----- fin de ~DtdElement
 
-std::string Element::GetName()
+std::string DtdElement::GetName()
 {
     return mIdent;
 }
 
-std::string GetRe()
+std::string DtdElement::GetRe()
 {
     return mAttributeReference->GetRe();
 }

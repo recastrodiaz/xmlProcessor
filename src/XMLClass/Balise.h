@@ -83,6 +83,8 @@ class Balise : public Element {
         // Contrat :
         //
 
+        bool verifyValidity(DtdDocument & docDtd);
+
 	private:
 		mapSS attributs;
 		vecE elements;

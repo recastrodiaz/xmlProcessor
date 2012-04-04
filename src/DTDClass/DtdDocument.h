@@ -57,6 +57,8 @@ class DtdDocument
 		void Print();
 		void GenerateRE();
 
+		bool CheckXmlElementValidity (std::string dtdElementName, std::string xmlString )
+
 	private:
 		std::list<DtdBalise *> * mBalises;
 		

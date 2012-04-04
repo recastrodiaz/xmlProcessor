@@ -42,29 +42,29 @@
 
 void ElementAttList::Print()
 {
-  // Selection du séparateur
-  char agregat;
-  if (mTypeAgregat == ElementAttList::A_PIPE)
-  {
-    agregat = '|';
-  }
-  else // COMMA
-  {
-    agregat = ',';
-  }
+	// Selection du séparateur
+	char agregat;
+	if (mTypeAgregat == ElementAttList::A_PIPE)
+	{
+		agregat = '|';
+	}
+	else // COMMA
+	{
+		agregat = ',';
+	}
 
-  // Affichage des éléments.
-  std::cout << "(";
-  for(std::list <ElementAttBase *>::iterator i=mElementAttBase.begin();i!=mElementAttBase.end();i++)
-  {
-   (*i)->Print();
-   if(i == mElementAttBase.end())
-   //Il ne faut pas ajouter un séparateur à la fin de la chaine
-    { 
-      std::cout << agregat;
-    }
-  }
-  std::cout << ")";
+	// Affichage des éléments.
+	std::cout << "(";
+	for(std::list <ElementAttBase *>::iterator it = mElementAttBase.begin(); it != mElementAttBase.end(); it++)
+	{
+		if(it != mElementAttBase.begin())
+		//Il ne faut pas ajouter un séparateur à la fin de la chaine
+		{ 
+			std::cout << agregat;
+		}
+		(*it)->Print();
+	}
+	std::cout << ")";
 
 } //----- fin de ElementAttList::Print()
 void ElementAttList::push_back(ElementAttBase * elem)

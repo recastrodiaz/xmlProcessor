@@ -57,7 +57,7 @@ AttList::AttList () : DtdBalise(), mAttDefs ()
 	mElement = NULL;
 } //----- fin de Element
 
-AttList::AttList ( Element* aElement) : DtdBalise(), mAttDefs ()
+AttList::AttList(Element* aElement, std::list<AttDef*> aAttDefs) : DtdBalise(), mElement(aElement), mAttDefs (aAttDefs)
 // Algorithme :
 //
 {

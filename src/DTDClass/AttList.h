@@ -43,7 +43,7 @@ class AttList : public DtdBalise
 {
 	public:
 		AttList();
-		AttList(Element* aElement);
+		AttList(Element* aElement, std::list<AttDef*> aAttDefs = std::list<AttDef*>() );
 		~AttList();
 		
 		void Print();

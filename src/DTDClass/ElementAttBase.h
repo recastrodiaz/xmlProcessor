@@ -38,17 +38,21 @@ class ElementAttBase
 // Contrat :
 //
 	public:
-		ElementAttBase();
-		virtual ~ElementAttBase();
-		// Should be redefined in subclasses
-		virtual void print() = 0;
 
-		enum Cardinality { AST, PLUS, QMARK };
-		enum ContentSpec { EMPTY, ANY };
+	    enum Cardinality { NONE ,AST, PLUS, QMARK };
+
+
+	    ElementAttBase();
+		ElementAttBase(ElementAttBase::Cardinality cardinality  );
+		virtual ~ElementAttBase();
+		// Devrait être redéfinie dans les sous-classes
+		virtual void Print() = 0;
+
 
 	protected:
-		// Element the attribute refers to
+		// Element parent
 		Element * owner;
+		ElementAttBase::Cardinality mCardinality;
 };
 
 #endif // ELEMENT_ATT_BASE_H

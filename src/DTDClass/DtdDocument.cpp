@@ -46,17 +46,19 @@ DtdDocument::DtdDocument ()
 {
 } //----- fin de Element
 
-DtdDocument::DtdDocument (std::string aName) : mName (aName), mBalises () 
-// Algorithme :
-//
-{
-} //----- fin de Element
-
 DtdDocument::~DtdDocument ()
 // Algorithme :
 //
 {
 } //----- fin de ~Element
-
+void DtdDocument::Print ()
+// Algorithme :
+{
+for(std::list <DtdBalise *>::iterator i=mBalises.begin();i!=mBalises.end();i++)
+  {
+   (*i)->Print();
+  }
+  
+} //----- fin de Print()
 
 

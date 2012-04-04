@@ -42,6 +42,7 @@ class DocXML {
 		virtual ~DocXML();
         void Print();
 		//bool verifyValidity(DtdDocument & docDtd);
+
     
     private:
         Balise* root;

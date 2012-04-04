@@ -52,8 +52,8 @@ class DtdDocument
 
 		DtdDocument( std::list<DtdBalise *> * );
 		~DtdDocument();
-		void addElementLinkToAttList( char * elementName, AttList * attList );
-		void addElementLinkToAttDef ( char * elementName, AttDef * attDef);
+		void addElementLinkToAttList( std::string elementName, AttList * attList );
+		void addElementLinkToAttDef ( std::string elementName, AttDef * attDef);
 		void Print();
 		void GenerateRE();
 

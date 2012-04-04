@@ -42,7 +42,15 @@
 
 void AttList::Print()
 {
-	std::cout << "<!ATTLIST " << mElement->GetName();
+	std::cout << "<!ATTLIST ";
+	if( mElement )
+	{
+		std::cout << mElement->GetName();
+	}
+	else
+	{
+		std::cout << "NULL ";
+	}
 	for(std::list <AttDef*>::iterator i = mAttDefs->begin(); i != mAttDefs->end(); i++)
 	{
        (*i)->Print();

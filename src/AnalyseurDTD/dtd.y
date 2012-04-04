@@ -72,7 +72,7 @@ dtd_list_opt
 : dtd_list_opt ATTLIST IDENT att_definition_opt CLOSE	{	$$ = $1;
 															AttList * attList = new AttList( $4 );
 															$$->push_back( attList );
-															(* dtdDocument)->addElementLinkToAttList( $3, attList ); }
+															/*(* dtdDocument)->addElementLinkToAttList( std::string($3), attList ); /* TODO use this */ }
 | dtd_list_opt elementspec								{ 	$$ = $1;
 															$$->push_back( $2 ); }
 | /* empty */											{	$$ = new std::list<DtdBalise *>(); }
@@ -86,7 +86,7 @@ att_definition_opt
 
 attribute
 : IDENT att_type default_declaration					{ 	$$ = new AttDef( std::string($2), std::string($3) ); 
-															(*dtdDocument)->addElementLinkToAttDef( $1, $$ ); }
+															/*(*dtdDocument)->addElementLinkToAttDef( std::string($1), $$ ); /* TODO use this */ }
 ;
 
 att_type

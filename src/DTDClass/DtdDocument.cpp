@@ -56,20 +56,20 @@ DtdDocument::~DtdDocument ()
 	// TODO delete mBalises
 } //----- fin de ~Element
 
-void DtdDocument::addElementLinkToAttList ( char * elementName, AttList * attList)
+void DtdDocument::addElementLinkToAttList ( std::string elementName, AttList * attList)
 // Algorithme :
 {
 	ElementLinkToAttList e;
-	e.elementName = std::string(elementName);
+	e.elementName = elementName;
 	e.attList = attList;
 	mElementToLinkToAttList.push_back( e );
 } //----- fin de addElementLinkToAttList()
 
-void DtdDocument::addElementLinkToAttDef ( char * elementName, AttDef * attDef)
+void DtdDocument::addElementLinkToAttDef ( std::string elementName, AttDef * attDef)
 // Algorithme :
 {
 	ElementLinkToAttDef e;
-	e.elementName = std::string(elementName);
+	e.elementName = elementName;
 	e.attDef = attDef;
 	mElementLinkToAttDef.push_back( e );
 } //----- fin de addElementLinkToAttDef()

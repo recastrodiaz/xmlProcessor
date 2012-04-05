@@ -189,33 +189,39 @@ choice
 ;
 
 seq
-: OPENPAR cp list_seq_opt CLOSEPAR						{	/*if( $3->size() == 0 )
+: OPENPAR cp list_seq_opt CLOSEPAR						{	if( $3->empty() )
 															{
-																// TODO constructeur par copie
-																//$$ = $2...;
+																$$ = $2;
 															}
 															else
-															{*/
-																$$ = new ElementAttList( ElementAttList::A_COMMA ) ;
-																((ElementAttList *)$$)->push_back( $2 );
+															{
+																ElementAttList * attList = dynamic_cast<ElementAttList*>($2);
+																if( !attList )
+																{
+																	attList = new ElementAttList( ElementAttList::A_COMMA ) ;
+																	attList->push_back( $2 );
+																}
 																std::list<ElementAttBase *>::iterator it = $3->begin();
 																for( ; it != $3->end(); it++)
 																{
 																	// TODO vérifier si *it n'a qu'un seul elementAttBase	
 																	// si oui -> faire un ElementAtt plutôt qu'un ElementAttList
-																	((ElementAttList *)$$)->push_back( *it );
+																	attList->push_back( *it );
 																}
-															/*}*/
+																$$ = attList;
+															}
 															delete $3;
 														}
 ;
 
 cp
 : children 												{ 	$$ = $1; }
-| IDENT card_opt										{	$$ = new ElementAttList( ElementAttList::A_NONE ) ;
+| IDENT card_opt										{	//$$ = new ElementAttList( ElementAttList::A_NONE ) ;
 															ElementAtt * e = new ElementAtt( std::string($1) );
 															e->setCardinality( $2 );
-															((ElementAttList *)$$)->push_back( e ); }
+															$$ = e;
+															//((ElementAttList *)$$)->push_back( e ); 
+														}
 ;
 
 list_choice_plus

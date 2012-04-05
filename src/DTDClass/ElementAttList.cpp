@@ -40,17 +40,31 @@
 //{
 //} //----- fin de Nom
 
+ElementAttList::ElementAttList(ElementAttList::TypeAgregat typeAgregat, std::list <ElementAttBase*> elementAttBase, ElementAttBase::Cardinality card)
+	: ElementAttBase(card), mTypeAgregat( typeAgregat ), mElementAttBase ( elementAttBase )
+// Algorithme :
+//
+{
+} //----- fin de ElementAtt::ElementAtt
+
+ElementAttList::~ElementAttList ()
+// Algorithme :
+//
+{
+
+} //----- fin de ElementAtt::~ElementAtt
+
 void ElementAttList::Print()
 {
 	// Selection du séparateur
-	char agregat;
+	std::string agregat = " ";
 	if (mTypeAgregat == ElementAttList::A_PIPE)
 	{
-		agregat = '|';
+		agregat = " | ";
 	}
 	else // COMMA
 	{
-		agregat = ',';
+		agregat = ", ";
 	}
 
 	// Affichage des éléments.
@@ -77,17 +91,9 @@ ElementAttList::ElementAttList()
 //
 {
 }
-ElementAttList::ElementAttList(ElementAttList::TypeAgregat typeAgregat, std::list <ElementAttBase*> elementAttBase, ElementAttBase::Cardinality card)
-	: ElementAttBase(card), mTypeAgregat( typeAgregat ), mElementAttBase ( elementAttBase )
-// Algorithme :
-//
-{
-} //----- fin de ElementAtt::ElementAtt
 
-ElementAttList::~ElementAttList ()
-// Algorithme :
-//
+std::list <ElementAttBase*> * ElementAttList::getElements()
 {
-
-} //----- fin de ElementAtt::~ElementAtt
+	return &mElementAttBase;
+}
 

@@ -92,8 +92,3 @@ ElementAttList::ElementAttList()
 {
 }
 
-std::list <ElementAttBase*> * ElementAttList::getElements()
-{
-	return &mElementAttBase;
-}
-

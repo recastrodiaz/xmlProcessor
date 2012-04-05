@@ -43,7 +43,7 @@ void AttDef::Print()
 {
 	if( mElement )
 		std::cout << mElement->GetName() << " ";
-	else;
+	else
 		std::cout << "NULL";
 	std::cout << " " << mAttType << " " << mDefaultDec;
 }

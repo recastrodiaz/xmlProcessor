@@ -79,6 +79,7 @@ void ElementAttList::Print()
 		(*it)->Print();
 	}
 	std::cout << ")";
+	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Print cardinality
 
 } //----- fin de ElementAttList::Print()
 void ElementAttList::push_back(ElementAttBase * elem)

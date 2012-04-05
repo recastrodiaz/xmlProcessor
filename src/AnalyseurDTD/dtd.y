@@ -176,15 +176,19 @@ choice_or_seq
 
 choice
 : OPENPAR cp list_choice_plus CLOSEPAR					{	
-															$$ = new ElementAttList( ElementAttList::A_PIPE ) ;
-															((ElementAttList *)$$)->push_back( $2 );
+															ElementAttList * attList = dynamic_cast<ElementAttList*>($2);
+															if( !attList )
+															{
+																attList = new ElementAttList( ElementAttList::A_PIPE ) ;
+																attList->push_back( $2 );
+															}
 															std::list<ElementAttBase *>::iterator it = $3->begin();
-														
 															for( ; it != $3->end(); it++)
 															{
-																((ElementAttList *)$$)->push_back( *it );
+																attList->push_back( *it );
 															}
-															delete $3;
+															$$ = attList;
+															
 														}
 ;
 
@@ -204,8 +208,6 @@ seq
 																std::list<ElementAttBase *>::iterator it = $3->begin();
 																for( ; it != $3->end(); it++)
 																{
-																	// TODO vérifier si *it n'a qu'un seul elementAttBase	
-																	// si oui -> faire un ElementAtt plutôt qu'un ElementAttList
 																	attList->push_back( *it );
 																}
 																$$ = attList;

@@ -41,8 +41,8 @@
 //} //----- fin de Nom
 void AttDef::Print()
 {
-	if( mElement )
-		std::cout << mElement->GetName() << " ";
+	if( !mElementName.empty() )
+		std::cout << mElementName;
 	else
 		std::cout << "NULL";
 	std::cout << " " << mAttType << " " << mDefaultDec;

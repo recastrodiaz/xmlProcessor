@@ -43,14 +43,20 @@
 void AttList::Print()
 {
 	std::cout << "<!ATTLIST ";
-	if( mElement )
+	// FIXME: DEBUG	--> C'est un mElementName qu'il faut
+	//std::cout << "Dans AttList::Print(), IDENT = " << mElementName << std::endl;
+	// FIXME: FIN DEBUG
+	if( !mElementName.empty() )
 	{
-		std::cout << mElement->GetName() << " ";
+		std::cout << mElementName << " ";
 	}
 	else
 	{
 		std::cout << "NULL ";
 	}
+	// FIXME: DEBUG
+	//std::cout << "[" << mAttDefs->size() << "]" << std::endl;
+	// FIXME: FIN DEBUG
 	for(std::list <AttDef*>::iterator i = mAttDefs->begin(); i != mAttDefs->end(); i++)
 	{
        (*i)->Print();

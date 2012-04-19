@@ -79,8 +79,21 @@ void ElementAttList::Print()
 		(*it)->Print();
 	}
 	std::cout << ")";
-	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Print cardinality
 
+	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Print cardinality
+	// Affichage de la cardinalite
+	switch (mCardinality)
+	{ 
+		case ElementAttBase::C_AST:
+			std::cout << "*";
+			break;
+		case ElementAttBase::C_PLUS:
+			std::cout << "+";
+			break;
+		case ElementAttBase::C_QMARK:
+			std::cout << "?";
+			break;
+	}
 } //----- fin de ElementAttList::Print()
 void ElementAttList::push_back(ElementAttBase * elem)
 {

@@ -40,7 +40,8 @@ void testPrintBalise()
 int main(int argc, char **argv)
 {
 	int err;
-/*	testPrintBalise();
+/*	
+	testPrintBalise();
 
 	printf("Parsing XML\n");
 
@@ -69,7 +70,7 @@ int main(int argc, char **argv)
 		dtdin = fopen(dtdURL.c_str(),"r+");
 	}
 	fclose(xmlin);
-*/
+//*/
 
 	if (argv[1] != NULL)
 	{

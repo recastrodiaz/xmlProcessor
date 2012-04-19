@@ -20,13 +20,13 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
 
-// #include "Element.h"
+#include "DtdElement.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
 
 //////////////////////////////////////////////////////////////////  PUBLIC
-class Element;
+class DtdElement;
 
 class ElementAttBase
 {
@@ -53,7 +53,7 @@ class ElementAttBase
 
 	protected:
 		// Element parent
-		Element * owner;
+		DtdElement * owner;
 		ElementAttBase::Cardinality mCardinality;
 };
 

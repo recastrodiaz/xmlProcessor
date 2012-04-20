@@ -38,7 +38,7 @@ class DtdDocument;
 class DtdElement;
 class AttList;
 
-class AttDef : public DtdBalise
+class AttDef
 {
 	public:
 		AttDef();

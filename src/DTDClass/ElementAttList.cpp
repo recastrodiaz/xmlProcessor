@@ -40,43 +40,6 @@
 //{
 //} //----- fin de Nom
 
-void ElementAttList::Print()
-{
-  // Selection du séparateur
-  char agregat;
-  if (mTypeAgregat == ElementAttList::A_PIPE)
-  {
-    agregat = '|';
-  }
-  else // COMMA
-  {
-    agregat = ',';
-  }
-
-  // Affichage des éléments.
-  std::cout << "(";
-  for(std::list <ElementAttBase *>::iterator i=mElementAttBase.begin();i!=mElementAttBase.end();i++)
-  {
-   (*i)->Print();
-   if(i == mElementAttBase.end())
-   //Il ne faut pas ajouter un séparateur à la fin de la chaine
-    { 
-      std::cout << agregat;
-    }
-  }
-  std::cout << ")";
-
-} //----- fin de ElementAttList::Print()
-void ElementAttList::push_back(ElementAttBase * elem)
-{
-	mElementAttBase.push_back(elem);
-}
-ElementAttList::ElementAttList()
-	: ElementAttBase()
-// Algorithme :
-//
-{
-}
 ElementAttList::ElementAttList(ElementAttList::TypeAgregat typeAgregat, std::list <ElementAttBase*> elementAttBase, ElementAttBase::Cardinality card)
 	: ElementAttBase(card), mTypeAgregat( typeAgregat ), mElementAttBase ( elementAttBase )
 // Algorithme :
@@ -114,6 +77,56 @@ std::string ElementAttList::GetRe()
     return re;
 }
 
+void ElementAttList::Print()
+{
+	// Selection du séparateur
+	std::string agregat = " ";
+	if (mTypeAgregat == ElementAttList::A_PIPE)
+	{
+		agregat = " | ";
+	}
+	else // COMMA
+	{
+		agregat = ", ";
+	}
 
+	// Affichage des éléments.
+	std::cout << "(";
+	for(std::list <ElementAttBase *>::iterator it = mElementAttBase.begin(); it != mElementAttBase.end(); it++)
+	{
+		if(it != mElementAttBase.begin())
+		//Il ne faut pas ajouter un séparateur à la fin de la chaine
+		{ 
+			std::cout << agregat;
+		}
+		(*it)->Print();
+	}
+	std::cout << ")";
 
+	// Affichage de la cardinalite
+	switch (mCardinality)
+	{ 
+		case ElementAttBase::C_AST:
+			std::cout << "*";
+			break;
+		case ElementAttBase::C_PLUS:
+			std::cout << "+";
+			break;
+		case ElementAttBase::C_QMARK:
+			std::cout << "?";
+			break;
+	}
+} //----- fin de ElementAttList::Print()
+
+void ElementAttList::push_back(ElementAttBase * elem)
+{
+	mElementAttBase.push_back(elem);
+}
+
+ElementAttList::ElementAttList()
+	: ElementAttBase()
+// Algorithme :
+//
+{
+}
 

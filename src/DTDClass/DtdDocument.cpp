@@ -43,12 +43,12 @@ using namespace std;
 //{
 //} //----- fin de Nom
 
-DtdDocument::DtdDocument ( std::list<DtdBalise *> * balises ) 
-	: mBalises( balises )
+DtdDocument::DtdDocument ()
+	: mBalises( NULL )
 // Algorithme :
 //
 {
-} //----- fin de Element
+} //----- fin de ~Element
 
 DtdDocument::~DtdDocument ()
 // Algorithme :
@@ -57,23 +57,39 @@ DtdDocument::~DtdDocument ()
 	// TODO delete mBalises
 } //----- fin de ~Element
 
-void DtdDocument::addElementLinkToAttList ( char * elementName, AttList * attList)
-// Algorithme :
+void DtdDocument::setBalises( std::list<DtdBalise *> * balises )
 {
-	ElementLinkToAttList e;
-	e.elementName = std::string(elementName);
-	e.attList = attList;
-	mElementToLinkToAttList.push_back( e );
-} //----- fin de addElementLinkToAttList()
+	mBalises = balises;
+	std::list<DtdBalise *>::iterator it = mBalises->begin();
+	for( ; it != mBalises->end(); it++ )
+	{
+		AttList * attList = dynamic_cast<AttList *>( * it );
+		if( attList )
+		{
+			std::map<std::string, DtdElement *>::iterator element;
+			
+			element = mElementsByName.find( attList->mElementName );
+			if( element != mElementsByName.end() )
+				attList->mElement = element->second;
+			
+			const std::list<AttDef *> * attDefs = attList->getAttDefs();
+			std::list<AttDef *>::const_iterator it2 = attDefs->begin();
+			for( ; it2 != attDefs->end(); it2++ )
+			{
+				element = mElementsByName.find( (*it2)->mElementName );
+				if( element != mElementsByName.end() )
+					(*it2)->mElement = element->second;
+			}
+		}
+	}
 
-void DtdDocument::addElementLinkToAttDef ( char * elementName, AttDef * attDef)
+}
+
+void DtdDocument::addElementByName ( std::string elementName, DtdElement * element )
 // Algorithme :
 {
-	ElementLinkToAttDef e;
-	e.elementName = std::string(elementName);
-	e.attDef = attDef;
-	mElementLinkToAttDef.push_back( e );
-} //----- fin de addElementLinkToAttDef()
+	mElementsByName.insert( std::pair<std::string, DtdElement* >( elementName, element ) ); // TODO fix this
+} //----- fin de addElementByName()
 
 void DtdDocument::Print ()
 // Algorithme :

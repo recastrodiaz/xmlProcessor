@@ -37,20 +37,25 @@
 // Contrat :
 //
 
+class DtdDocument;
 class AttDef;
 class DtdElement;
 
 class AttList : public DtdBalise
 {
 	public:
-		AttList(std::list<AttDef*> * aAttDefs = new std::list<AttDef*>() );
+		AttList(std::string elementName, std::list<AttDef*> * aAttDefs = new std::list<AttDef*>() );
 		~AttList();
 		
 		void Print();
+		const std::list<AttDef*> * getAttDefs() const;
 
 	private:
 		DtdElement* mElement;
+		std::string mElementName;
 		std::list<AttDef*> * mAttDefs;
+		
+		friend class DtdDocument;
 
 };
 

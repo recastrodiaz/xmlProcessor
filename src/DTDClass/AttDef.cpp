@@ -41,21 +41,21 @@
 //} //----- fin de Nom
 void AttDef::Print()
 {
-	if( mElement )
-		std::cout << mElement->GetName();
-	else;
+	if( !mElementName.empty() )
+		std::cout << mElementName;
+	else
 		std::cout << "NULL";
 	std::cout << " " << mAttType << " " << mDefaultDec;
 }
-AttDef::AttDef () : DtdBalise()
+AttDef::AttDef ()
 // Algorithme :
 //
 {
 
 } //----- fin de DtdElement
 
-AttDef::AttDef(std::string aAttType, std::string aDefaultDec ) 
-	: DtdBalise(), mElement(NULL),mAttType(aAttType), mDefaultDec(aDefaultDec)
+AttDef::AttDef( std::string elementName, std::string aAttType, std::string aDefaultDec ) 
+	: mElement(NULL), mElementName(elementName), mAttType(aAttType), mDefaultDec(aDefaultDec)
 // Algorithme :
 //
 {
@@ -66,6 +66,5 @@ AttDef::~AttDef ()
 //
 {
 } //----- fin de ~DtdElement
-
 
 

@@ -42,7 +42,21 @@
 
 void AttList::Print()
 {
-	std::cout << "<!ATTLIST " << mElement->GetName();
+	std::cout << "<!ATTLIST ";
+	// FIXME: DEBUG	--> C'est un mElementName qu'il faut
+	//std::cout << "Dans AttList::Print(), IDENT = " << mElementName << std::endl;
+	// FIXME: FIN DEBUG
+	if( !mElementName.empty() )
+	{
+		std::cout << mElementName << " ";
+	}
+	else
+	{
+		std::cout << "NULL ";
+	}
+	// FIXME: DEBUG
+	//std::cout << "[" << mAttDefs->size() << "]" << std::endl;
+	// FIXME: FIN DEBUG
 	for(std::list <AttDef*>::iterator i = mAttDefs->begin(); i != mAttDefs->end(); i++)
 	{
        (*i)->Print();
@@ -50,8 +64,8 @@ void AttList::Print()
 	std::cout << ">";
 }
 
-AttList::AttList(std::list<AttDef*> * aAttDefs) 
-	: DtdBalise(), mElement(NULL), mAttDefs (aAttDefs)
+AttList::AttList(std::string elementName, std::list<AttDef*> * aAttDefs) 
+	: DtdBalise(), mElement(NULL), mElementName(elementName), mAttDefs (aAttDefs)
 // Algorithme :
 //
 {
@@ -62,6 +76,11 @@ AttList::~AttList ()
 //
 {
 } //----- fin de ~DtdElement
+
+const std::list<AttDef*> * AttList::getAttDefs() const
+{
+	return mAttDefs;
+}
 
 
 

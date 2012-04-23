@@ -1,3 +1,5 @@
+This is a trivial academic project using Bison (GNU parser generator to work with grammar) and Flex (a fast lexical analyser generator).
+
 #Validating a XML file with a reference to its DTD
 
 ##Compiling AnalyseurXML

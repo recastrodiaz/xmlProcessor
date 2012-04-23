@@ -12,7 +12,7 @@
 ##Starting
 Write a example.xml file containing a reference toward its DTD.
 This reference should be like the following line :
-    <!DOCTYPE rapport SYSTEM "example.dtd">
+    <!DOCTYPE example SYSTEM "example.dtd">
 
 Then do :
 

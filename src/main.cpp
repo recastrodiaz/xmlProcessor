@@ -62,16 +62,17 @@ int main(int argc, char **argv)
 
 	printf("Parsing XML\n");
 
-	//xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
+	xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
 	DocXML * doc;
 
-	// dtddebug = 1; // pour désactiver l'affichage de l'exécution du parser LALR, commenter cette ligne
+	//dtddebug = 1; // pour désactiver l'affichage de l'exécution du parser LALR, commenter cette ligne
 	DtdDocument dtdDocument;
 
 	if (argv[1] != NULL)
 	{
 		// On a passe un fichier .xml en parametre
-		if ( std::string(argv[1]).substr(strlen(argv[1])-3,strlen(argv[1])-1) == "xml" )
+		if ( std::string(argv[1]).substr(strlen(argv[1])-3,strlen(argv[1])-1) == "xml" ||
+			 std::string(argv[1]).substr(strlen(argv[1])-3,strlen(argv[1])-1) == "xsl" )
 		{
 			std::cout << "On va parser du XML!" << std::endl;
 			xmlin = fopen(argv[1],"r+");
@@ -124,7 +125,7 @@ int main(int argc, char **argv)
 		}
 		else if ( std::string(argv[1]).substr(strlen(argv[1])-3,strlen(argv[1])-1) == "dtd" )
 		{
-			std::cout << "Tu ment c'est de la DTD!" << std::endl;
+			std::cout << "On va parser de la DTD!" << std::endl;
 			dtdin = fopen(argv[1],"r+");
 			if (dtdin == NULL)
 				return -1;

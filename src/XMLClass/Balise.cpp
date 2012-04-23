@@ -139,6 +139,15 @@ void Balise::addContent (vecE* elem)
 		elements.push_back(*it);
 } //----- fin de addContent
 
+void Balise::addElement(Element *elem)
+/* Algorithme :
+ Ajoute un element
+*/
+{
+	this->elements.push_back(*elem);
+} //----- fin de addElement
+
+
 void Balise::setEmpty(bool unEmpty)
 /* Algorithme :
  Indique que la balise ne contient aucun élément en mettant à jour l'attribut.
@@ -146,6 +155,31 @@ void Balise::setEmpty(bool unEmpty)
 {
 	this->empty = unEmpty;
 } //----- fin de setEmpty
+
+string Balise::GetNom()
+{
+	return this->nom;
+}
+
+void Balise::SetNom(string unNom)
+{
+	this->nom = unNom;
+}
+
+mapSS Balise::GetAttributs()
+{
+	return this->attributs;
+}
+
+string Balise::GetNs()
+{
+	return this->ns;
+}
+
+void Balise::SetNs(string unNs)
+{
+	this->ns = unNs;
+}
 
 
 

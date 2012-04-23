@@ -40,6 +40,7 @@ class Data : public Element {
 		Data(string uneValue);
 		virtual ~Data();
 		void Print(); //pour récupérer le CDATA
+		string GetValue();
 
 	private:
 		string value;

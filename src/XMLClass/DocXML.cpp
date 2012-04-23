@@ -69,3 +69,11 @@ void DocXML::Print()
 }
  */
 
+Balise* DocXML::GetRoot(){
+	return this->root;
+}
+
+void DocXML::SetRoot(Balise* uneBalise){
+	this->root = uneBalise;
+}
+

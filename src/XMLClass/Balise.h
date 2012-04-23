@@ -53,7 +53,7 @@ class Balise : public Element {
         // Contrat :
         //
     
-		void Print();
+	void Print();
         // Mode d'emploi :
         //
         // Contrat :
@@ -76,19 +76,56 @@ class Balise : public Element {
         //
         // Contrat :
         //
-    
+	
+	void addElement(Element* elem);
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //    
+
         void setEmpty(bool unEmpty);
         // Mode d'emploi :
         //
         // Contrat :
         //
 
+	string GetNom();
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+
+	void SetNom(string unNom);
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+
+	mapSS GetAttributs();
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+
+	string GetNs();
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+
+	void SetNs(string unNs);
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+
+
 	private:
 		mapSS attributs;
 		vecE elements;
  		string nom;
-        string ns;
-        bool empty;
+        	string ns;
+        	bool empty;
 };
 
 #endif // BALISE_H

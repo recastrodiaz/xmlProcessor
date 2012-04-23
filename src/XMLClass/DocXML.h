@@ -40,8 +40,10 @@ class DocXML {
 		DocXML();
 		DocXML(Balise* unRoot, string unKeyword, string uneUrl);
 		virtual ~DocXML();
-        void Print();
+        	void Print();
 		//bool verifyValidity(DtdDocument & docDtd);
+		Balise *GetRoot();
+		void SetRoot(Balise* uneBalise);
 
     
     private:

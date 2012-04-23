@@ -54,6 +54,14 @@ Data::~Data ()
 {
 } //----- fin de Nom
 
+string Data::GetValue ()
+// Algorithme :
+//
+{
+  return value;
+} //----- fin de Nom
+
+
 void Data::Print ()
 // Algorithme :
 //

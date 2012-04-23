@@ -77,12 +77,25 @@ ElementAtt::~ElementAtt ()
 // Algorithme :
 //
 {
-
 } //----- fin de ElementAtt::~ElementAtt
 
 std::string ElementAtt::GetRe()
 {
-    return contentSpec;
+	std::string contentSpecWithCardinality = "(" + contentSpec + ")";
+	switch (mCardinality) {
+	case ElementAttBase::C_NONE:
+		break;
+	case ElementAttBase::C_AST:
+		contentSpecWithCardinality += '*';
+		break;
+	case ElementAttBase::C_PLUS:
+		contentSpecWithCardinality += '+';
+		break;
+	case ElementAttBase::C_QMARK:
+		contentSpecWithCardinality += '?';
+		break;
+	}
+    return contentSpecWithCardinality;
 }
 
 

@@ -61,7 +61,7 @@ std::string ElementAttList::GetRe()
     {
       agregat = "|";
     }
-    else // COMMA
+    else
     {
       agregat = "";
     }
@@ -70,10 +70,22 @@ std::string ElementAttList::GetRe()
     for(std::list <ElementAttBase *>::iterator it=mElementAttBase.begin();it!=mElementAttBase.end();it++)
     {
       re += (*it)->GetRe();
-      if(it != mElementAttBase.end())
+      if(it != --mElementAttBase.end())
           re += agregat;
     }
     re += ")";
+    // Affichage de la cardinalite
+	switch (mCardinality) {
+	case ElementAttBase::C_AST:
+		re += "*";
+		break;
+	case ElementAttBase::C_PLUS:
+		re += "+";
+		break;
+	case ElementAttBase::C_QMARK:
+		re += "?";
+		break;
+	}
     return re;
 }
 

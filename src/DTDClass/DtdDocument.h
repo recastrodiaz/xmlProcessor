@@ -45,8 +45,9 @@ class DtdDocument
 		void addElementByName( std::string elementName, DtdElement * element );
 		void Print();
 		void GenerateRE();
+		std::map<std::string,std::string> & getMRe();
 
-		bool CheckXmlElementValidity (std::string dtdElementName, std::string xmlString )
+		bool CheckXmlElementValidity (std::string dtdElementName, std::string xmlString );
 
 	private:
 	

@@ -11,6 +11,11 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
 
+#include <regex.h>
+#include <sys/types.h>
+
+#include <stdlib.h>
+#include <stdio.h>
 //------------------------------------------------------ Include personnel
 #include "DtdDocument.h"
 #include "DtdElement.h"
@@ -114,9 +119,55 @@ void DtdDocument::GenerateRE()
 	}
 }
 
+std::map<std::string,std::string> & DtdDocument::getMRe()
+{
+	return mRe;
+}
+
 bool DtdDocument::CheckXmlElementValidity (std::string dtdElementName, std::string xmlString )
 {
-	// TODO
+	regex_t regex;
+	int reti;
+	char msgbuf[100];
+	std::string strRegExp;
+	map<string,string>::iterator dtdElementNameIt = mRe.find(dtdElementName);
+
+	if ( dtdElementNameIt == mRe.end())
+	{
+		return false;
+	}
+
+	// We have found the dtdElementName
+
+	// Compile regular expression
+	reti = regcomp(&regex,(dtdElementNameIt->second).c_str(), REG_EXTENDED);
+	if (reti) {
+		fprintf(stderr, "Could not compile regex\n");
+		exit(1);
+	}
+
+	//DEBUG
+	cout << dtdElementNameIt->second + " : " + xmlString << endl;
+
+	// Execute regular expression
+	reti = regexec(&regex, xmlString.c_str(), 0, NULL,0);
+	if (!reti) {
+		// match
+		cout << "matched !" << endl;
+		regfree(&regex);
+		return true;
+	} else if (reti == REG_NOMATCH) {
+		cout << "not matched !" << endl;
+		// No match
+		regfree(&regex);
+		return false;
+	} else {
+		regfree(&regex);
+		regerror(reti, &regex, msgbuf, sizeof(msgbuf));
+		fprintf(stderr, "Regex match failed: %s\n", msgbuf);
+		exit(1);
+	}
+
 }
 
 

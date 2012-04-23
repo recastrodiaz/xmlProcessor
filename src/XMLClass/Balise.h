@@ -25,6 +25,7 @@
 
 #include "../commun.h"
 #include "Element.h"
+#include "../DTDClass/DtdDocument.h"
 
 using namespace std;
 //------------------------------------------------------------- Constantes
@@ -84,6 +85,8 @@ class Balise : public Element {
         //
 
         bool verifyValidity(DtdDocument & docDtd);
+
+        std::string getName();
 
 	private:
 		mapSS attributs;

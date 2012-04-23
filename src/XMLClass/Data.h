@@ -41,6 +41,11 @@ class Data : public Element {
 		virtual ~Data();
 		void Print(); //pour récupérer le CDATA
 
+		// Return #PCDATA
+		std::string getName();
+
+		bool verifyValidity(DtdDocument & docDtd);
+
 	private:
 		string value;
 };

@@ -1,6 +1,5 @@
 
 
-#include "main.h"
 #include <string>
 #include <stdio.h>
 #include <iostream>
@@ -35,6 +34,24 @@ void testPrintBalise()
 	b1->setEmpty(false);
 	cout<<"b1 : "<<endl;
 	b1->Print();
+}
+
+void testPrintMapRE(DtdDocument& docDtd)
+{
+	std::map<std::string, std::string>::iterator iter;
+	std::string strToReturn;
+
+	docDtd.GenerateRE();
+
+	std::map<std::string,std::string> map = docDtd.getMRe();
+
+	for (iter = map.begin(); iter != map.end(); ++iter) {
+		strToReturn.append(iter->first);
+		strToReturn.append("=");
+		strToReturn.append(iter->second + "\n");
+	}
+	cout << strToReturn << endl;
+
 }
 
 int main(int argc, char **argv)
@@ -85,6 +102,15 @@ int main(int argc, char **argv)
 					{
 						printf("Parse ended with success\n", err);
 						dtdDocument.Print();
+						testPrintMapRE(dtdDocument);
+						if (doc->verifyValidity(dtdDocument))
+						{
+							cout << "THE XML DOC IS VALID !" << endl;
+						}
+						else
+						{
+							cout << "THE XML DOC IS *NOT* VALID" << endl;
+						}
 					}
 				}
 				else
@@ -114,6 +140,7 @@ int main(int argc, char **argv)
 				{
 					printf("Parse ended with success\n", err);
 					dtdDocument.Print();
+					testPrintMapRE(dtdDocument);
 				}
 			}
 			else

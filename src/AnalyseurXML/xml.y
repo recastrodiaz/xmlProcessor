@@ -48,9 +48,9 @@ int xmllex(void);
 
 %%
 
- main
-   : document   { *doc = $1; } // recopie du poly mais pas trop compris
-   ;
+main
+ : document   { *doc = $1; } // recopie du poly mais pas trop compris
+;
 
 document
 : declarations_opt xml_element misc_seq_opt    { $$ = new DocXML($2, ((vecS)(*$1))[0], ((vecS)(*$1))[1]); }
@@ -66,7 +66,7 @@ comment
 
 declarations_opt
  : DOCTYPE IDENT IDENT STRING CLOSE { dtdURL=string($4); $$ = new vecS(); (*$$).push_back(string($3)); (*$$).push_back(string($4)); free($3); free($4); }
- | /*empty*/ { $$ = new vecS(); }
+ | /*empty*/ { $$ = new vecS(); $$->push_back(""); $$->push_back(""); }
  ;
 
 attributs_opt

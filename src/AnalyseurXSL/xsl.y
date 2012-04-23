@@ -38,7 +38,7 @@ int xsllex(void);
 %token <en> NSSTART START STARTSPECIAL END NSEND
 
 %type <doc> document
-%type <tag> xml_element 
+%type <tag> xsl_element 
 %type <dec_opt> declarations_opt
 %type <att_opt> attributs_opt
 %type <cont_opt> content_opt
@@ -53,7 +53,7 @@ int xsllex(void);
    ;
 
 document
-: declarations_opt xml_element misc_seq_opt    { $$ = new DocXML($2, ((vecS)(*$1))[0], ((vecS)(*$1))[1]); }
+: declarations_opt xsl_element misc_seq_opt    { $$ = new DocXML($2, ((vecS)(*$1))[0], ((vecS)(*$1))[1]); }
  ;
 
 misc_seq_opt
@@ -74,8 +74,8 @@ attributs_opt
  | /*empty*/ { $$ = new mapSS();}
 ;
 
-xml_element
-: start attributs_opt empty_or_content      { $$ = new Balise($1->second); (*$$).addListAttributs($2); (*$$).addContent($3); $$->setEmpty(empty);} 
+xsl_element
+: start attributs_opt empty_or_content      { $$ = new Balise($1->second, $1->first); (*$$).addListAttributs($2); (*$$).addContent($3); $$->setEmpty(empty);} 
  ;
 start
  : START	{ $$ =  $1; }	
@@ -91,7 +91,7 @@ close_content_and_end
 content_opt 
  : content_opt DATA	{ $$ = $1; (*$$).push_back(new Data(string($2))); }
  | content_opt comment	{ $$ = $1; }
- | content_opt xml_element   { $$ = $1; (*$$).push_back($2); }
+ | content_opt xsl_element   { $$ = $1; (*$$).push_back($2); }
  | /*empty*/	{ $$ = new vecE(); }
  ;
 %%

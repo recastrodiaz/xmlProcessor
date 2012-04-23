@@ -145,7 +145,7 @@ std::map<std::string,regex_t> & DtdDocument::getMRe()
 	return mRe;
 }
 
-bool DtdDocument::CheckXmlElementValidity (std::string dtdElementName, std::string xmlString )
+bool DtdDocument::CheckXmlElementValidity(std::string dtdElementName, std::string xmlString )
 {
 	int reti;
 	char msgbuf[100];

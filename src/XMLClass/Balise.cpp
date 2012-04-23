@@ -50,6 +50,8 @@ Constructeur de Balise:
 */
 {
     this->empty=false;
+    attributs = new mapSS();
+    elements = new vecE();
 } //----- fin de Constructeur
 
 Balise::~Balise ()
@@ -57,7 +59,7 @@ Balise::~Balise ()
 //
 {
 	vecE::iterator it;
-	for (vecE::iterator it = elements.begin(); it!=elements.end(); ++it) {
+	for (vecE::iterator it = elements->begin(); it!=elements->end(); ++it) {
     		delete (*it);
 	}
 	delete &elements;
@@ -78,7 +80,7 @@ void Balise::Print ()
     }
     cout << this->nom;
     //attributs display
-    for (mapSS::iterator it=(this->attributs).begin(); it != (this->attributs).end(); it++)
+    for (mapSS::iterator it=attributs->begin(); it != attributs->end(); it++)
     {
         cout << " "<<it->first << "=\"" << it->second << "\""; 
     }
@@ -90,7 +92,7 @@ void Balise::Print ()
         cout << ">\r\n";
     
     //elements display
-	for (vecE::iterator it = elements.begin(); it!=elements.end(); ++it) {
+	for (vecE::iterator it = elements->begin(); it!=elements->end(); ++it) {
     		(*it)->Print();
 	}
     
@@ -112,7 +114,7 @@ void Balise::addAttribut (string label, string value)
 */
 {
     pair<mapSS::iterator,bool> ret;
-    ret = attributs.insert(pair<string, string>(label, value));
+    ret = attributs->insert(pair<string, string>(label, value));
     if (!ret.second) {
         //TODO: traiter les erreurs : l'attribut existe déjà
     }
@@ -136,7 +138,7 @@ void Balise::addContent (vecE* elem)
 */
 {
 	for ( vecE::iterator it = (*elem).begin(); it != (*elem).end(); it++)
-		elements.push_back(*it);
+		elements->push_back(*it);
 } //----- fin de addContent
 
 void Balise::addElement(Element *elem)
@@ -144,7 +146,7 @@ void Balise::addElement(Element *elem)
  Ajoute un element
 */
 {
-	this->elements.push_back(elem);
+	elements->push_back(elem);
 } //----- fin de addElement
 
 
@@ -173,9 +175,9 @@ void Balise::SetNom(string unNom)
 	this->nom = unNom;
 }
 
-mapSS Balise::GetAttributs()
+mapSS& Balise::GetAttributs()
 {
-	return this->attributs;
+	return *attributs;
 }
 
 string Balise::GetNs()
@@ -188,16 +190,16 @@ void Balise::SetNs(string unNs)
 	this->ns = unNs;
 }
 
-vecE &Balise::GetElem()
+vecE& Balise::GetElem()
 {
-	return &elements;
+	return *elements;
 }
 
 bool Balise::verifyValidity(DtdDocument & docDtd)
 {
 	// First, we verify this node
 	std::string stringToMatch = "";
-	for ( vecE::iterator it = elements.begin(); it != elements.end(); it++)
+	for ( vecE::iterator it = elements->begin(); it != elements->end(); it++)
 	{
 		stringToMatch += (**it).GetNom();
 	}
@@ -208,7 +210,7 @@ bool Balise::verifyValidity(DtdDocument & docDtd)
 	// *this* node is OK
 
 	//we are going to check his children
-	for (vecE::iterator it = elements.begin(); it != elements.end(); it++) {
+	for (vecE::iterator it = elements->begin(); it != elements->end(); it++) {
 		if (!(**it).verifyValidity(docDtd))
 		{
 			return false;

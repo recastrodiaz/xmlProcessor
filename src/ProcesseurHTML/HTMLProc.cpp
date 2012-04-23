@@ -41,13 +41,17 @@ using namespace std;
 //{
 //} //----- fin de Nom
 
-HTMLProc::HTMLProc (DocXML *unDocXML, DocXML *unDocXSL) : rootXML(unDocXML->GetRoot()) ,rootXSL(unDocXSL->GetRoot())
+HTMLProc::HTMLProc (DocXML *unDocXML, DocXML *unDocXSL) : rootXSL(unDocXSL->GetRoot())
 /* Algorithme :
 Constructeur de HTMLProc:
 */
 {
 	
-	docHTML = new DocXML();
+	Balise *docXML = new Balise("docXML","");
+    docXML->addElement(unDocXML->GetRoot());
+    rootXML = docXML;
+    
+    docHTML = new DocXML();
 	docHTML->SetRoot(NULL);
 	findTemplate(rootXML, docHTML->GetRoot());
 } //----- fin de Constructeur
@@ -70,21 +74,27 @@ void HTMLProc::construireHTML(Balise *balXMLCourante, Balise *balHTMLCourante, B
 			 findTemplate(balXMLCourante, balHTMLCourante);
 		else if((*itFils)->GetNom() == "value-of")
 		{}
-		else{  //c'est une balise HTML
+        else if((*itFils)->GetNom() == "template")
+		{}
+		else{  //c'est une element HTML
 			Balise *Bfils = dynamic_cast<Balise*>(*itFils);
-			if(Bfils != 0) { //balise data
-				Data *dataFils = new Data(Bfils->GetValue());
-				balHTMLCourante.addElement(dataFils);
+			if(Bfils == 0) { //balise = data
+				//Data *dataFils = new Data((Data)Bfils->GetValue());
+				balHTMLCourante->addElement(*itFils);
+                (*itFils)->Print();
 			}
 			else{ //balise avec des fils
 				if (balHTMLCourante == NULL){
-					balHTMLCourante = new Balise(balXSLCourante->GetNom(), balXSLCourante->GetNs());
-					construireHTML(balXMLCourante, balHTMLCourante, *itFils);
+					balHTMLCourante = new Balise(Bfils->GetNom(), Bfils->GetNs());
+                    balHTMLCourante->Print();
+					construireHTML(balXMLCourante, balHTMLCourante, Bfils);
 				}
 				else{
-					Balise *nvelleBalHTML = new Balise(balXSLCourante->GetNom(), balXSLCourante->GetNs());
-					construireHTML(balXMLCourante, nvelleBalHTML, *itFils); 
-					balHTMLCourante.addElement(nvellBalHTML);
+					//Balise *nvelleBalHTML = new Balise(balXSLCourante->GetNom(), balXSLCourante->GetNs());
+                    Balise *nvelleBalHTML = new Balise(Bfils->GetNom(), Bfils->GetNs());
+                    nvelleBalHTML->Print();
+					construireHTML(balXMLCourante, nvelleBalHTML, Bfils); 
+					balHTMLCourante->addElement(nvelleBalHTML);
 				}
 			}
 		}
@@ -94,50 +104,31 @@ void HTMLProc::construireHTML(Balise *balXMLCourante, Balise *balHTMLCourante, B
 void HTMLProc::findTemplate(Balise *balXMLCourante, Balise *balHTMLCourante){
 	vecE::iterator itFilsXML;
 	vecE::iterator itXSL;
-	for(itFilsXML=(balXMLCourante->elements).begin();itFils != (balXMLCourante->elements).end();itFilsXML++){ //parcours des balises XML (fils de la balise courante)
-		for(itXSL=(rootXSL->elements).begin();itXSL!=(rootXSL->elements).end();itXSL++){ //recherche d'une règle s'appliquant à la balise XML courante
-			if((*itXSL)->GetNom() == "template" && ((*itXSL)->GetAttributs()[0])->second == (*itFilsXML)->GetNom()) //template found
-				construireHTML(*itFilsXML, balHTMLCourante, *itXSL);
+	for(itFilsXML=(balXMLCourante->GetElem()).begin();itFilsXML != (balXMLCourante->GetElem()).end();itFilsXML++){ //parcours des balises XML (fils de la balise courante)
+        for(itXSL=(rootXSL->GetElem()).begin();itXSL!=(rootXSL->GetElem()).end();itXSL++){ //recherche d'une règle s'appliquant à la balise XML courante
+            Balise *BXSL = dynamic_cast<Balise*>(*itXSL); //verification pour voir s'il s'agît bien d'une balise, ça aurait pu etre un data
+			if(BXSL != 0) { //balise
+                
+                if(BXSL->GetNom() == "template" && (BXSL->GetAttributs()["match"]) == (*itFilsXML)->GetNom()){ //template found
+                    cout << "balise XSL: " << BXSL->GetNom() << endl;
+                    cout << "match : " << BXSL->GetAttributs()["match"] << " nom XML :" << (*itFilsXML)->GetNom() << endl;
+                    construireHTML((Balise *)*itFilsXML, balHTMLCourante, BXSL);
+                }
+			}
+			
 		}
+        //findTemplate((Balise *)*itFilsXML, balHTMLCourante);
 	}
 }
 
 
 void HTMLProc::Print ()
-/* Algorithme :
- Affichage de la balise et de ses composants
-*/
+// Algorithme :
+// Affichage de la balise et de ses composants
+//
 {
-    cout << "<";
-    if (this->ns != ""){
-        cout << this->ns<<":";
-    }
-    cout << this->nom;
-    //attributs display
-    for (mapSS::iterator it=(this->attributs).begin(); it != (this->attributs).end(); it++)
-    {
-        cout << " "<<it->first << "=\"" << it->second << "\""; 
-    }
-    
-    if (this->empty)
-        cout << "/>\r\n";
-    else
-    {
-        cout << ">\r\n";
-    
-    //elements display
-	for (vecE::iterator it = elements.begin(); it!=elements.end(); ++it) {
-    		(*it)->Print();
-	}
-    
-    cout << "</";
-    if (this->ns != ""){
-        cout << this->ns<<":";
-    }        
-    cout << this->nom << ">\r\n";
+    (docHTML->GetRoot())->Print();
         
-    }
-    
 } //----- fin de Print
 
 /*void HTMLProc::parcoursFilsXML(Balise * uneBaliseXML){

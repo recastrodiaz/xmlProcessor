@@ -48,8 +48,8 @@ class DtdDocument
 		void Print();
 		void GenerateRE();
 		std::map<std::string,regex_t> & getMRe();
-
-		bool CheckXmlElementValidity (std::string dtdElementName, std::string xmlString );
+    
+		bool CheckXmlElementValidity(std::string dtdElementName, std::string xmlString );
 
 	private:
 	

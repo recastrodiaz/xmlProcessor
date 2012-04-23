@@ -90,10 +90,10 @@ public:
 	//
 
 	bool GetEmpty();
-        // Mode d'emploi :
-        //
-        // Contrat :
-        //
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 
 	string GetNom();
 	// Mode d'emploi :
@@ -108,7 +108,7 @@ public:
 	// Contrat :
 	//
 
-	mapSS GetAttributs();
+	mapSS& GetAttributs();
 	// Mode d'emploi :
 	//
 	// Contrat :
@@ -121,31 +121,27 @@ public:
 	//
 
 	void SetNs(string unNs);
-
-        // Mode d'emploi :
-        //
-        // Contrat :
-        //
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 
 	vecE& GetElem();
-        // Mode d'emploi :
-        //
-        // Contrat :
-        //
-
-
-	// Mode d'emploi :
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+	
+	bool verifyValidity(DtdDocument & docDtd);
+    // Mode d'emploi :
 	//
 	// Contrat :
 	//
 
-	bool verifyValidity(DtdDocument & docDtd);
-
-
 
 	private:
-	mapSS attributs;
-	vecE elements;
+	mapSS *attributs;
+	vecE *elements;
 	string nom;
 	string ns;
 	bool empty;

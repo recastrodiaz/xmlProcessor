@@ -87,6 +87,7 @@ empty_or_content
  ;
 close_content_and_end
  : CLOSE content_opt END { $$ = $2; }
+ | CLOSE content_opt NSEND { $$ = $2; }
  ;
 content_opt 
  : content_opt DATA	{ $$ = $1; (*$$).push_back(new Data(string($2))); }

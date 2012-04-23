@@ -60,7 +60,10 @@ void DocXML::Print()
 // Algorithme :
 //
 {
-    this->root->Print();
+	if(root != NULL)
+    	this->root->Print();
+	else
+		std::cout << "ROOT IS NULL" << std::endl;
 } //----- fin de Nom
 
 

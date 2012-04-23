@@ -54,7 +54,8 @@ int main(int argc, char **argv)
 	if (argv[1] != NULL)
 	{
 		// On a passe un fichier .xml en parametre
-		if ( std::string(argv[1]).substr(strlen(argv[1])-3,strlen(argv[1])-1) == "xml" )
+		if ( std::string(argv[1]).substr(strlen(argv[1])-3,strlen(argv[1])-1) == "xml" ||
+			 std::string(argv[1]).substr(strlen(argv[1])-3,strlen(argv[1])-1) == "xsl" )
 		{
 			std::cout << "On va parser du XML!" << std::endl;
 			xmlin = fopen(argv[1],"r+");

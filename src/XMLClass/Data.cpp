@@ -69,7 +69,7 @@ void Data::Print ()
     	cout << this->value << endl;
 } //----- fin de Nom
 
-std::string Data::getName()
+std::string Data::GetNom()
 {
 	return "#PCDATA";
 }

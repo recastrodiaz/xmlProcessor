@@ -43,7 +43,7 @@ class Data : public Element {
 		string GetValue();
 
 		// Return #PCDATA
-		std::string getName();
+		std::string GetNom();
 
 		bool verifyValidity(DtdDocument & docDtd);
 

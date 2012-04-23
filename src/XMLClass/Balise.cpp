@@ -187,7 +187,7 @@ bool Balise::verifyValidity(DtdDocument & docDtd)
 	std::string stringToMatch = "";
 	for ( vecE::iterator it = elements.begin(); it != elements.end(); it++)
 	{
-		stringToMatch += (**it).getName();
+		stringToMatch += (**it).GetNom();
 	}
 	if (!docDtd.CheckXmlElementValidity(nom,stringToMatch)){
 		std::cout<< "The \"" + nom + "\" tag is not valid" << endl;
@@ -204,10 +204,4 @@ bool Balise::verifyValidity(DtdDocument & docDtd)
 	}
 	return true;
 
-}
-
-
-std::string Balise::getName()
-{
-	return nom;
 }

@@ -40,7 +40,7 @@ class Element { //abstract
 
 		// Return the name of the node.
 		// NB : the name of a data node is #PCDATA
-		virtual std::string getName() = 0;
+		virtual std::string GetNom() = 0;
 
 		virtual bool verifyValidity(DtdDocument & docDtd)=0;
 };

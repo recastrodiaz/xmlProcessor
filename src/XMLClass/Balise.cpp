@@ -144,7 +144,7 @@ void Balise::addElement(Element *elem)
  Ajoute un element
 */
 {
-	this->elements.push_back(*elem);
+	this->elements.push_back(elem);
 } //----- fin de addElement
 
 
@@ -193,5 +193,27 @@ vecE &Balise::GetElem()
 	return &elements;
 }
 
+bool Balise::verifyValidity(DtdDocument & docDtd)
+{
+	// First, we verify this node
+	std::string stringToMatch = "";
+	for ( vecE::iterator it = elements.begin(); it != elements.end(); it++)
+	{
+		stringToMatch += (**it).GetNom();
+	}
+	if (!docDtd.CheckXmlElementValidity(nom,stringToMatch)){
+		std::cout<< "The \"" + nom + "\" tag is not valid" << endl;
+		return false;
+	}
+	// *this* node is OK
 
+	//we are going to check his children
+	for (vecE::iterator it = elements.begin(); it != elements.end(); it++) {
+		if (!(**it).verifyValidity(docDtd))
+		{
+			return false;
+		}
+	}
+	return true;
 
+}

@@ -67,10 +67,11 @@ void DocXML::Print()
 } //----- fin de Nom
 
 
-/*bool verifyValidity(DtdDocument & docDtd)
+bool DocXML::verifyValidity(DtdDocument & docDtd)
 {
+	return root->verifyValidity(docDtd);
 }
- */
+
 
 Balise* DocXML::GetRoot(){
 	return this->root;

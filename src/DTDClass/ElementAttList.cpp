@@ -54,6 +54,41 @@ ElementAttList::~ElementAttList ()
 
 } //----- fin de ElementAtt::~ElementAtt
 
+std::string ElementAttList::GetRe()
+{ 
+    std::string agregat;
+    if (mTypeAgregat == ElementAttList::A_PIPE)
+    {
+      agregat = "|";
+    }
+    else
+    {
+      agregat = "";
+    }
+    
+    std::string re("(");
+    for(std::list <ElementAttBase *>::iterator it=mElementAttBase.begin();it!=mElementAttBase.end();it++)
+    {
+      re += (*it)->GetRe();
+      if(it != --mElementAttBase.end())
+          re += agregat;
+    }
+    re += ")";
+    // Affichage de la cardinalite
+	switch (mCardinality) {
+	case ElementAttBase::C_AST:
+		re += "*";
+		break;
+	case ElementAttBase::C_PLUS:
+		re += "+";
+		break;
+	case ElementAttBase::C_QMARK:
+		re += "?";
+		break;
+	}
+    return re;
+}
+
 void ElementAttList::Print()
 {
 	// Selection du séparateur

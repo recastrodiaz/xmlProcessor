@@ -5,6 +5,10 @@
     <prenom> Nino </prenom>
     <nom> Silverio </nom>
   </auteur>
+    <auteur>
+    <prenom> Nino2 </prenom>
+    <nom> Silverio2 </nom>
+  </auteur>
   <resume> Ceci est extrait du livre "Réaliser un compilateur : 
 	les outils Lex et Yacc" de Nino Silverio. </resume>
   <chapitre>

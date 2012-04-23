@@ -52,6 +52,7 @@ class DtdElement : public DtdBalise
 
 		void Print();
 		std::string GetName();
+		std::string GetRe();
 
 	protected:
 		// Attribute name of the DtdElement

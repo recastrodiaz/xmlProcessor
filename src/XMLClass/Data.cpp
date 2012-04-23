@@ -69,6 +69,16 @@ void Data::Print ()
     	cout << this->value << endl;
 } //----- fin de Nom
 
+std::string Data::GetNom()
+{
+	return "#PCDATA";
+}
+
+bool Data::verifyValidity(DtdDocument & docDtd)
+{
+	// No verification here
+	return true;
+}
 
 
  

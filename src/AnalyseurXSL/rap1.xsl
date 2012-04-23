@@ -12,25 +12,26 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 </xsl:template>
 
 <xsl:template match="rapport">
-	<h2>Titre : <xsl:value-of select="titre"/></h2>
-	<p> Resumé : <xsl:value-of select="resume"/></p>
+	<h2> Titre : <xsl:value-of select="titre"/></h2>
+	<h3> Resumé : </h3> 
+	<p> <xsl:value-of select="resume"/></p>
 	<xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="auteur">
-	<p>Auteur(s) :</p> 
+	<h3>Auteur(s) :</h3> 
 	<p><xsl:value-of select="prenom"/> <xsl:value-of select="nom"/></p>
 </xsl:template>
 
 <xsl:template match="chapitre">
-	<p>Chapitres</p> 
-	<h3><xsl:value-of select="titre"/></h3>
+	<h3>Chapitres</h3> 
+	<h4><xsl:value-of select="titre"/></h4>
 	<xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="section">
-	<p>Section :</p> 
-	<h4><xsl:value-of select="titre"/></h4>
+	<h4>Section :</h4> 
+	<h5><xsl:value-of select="titre"/></h5>
 	<p><xsl:value-of select="p"/></p>
 </xsl:template>
 

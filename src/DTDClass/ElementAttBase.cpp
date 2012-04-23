@@ -58,9 +58,8 @@ ElementAttBase::~ElementAttBase ()
 {
 } //----- fin de ~ElementAttBase
 
+
 void ElementAttBase::setCardinality( ElementAttBase::Cardinality cardinality )
 {
 	mCardinality = cardinality;
 }
-
-

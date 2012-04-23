@@ -181,5 +181,33 @@ void Balise::SetNs(string unNs)
 	this->ns = unNs;
 }
 
+bool Balise::verifyValidity(DtdDocument & docDtd)
+{
+	// First, we verify this node
+	std::string stringToMatch = "";
+	for ( vecE::iterator it = elements.begin(); it != elements.end(); it++)
+	{
+		stringToMatch += (**it).getName();
+	}
+	if (!docDtd.CheckXmlElementValidity(nom,stringToMatch)){
+		std::cout<< "The \"" + nom + "\" tag is not valid" << endl;
+		return false;
+	}
+	// *this* node is OK
+
+	//we are going to check his children
+	for (vecE::iterator it = elements.begin(); it != elements.end(); it++) {
+		if (!(**it).verifyValidity(docDtd))
+		{
+			return false;
+		}
+	}
+	return true;
+
+}
 
 
+std::string Balise::getName()
+{
+	return nom;
+}

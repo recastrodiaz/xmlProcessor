@@ -1,6 +1,5 @@
 
 
-#include "main.h"
 #include <string>
 #include <stdio.h>
 #include <iostream>
@@ -86,6 +85,15 @@ int main(int argc, char **argv)
 					{
 						printf("Parse ended with success\n", err);
 						dtdDocument.Print();
+						dtdDocument.GenerateRE();
+						if (doc->verifyValidity(dtdDocument))
+						{
+							cout << "THE XML DOC IS VALID !" << endl;
+						}
+						else
+						{
+							cout << "THE XML DOC IS *NOT* VALID" << endl;
+						}
 					}
 				}
 				else

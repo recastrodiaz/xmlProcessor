@@ -47,6 +47,7 @@ class ElementAttBase
 		virtual ~ElementAttBase();
 		// Devrait être redéfinie dans les sous-classes
 		virtual void Print() = 0;
+		virtual std::string GetRe() = 0;
 
 		void setCardinality( ElementAttBase::Cardinality cardinality );
 

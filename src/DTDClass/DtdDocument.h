@@ -22,6 +22,8 @@
 #include <list>
 #include <string>
 #include <map>
+#include <regex.h>
+#include <sys/types.h>
 
 #include "DtdBalise.h"
 #include "AttList.h"
@@ -45,13 +47,16 @@ class DtdDocument
 		void addElementByName( std::string elementName, DtdElement * element );
 		void Print();
 		void GenerateRE();
+		std::map<std::string,regex_t> & getMRe();
+
+		bool CheckXmlElementValidity (std::string dtdElementName, std::string xmlString );
 
 	private:
 	
 		std::list<DtdBalise *> * mBalises;
 		
 		// a map matching the names of dtd elements with their RE
-		std::map<std::string,std::string> re;
+		std::map<std::string,regex_t> mRe;
 
 		// Contains all DtdElements, searchable by name
 		std::map<std::string, DtdElement *>  mElementsByName;

@@ -25,6 +25,7 @@
 
 #include "../commun.h"
 #include "Element.h"
+#include "../DTDClass/DtdDocument.h"
 
 using namespace std;
 //------------------------------------------------------------- Constantes
@@ -34,7 +35,6 @@ using namespace std;
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
 // type Nom ( liste de paramètres );
-// Mode d'emploi :
 //
 // Contrat :
 //
@@ -119,6 +119,9 @@ class Balise : public Element {
         // Contrat :
         //
 
+        bool verifyValidity(DtdDocument & docDtd);
+
+        std::string getName();
 
 	private:
 		mapSS attributs;

@@ -156,6 +156,13 @@ void Balise::setEmpty(bool unEmpty)
 	this->empty = unEmpty;
 } //----- fin de setEmpty
 
+bool Balise::GetEmpty()
+/* Algorithme :
+*/
+{
+	return this->empty;
+} //----- fin de setEmpty
+
 string Balise::GetNom()
 {
 	return this->nom;
@@ -179,6 +186,11 @@ string Balise::GetNs()
 void Balise::SetNs(string unNs)
 {
 	this->ns = unNs;
+}
+
+vecE &Balise::GetElem()
+{
+	return &elements;
 }
 
 

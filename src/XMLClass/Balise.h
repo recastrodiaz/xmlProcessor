@@ -89,6 +89,12 @@ class Balise : public Element {
         // Contrat :
         //
 
+	bool GetEmpty();
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+
 	string GetNom();
         // Mode d'emploi :
         //
@@ -114,6 +120,12 @@ class Balise : public Element {
         //
 
 	void SetNs(string unNs);
+        // Mode d'emploi :
+        //
+        // Contrat :
+        //
+
+	vecE& GetElem();
         // Mode d'emploi :
         //
         // Contrat :

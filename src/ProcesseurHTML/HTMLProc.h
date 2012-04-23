@@ -20,6 +20,8 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
 #include "../XMLClass/DocXML.h"
+#include "../commun.h"
+#include "../XMLClass/Data.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -37,14 +39,14 @@ class HTMLProc { //abstract
 		HTMLProc(DocXML *unDocXML, DocXML *unDocXSL);
 		virtual ~HTMLProc();
 		void Print();
+		void findTemplate(Balise *balXMLCourante, Balise *balHTMLCourante);
 	private:
-		void findXSLMatch();
-		void parcoursFilsXML(Balise * uneBaliseXML);
+		//void findXSLMatch();
+		//void parcoursFilsXML(Balise * uneBaliseXML);
+		void construireHTML(Balise *balXMLCourante, Balise *balHTMLCourante, Balise *balXSLCourante);
 		DocXML *docHTML;
 		Balise *rootXML;
 		Balise *rootXSL;
-
-		Balise *htmlCourant;
 };
 
 #endif // HTMLPROC_H

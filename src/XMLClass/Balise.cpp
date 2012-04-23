@@ -144,7 +144,7 @@ void Balise::addElement(Element *elem)
  Ajoute un element
 */
 {
-	this->elements.push_back(*elem);
+	this->elements.push_back(elem);
 } //----- fin de addElement
 
 

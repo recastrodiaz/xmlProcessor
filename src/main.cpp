@@ -36,24 +36,6 @@ void testPrintBalise()
 	b1->Print();
 }
 
-void testPrintMapRE(DtdDocument& docDtd)
-{
-	std::map<std::string, std::string>::iterator iter;
-	std::string strToReturn;
-
-	docDtd.GenerateRE();
-
-	std::map<std::string,std::string> map = docDtd.getMRe();
-
-	for (iter = map.begin(); iter != map.end(); ++iter) {
-		strToReturn.append(iter->first);
-		strToReturn.append("=");
-		strToReturn.append(iter->second + "\n");
-	}
-	cout << strToReturn << endl;
-
-}
-
 int main(int argc, char **argv)
 {
 	int err;
@@ -103,7 +85,7 @@ int main(int argc, char **argv)
 					{
 						printf("Parse ended with success\n", err);
 						dtdDocument.Print();
-						testPrintMapRE(dtdDocument);
+						dtdDocument.GenerateRE();
 						if (doc->verifyValidity(dtdDocument))
 						{
 							cout << "THE XML DOC IS VALID !" << endl;
@@ -141,7 +123,6 @@ int main(int argc, char **argv)
 				{
 					printf("Parse ended with success\n", err);
 					dtdDocument.Print();
-					testPrintMapRE(dtdDocument);
 				}
 			}
 			else

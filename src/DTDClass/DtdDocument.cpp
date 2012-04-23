@@ -60,6 +60,14 @@ DtdDocument::~DtdDocument ()
 //
 {
 	// TODO delete mBalises
+
+	// deleting regex
+	std::map<std::string, regex_t>::iterator iter;
+	for (iter = mRe.begin(); iter != mRe.end(); ++iter) {
+		regfree(&(iter->second));
+	}
+
+
 } //----- fin de ~Element
 
 void DtdDocument::setBalises( std::list<DtdBalise *> * balises )
@@ -109,45 +117,51 @@ void DtdDocument::Print ()
 void DtdDocument::GenerateRE()
 {
 	// Iterating over all the elements
-	for (std::list<DtdBalise *>::iterator it = mBalises->begin(); it != mBalises->end(); it++)
-	{
-	   DtdElement* element = dynamic_cast<DtdElement*>(*it);
-       if(element != 0) 
-       {
-          mRe[element->GetName()] = element->GetRe();
-       }
+	for (std::list<DtdBalise *>::iterator it = mBalises->begin();
+			it != mBalises->end(); it++) {
+		DtdElement* element = dynamic_cast<DtdElement*>(*it);
+		if (element != 0) {
+			std::string strRegExp = element->GetRe();
+			int reti;
+			regex_t regex;
+
+			// Compile regular expression
+			reti = regcomp(&regex, strRegExp.c_str(),
+					REG_EXTENDED);
+			if (reti) {
+				fprintf(stderr, "Could not compile regex\n");
+				exit(1);
+			}
+
+			//DEBUG
+			cout <<  element->GetName() + " : "+strRegExp << endl;
+			mRe[element->GetName()] = regex;
+		}
 	}
 }
 
-std::map<std::string,std::string> & DtdDocument::getMRe()
+std::map<std::string,regex_t> & DtdDocument::getMRe()
 {
 	return mRe;
 }
 
 bool DtdDocument::CheckXmlElementValidity (std::string dtdElementName, std::string xmlString )
 {
-	regex_t regex;
 	int reti;
 	char msgbuf[100];
 	std::string strRegExp;
-	map<string,string>::iterator dtdElementNameIt = mRe.find(dtdElementName);
+	map<string,regex_t>::iterator dtdElementNameIt = mRe.find(dtdElementName);
 
 	if ( dtdElementNameIt == mRe.end())
 	{
+		//DEBUG
+		cout << "Unknown tag" << endl;
+
 		return false;
 	}
 
 	// We have found the dtdElementName
-
-	// Compile regular expression
-	reti = regcomp(&regex,(dtdElementNameIt->second).c_str(), REG_EXTENDED);
-	if (reti) {
-		fprintf(stderr, "Could not compile regex\n");
-		exit(1);
-	}
-
-	//DEBUG
-	cout << dtdElementNameIt->second + " : " + xmlString << endl;
+	regex_t regex = dtdElementNameIt->second;
 
 	// Execute regular expression
 	reti = regexec(&regex, xmlString.c_str(), 0, NULL,0);
@@ -155,19 +169,14 @@ bool DtdDocument::CheckXmlElementValidity (std::string dtdElementName, std::stri
 		// match
 		//DEBUG
 		cout << "matched !" << endl;
-
-		regfree(&regex);
 		return true;
+
 	} else if (reti == REG_NOMATCH) {
-		cout << "not matched !" << endl;
 		// No match
-
-		//DEBUG
-		regfree(&regex);
-
+		cout << "not matched !" << endl;
 		return false;
+
 	} else {
-		regfree(&regex);
 		regerror(reti, &regex, msgbuf, sizeof(msgbuf));
 		fprintf(stderr, "Regex match failed: %s\n", msgbuf);
 		exit(1);

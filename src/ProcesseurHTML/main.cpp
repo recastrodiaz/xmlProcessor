@@ -51,10 +51,11 @@ int main()
 
     //template2
     Balise *template2 = new Balise("template", "xsl");
-	template1->addAttribut("match", "nombre");
+	template2->addAttribut("match", "nombre");
 	
 	Balise *li = new Balise("li", "");
     Balise *valueOf = new Balise("value-of", "xsl");
+    valueOf->addAttribut("select",".");
     valueOf->setEmpty(true);
     
 	li->addElement(valueOf);

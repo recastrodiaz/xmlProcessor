@@ -73,26 +73,54 @@ void HTMLProc::construireHTML(Balise *balXMLCourante, Balise *balHTMLCourante, B
 		if((*itFils)->GetNom() == "apply-templates") 
 			 findTemplate(balXMLCourante, balHTMLCourante);
 		else if((*itFils)->GetNom() == "value-of")
-		{}
+		{
+            //vecE::iterator itFilsXML;
+            
+            //Balise *Bfils = dynamic_cast<Balise*>(*itFils);
+			//if(Bfils != 0) { //fils XML est une balise et non pas une data
+                //for(itFilsXML=(balXMLCourante->GetElem()).begin();itFilsXML != (balXMLCourante->GetElem()).end();itFilsXML++){
+                    //cout << "fils XML :" << (*itFilsXML)->GetNom();
+                    //if(Bfils->GetAttributs()["select"] == (*itFilsXML)->GetNom()){
+                        //Data *DToAdd = dynamic_cast<Data*>(Bfils->GetElem().front());
+                        //if (DToAdd != 0){//c'est une data on peut ajouter
+                        
+                            balHTMLCourante->addElement(balXMLCourante->GetElem().front()); //on prend le data                            
+                        //}
+                        //else
+                        //{
+                            //Erreur ce n'est pas un #PCDATA
+                        //}
+ 
+                    //}
+                //}
+                //if(itFilsXML == (balXMLCourante->GetElem()).end()){
+                    //balise not found
+                //}
+                    
+            //}
+            //else{
+                //balise not found
+            //}
+        }
         else if((*itFils)->GetNom() == "template")
 		{}
 		else{  //c'est une element HTML
 			Balise *Bfils = dynamic_cast<Balise*>(*itFils);
 			if(Bfils == 0) { //balise = data
-				//Data *dataFils = new Data((Data)Bfils->GetValue());
 				balHTMLCourante->addElement(*itFils);
                 (*itFils)->Print();
 			}
 			else{ //balise avec des fils
 				if (balHTMLCourante == NULL){
 					balHTMLCourante = new Balise(Bfils->GetNom(), Bfils->GetNs());
-                    balHTMLCourante->Print();
+                    docHTML->SetRoot(balHTMLCourante);
+//                    balHTMLCourante->Print();
 					construireHTML(balXMLCourante, balHTMLCourante, Bfils);
 				}
 				else{
 					//Balise *nvelleBalHTML = new Balise(balXSLCourante->GetNom(), balXSLCourante->GetNs());
                     Balise *nvelleBalHTML = new Balise(Bfils->GetNom(), Bfils->GetNs());
-                    nvelleBalHTML->Print();
+//                    nvelleBalHTML->Print();
 					construireHTML(balXMLCourante, nvelleBalHTML, Bfils); 
 					balHTMLCourante->addElement(nvelleBalHTML);
 				}
@@ -108,16 +136,14 @@ void HTMLProc::findTemplate(Balise *balXMLCourante, Balise *balHTMLCourante){
         for(itXSL=(rootXSL->GetElem()).begin();itXSL!=(rootXSL->GetElem()).end();itXSL++){ //recherche d'une règle s'appliquant à la balise XML courante
             Balise *BXSL = dynamic_cast<Balise*>(*itXSL); //verification pour voir s'il s'agît bien d'une balise, ça aurait pu etre un data
 			if(BXSL != 0) { //balise
-                
                 if(BXSL->GetNom() == "template" && (BXSL->GetAttributs()["match"]) == (*itFilsXML)->GetNom()){ //template found
-                    cout << "balise XSL: " << BXSL->GetNom() << endl;
-                    cout << "match : " << BXSL->GetAttributs()["match"] << " nom XML :" << (*itFilsXML)->GetNom() << endl;
+/*                    cout << "balise XSL: " << BXSL->GetNom() << endl;
+                    cout << "match : " << BXSL->GetAttributs()["match"] << " nom XML :" << (*itFilsXML)->GetNom() << endl;*/
                     construireHTML((Balise *)*itFilsXML, balHTMLCourante, BXSL);
                 }
 			}
 			
 		}
-        //findTemplate((Balise *)*itFilsXML, balHTMLCourante);
 	}
 }
 

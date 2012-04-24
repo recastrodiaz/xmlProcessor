@@ -75,6 +75,18 @@ AttList::~AttList ()
 // Algorithme :
 //
 {
+	// mElement est détruit par DtdDocument
+	mElement = NULL;
+
+	if( mAttDefs )
+	{
+		for(std::list <AttDef*>::iterator it = mAttDefs->begin(); it != mAttDefs->end(); it++)
+		{
+			delete *it;
+		}
+		delete mAttDefs;
+	}
+	
 } //----- fin de ~DtdElement
 
 const std::list<AttDef*> * AttList::getAttDefs() const

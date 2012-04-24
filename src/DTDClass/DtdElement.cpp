@@ -67,6 +67,9 @@ DtdElement::~DtdElement ()
 // Algorithme :
 //
 {
+		delete mAttributeReference;
+		// mAttList sera détruit par DtdDocument
+		// mAttDef sera détruit par DtdDocument
 } //----- fin de ~DtdElement
 
 std::string DtdElement::GetName()

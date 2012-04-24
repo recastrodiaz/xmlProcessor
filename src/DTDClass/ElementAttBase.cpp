@@ -56,6 +56,7 @@ ElementAttBase::~ElementAttBase ()
 // Algorithme :
 //
 {
+	mOwner = NULL;
 } //----- fin de ~ElementAttBase
 
 

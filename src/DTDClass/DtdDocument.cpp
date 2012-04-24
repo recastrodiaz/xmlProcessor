@@ -60,6 +60,15 @@ DtdDocument::~DtdDocument ()
 //
 {
 	// TODO delete mBalises
+	if( mBalises )
+	{
+		std::list<DtdBalise *>::iterator it = mBalises->begin();
+		for( ; it != mBalises->end(); it++ )
+		{
+			delete * it; 
+		}
+		delete mBalises;
+	}
 
 	// deleting regex
 	std::map<std::string, regex_t>::iterator iter;

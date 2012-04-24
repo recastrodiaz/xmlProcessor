@@ -75,7 +75,8 @@ dtd_list_opt												// On met a jour la reference sur dtd_list_opt
 															// On construit une nouvelle liste d'attribut avec comme parametres <IDENT> construit en std::string et <att_definition_opt>
 															AttList * attList = new AttList( std::string($3), $4 );
 															// On l'ajoute a la liste des balises DTD
-															$$->push_back( attList ); }
+															$$->push_back( attList ); 
+															free($3);	}
 															// On met a jour la reference sur dtd_list_opt
 | dtd_list_opt elementspec								{ 	$$ = $1;
 															// On ajoute <elementspec> a la liste des balises DTD
@@ -95,7 +96,10 @@ att_definition_opt											// On met a jour la reference sur att_definition_op
 
 // Definition d'un attribut
 attribute													// <attribute> est construit par l'appel a AttDef
-: IDENT att_type default_declaration					{ 	$$ = new AttDef( std::string($1), std::string($2), std::string($3) ); }
+: IDENT att_type default_declaration					{ 	$$ = new AttDef( std::string($1), std::string($2), std::string($3) ); 
+															free( $1 );
+															free( $2 );
+															free( $3 );		}
 ;
 
 // Type d'un attribut <attribute>
@@ -109,13 +113,15 @@ att_type													// TODO:Passer a strdup()
 															// On affecte TOKENTYPE a <att_type>
 | TOKENTYPE												{	/*$$ = new std::list<std::string>();
 															$$->push_back( std::string($1) );*/
-															$$ = $1; }
+															$$ = $1;
+															/*free( $1 );*/ }
 /*| enumerate												{	$$ = $1; }	/* N'est jamais utilisé */
 ;
 
 // Definition des declarations par defaut
 default_declaration											// <default_declaration> prend la valeur de DECLARATION
-: DECLARATION											{	$$ = $1;	}
+: DECLARATION											{	$$ = $1;	
+															/*free($1);*/	}
 															// <default_declaration> prend la valeur de STRING
 | STRING     											{	$$ = $1;	}
 															// On construit la chaine de caractere suivante: "FIXED " + STRING
@@ -125,7 +131,7 @@ default_declaration											// <default_declaration> prend la valeur de DECLAR
 															// On affecte str a <default_declaration>
 															$$ = str;
 															// On vide la memoire
-															free($2); /* TODO free STRINGs */ }
+															free($2); /* TODO free STRINGs OK ???*/ }
 ;
 
 
@@ -157,7 +163,8 @@ elementspec													// On construit un element de DTD
 															// On ajoute l'element dans la liste composant le document DTD
 															dtdDocument->addElementByName( std::string($2), element ); 
 															// <elementspec> prend pour valeur l'element construit
-															$$ = element; }
+															$$ = element;
+															free( $2 );		}
 ;
 
 // Definition du contenu
@@ -187,11 +194,13 @@ mixed
 list_mixed_plus												// <list_mixed_plus> est mis a jour
 : list_mixed_plus PIPE IDENT							{	$$ = $1;
 															// On ajoute un nouvel ElementAtt a la liste de contenu mixte
-															$$->push_back( new ElementAtt( std::string($3) )); }
+															$$->push_back( new ElementAtt( std::string($3) ));
+															free( $3 ); }
 															// <list_mixed_plus> est construit comme un nouvel ElementAttList avec une aggregation de type PIPE
 | PIPE IDENT											{	$$ = new ElementAttList( ElementAttList::A_PIPE );
 															// On ajoute un nouvel ElementAtt d'identifiant <IDENT> a la liste <list_mixed_plu>
-															$$->push_back( new ElementAtt( std::string($2) )); }
+															$$->push_back( new ElementAtt( std::string($2) )); 
+															free( $2 );	}
 ;
 
 // Definition d'un contenu de type 'children'
@@ -282,6 +291,7 @@ cp															// <cp> est mis a jour avec la valeur de <children>
 															e->setCardinality( $2 );
 															// Mise a jour de <cp> avec le nouvel element
 															$$ = e;
+															free( $1 );
 															//((ElementAttList *)$$)->push_back( e ); 
 														}
 ;

@@ -51,7 +51,10 @@ ElementAttList::~ElementAttList ()
 // Algorithme :
 //
 {
-
+	for(std::list <ElementAttBase *>::iterator it = mElementAttBase.begin(); it != mElementAttBase.end(); it++)
+    {
+      delete * it;
+    }
 } //----- fin de ElementAtt::~ElementAtt
 
 std::string ElementAttList::GetRe()

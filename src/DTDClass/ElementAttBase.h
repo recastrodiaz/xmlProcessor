@@ -54,7 +54,7 @@ class ElementAttBase
 
 	protected:
 		// DtdElement parent
-		DtdElement * owner;
+		DtdElement * mOwner;
 		ElementAttBase::Cardinality mCardinality;
 };
 

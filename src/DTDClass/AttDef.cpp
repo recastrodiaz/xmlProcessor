@@ -65,6 +65,8 @@ AttDef::~AttDef ()
 // Algorithme :
 //
 {
+	// mElement sera détruit par DtdDocument
+	mElement = NULL;
 } //----- fin de ~DtdElement
 
 

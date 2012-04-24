@@ -41,7 +41,7 @@ using namespace std;
 //{
 //} //----- fin de Nom
 
-HTMLProc::HTMLProc (DocXML *unDocXML, DocXML *unDocXSL) : rootXSL(unDocXSL->GetRoot())
+HTMLProc::HTMLProc (DocXML *unDocXML, DocXML *unDocXSL) : rootXSL(unDocXSL->GetRoot()), erreur(false)
 /* Algorithme :
 Constructeur de HTMLProc:
 */
@@ -64,63 +64,72 @@ HTMLProc::~HTMLProc ()
 
 } //----- fin de Destructeur
 
-
+Data * HTMLProc::findFils(string nom, Element *baliseCourante, bool &erreur){
+    Data *data = dynamic_cast<Data*>(baliseCourante);
+    if (data != 0) {//c'est une data donc j'arrete la recherche
+        return NULL; //pas trouvé
+    }else{
+        Balise *baliseC = dynamic_cast<Balise*>(baliseCourante);
+        if(baliseCourante->GetNom() == nom){ //je trouve la balise que je recherche
+            Data *DToAdd = dynamic_cast<Data*>(baliseC->GetElem().front());
+            if ((DToAdd != 0) && (baliseC->GetElem().size() == 1)){ //vérification du contenu à ajouter => il faut que ce soit uniquement une Data
+                return DToAdd;
+            }else{
+                erreur = true;
+                return NULL; //trouvé mais erreur car contient autre chose qu'une simple DATA
+            }
+        }else{
+            vecE::iterator itFils;
+            Data *result;
+            for(itFils=(baliseC->GetElem()).begin();itFils!=(baliseC->GetElem()).end();itFils++){
+                result = findFils(nom, (*itFils), erreur); 
+                if(result != NULL || erreur)//choix de retourner le contenu de la première balise rencontrée 
+                    return result;
+            }
+            return result;
+        }
+    }
+}
 
 
 void HTMLProc::construireHTML(Balise *balXMLCourante, Balise *balHTMLCourante, Balise *balXSLCourante){
 	vecE::iterator itFils;
+    //bool erreur = false;
 	for(itFils=(balXSLCourante->GetElem()).begin();itFils != (balXSLCourante->GetElem()).end();itFils++){ //pour tous les fils de la balise XSL courante
 		if((*itFils)->GetNom() == "apply-templates") 
 			 findTemplate(balXMLCourante, balHTMLCourante);
-		else if((*itFils)->GetNom() == "value-of")
-		{
-            //vecE::iterator itFilsXML;
-            
-            //Balise *Bfils = dynamic_cast<Balise*>(*itFils);
-			//if(Bfils != 0) { //fils XML est une balise et non pas une data
-                //for(itFilsXML=(balXMLCourante->GetElem()).begin();itFilsXML != (balXMLCourante->GetElem()).end();itFilsXML++){
-                    //cout << "fils XML :" << (*itFilsXML)->GetNom();
-                    //if(Bfils->GetAttributs()["select"] == (*itFilsXML)->GetNom()){
-                        //Data *DToAdd = dynamic_cast<Data*>(Bfils->GetElem().front());
-                        //if (DToAdd != 0){//c'est une data on peut ajouter
-                        
-                            balHTMLCourante->addElement(balXMLCourante->GetElem().front()); //on prend le data                            
-                        //}
-                        //else
-                        //{
-                            //Erreur ce n'est pas un #PCDATA
-                        //}
- 
-                    //}
-                //}
-                //if(itFilsXML == (balXMLCourante->GetElem()).end()){
-                    //balise not found
-                //}
-                    
-            //}
-            //else{
-                //balise not found
-            //}
-        }
-        else if((*itFils)->GetNom() == "template")
-		{}
-		else{  //c'est une element HTML
+		else if((*itFils)->GetNom() == "value-of"){
+            if(((Balise*)(*itFils))->GetAttributs()["select"] == balXMLCourante->GetNom() || ((Balise*)(*itFils))->GetAttributs()["select"] == "."){ //<xsl:value-of select="NomBaliseCourante" >
+                Data *DToAdd = dynamic_cast<Data*>(balXMLCourante->GetElem().front());
+                if ((DToAdd != 0) && (balXMLCourante->GetElem().size() == 1)){ //vérification du contenu à ajouter => il faut que ce soit uniquement une Data
+                    balHTMLCourante->addElement(DToAdd);
+                }else{
+                    //Erreur on ne rajoute pas uniquement une Data
+                    cout << "Erreur on ne rajoute pas seulement une DATA" << endl;
+                }
+            }else{ //<xsl:value-of select="NomBaliseFille">
+                Data *DToAdd = findFils(((Balise*)(*itFils))->GetAttributs()["select"], balXMLCourante, erreur);
+                if(DToAdd != NULL)
+                    balHTMLCourante->addElement(DToAdd);
+                else if (erreur){
+                    //Erreur on ne rajoute pas uniquement une Data
+                    cout << "Erreur on ne rajoute pas seulement une DATA" << endl;
+                }else{
+                    //Balise non trouvée
+                    cout << "Erreur balise non trouvée" << endl;
+                }
+            }
+        }else{  //c'est une element HTML
 			Balise *Bfils = dynamic_cast<Balise*>(*itFils);
 			if(Bfils == 0) { //balise = data
 				balHTMLCourante->addElement(*itFils);
-                (*itFils)->Print();
-			}
-			else{ //balise avec des fils
+			}else{ //balise avec des fils
 				if (balHTMLCourante == NULL){
 					balHTMLCourante = new Balise(Bfils->GetNom(), Bfils->GetNs());
                     docHTML->SetRoot(balHTMLCourante);
-//                    balHTMLCourante->Print();
 					construireHTML(balXMLCourante, balHTMLCourante, Bfils);
-				}
-				else{
-					//Balise *nvelleBalHTML = new Balise(balXSLCourante->GetNom(), balXSLCourante->GetNs());
+				}else{
                     Balise *nvelleBalHTML = new Balise(Bfils->GetNom(), Bfils->GetNs());
-//                    nvelleBalHTML->Print();
 					construireHTML(balXMLCourante, nvelleBalHTML, Bfils); 
 					balHTMLCourante->addElement(nvelleBalHTML);
 				}
@@ -129,22 +138,27 @@ void HTMLProc::construireHTML(Balise *balXMLCourante, Balise *balHTMLCourante, B
 	}
 }
 
-void HTMLProc::findTemplate(Balise *balXMLCourante, Balise *balHTMLCourante){
-	vecE::iterator itFilsXML;
-	vecE::iterator itXSL;
-	for(itFilsXML=(balXMLCourante->GetElem()).begin();itFilsXML != (balXMLCourante->GetElem()).end();itFilsXML++){ //parcours des balises XML (fils de la balise courante)
-        for(itXSL=(rootXSL->GetElem()).begin();itXSL!=(rootXSL->GetElem()).end();itXSL++){ //recherche d'une règle s'appliquant à la balise XML courante
-            Balise *BXSL = dynamic_cast<Balise*>(*itXSL); //verification pour voir s'il s'agît bien d'une balise, ça aurait pu etre un data
-			if(BXSL != 0) { //balise
-                if(BXSL->GetNom() == "template" && (BXSL->GetAttributs()["match"]) == (*itFilsXML)->GetNom()){ //template found
-/*                    cout << "balise XSL: " << BXSL->GetNom() << endl;
-                    cout << "match : " << BXSL->GetAttributs()["match"] << " nom XML :" << (*itFilsXML)->GetNom() << endl;*/
-                    construireHTML((Balise *)*itFilsXML, balHTMLCourante, BXSL);
+void HTMLProc::findTemplate(Element *balXMLCourante, Balise *balHTMLCourante){
+	Data *data = dynamic_cast<Data*>(balXMLCourante);
+    if (data != 0) {//c'est une data donc j'arrete la recherche
+        return; //je suis descendu au plus profond
+    }else{
+        vecE::iterator itFilsXML;
+        vecE::iterator itXSL;
+        Balise *baliseC = dynamic_cast<Balise*>(balXMLCourante);
+        for(itFilsXML=(baliseC->GetElem()).begin();itFilsXML != (baliseC->GetElem()).end();itFilsXML++){ //parcours des balises XML (fils de la balise courante)
+            if((baliseC->GetElem()).size() != 0)
+                findTemplate((Balise *)*itFilsXML, balHTMLCourante); //récursion pour les fils
+            for(itXSL=(rootXSL->GetElem()).begin();itXSL!=(rootXSL->GetElem()).end();itXSL++){ //recherche d'une règle s'appliquant à la balise XML courante
+                Balise *BXSL = dynamic_cast<Balise*>(*itXSL); //verification pour voir s'il s'agît bien d'une balise, ça aurait pu etre un data
+                if(BXSL != 0) { //c'est une balise
+                    if(BXSL->GetNom() == "template" && (BXSL->GetAttributs()["match"]) == (*itFilsXML)->GetNom()){ //template trouvé
+                        construireHTML((Balise *)*itFilsXML, balHTMLCourante, BXSL);
+                    }
                 }
-			}
-			
-		}
-	}
+            }
+        }
+    }
 }
 
 
@@ -153,74 +167,6 @@ void HTMLProc::Print ()
 // Affichage de la balise et de ses composants
 //
 {
-    (docHTML->GetRoot())->Print();
+    docHTML->Print();
         
 } //----- fin de Print
-
-/*void HTMLProc::parcoursFilsXML(Balise * uneBaliseXML){
-// Algorithme : parcoursFilsXML
-//parcours de l'arbre XML
-//
-	vecE::iterator itXML;
-	for(itXML=(uneBaliseXML->elements).begin();itXML!=(uneBaliseXML->elements).end(); itXML++){
-		Balise *Bfils = dynamic_cast<Balise*>(*itXML);
-		if(Bfils != 0) {
-			cout << "cast reussi" << endl;
-			findXSLMatch(Bfils);
-		}
-		else{
-			cout << "cast fail" << endl;
-		}
-	}
-}*/
-
-/*void HTMLProc::findXSLMatch(Balise * uneBalise) {
-// Algorithme : findXSLMatch
-//remplissage de l'arbre html
-//
-	vecE::iterator itXML;
-	vecE::iterator itXSL = this->rootXSL;
-	for(itXML=(uneBalise->elements).begin();itXML!=(uneBalise->elements).end(); itXML++){ //parcours de l'arbre XML
-		
-		if(itXSL.nom == "template" && (itXSL.attributs[0])->second == uneBalise.nom){ //parcours de l'arbre XSL
-			vecE::iterator itXSLfils;
-			//on traite!
-			for (itXSLfils= (itXSL->elements).begin() ; itXSLfils != (itXSL->elements).end(); itXSLfils++){ //
-				if (itXSLfils.GetNom == "apply-templates"){ //parcours des fils de la balise XML courante
-					parcoursFilsXML(*itXML);
-				}
-				else if(itXSLfils->nom == "value-of")
-				{
-					if(itXSLfils->attributs[0]->first == "select")
-					{
-					  if(itXSLfils->attributs[0]->second == ".")
-					  { // Valeur de la data de la balise XML
-					    // On suppose qu'il n'existe qu'un seul fils à l'élément considéré
-                                            // et que ce fils est un élément Data
-   					docHTML->elements.addElement(itXML->elements[0])
-						
-					  }
-					  else if(((itXSLfils->attributs[0])->second)[0] == '@' )
-					  {  // Valeur de l'attribut de la balise XML
-						
-					  }
-					}
-
-				}
-				else{ //copie dans l'arbre html des balises filles du "xsl:template" courant
-					if(itXSLfils->ns != "xsl"){
-						Balise *baliseToAdd = new Balise(itXSLfils->GetNom(), itXSLfils->GetNs());
-						(htmlCourant==NULL) ? htmlCourant = baliseToAdd : htmlCourant->addElement(baliseToAdd);
-					}
-					htmlCourant->elements.addElement(*itXSLfils);	
-				}	
-			}
-		}
-		else{
-			parcoursFilsXML(uneBalise);
-		}
-		itXSL++;
-	}
-	
-}*/
-

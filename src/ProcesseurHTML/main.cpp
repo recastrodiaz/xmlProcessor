@@ -15,17 +15,19 @@ int main()
      <xsl:stylesheet>
      
      <xsl:template match="liste_nombres">
-     <html><body>
-     <p>Liste de nombres :</p>
+     <html>
+     <body>
+     data dans le body
      <ul>
-     <xsl:apply-templates select="nombre" />
+     <xsl:apply-templates select="nombre"/>
      </ul>
-     </body></html>
+     </body>
+     </html>
      </xsl:template>
      
      <xsl:template match="nombre">
      <li>
-     <xsl:value-of/>
+     <xsl:value-of select="."/>
      </li>
      </xsl:template>
      
@@ -39,12 +41,14 @@ int main()
 	
 	Balise *html = new Balise("html", "");
 	Balise *body = new Balise("body", "");
+    Data *dataB = new Data("data dans le body");
 	Balise *ul = new Balise("ul", "");	
 	Balise *applyT = new Balise("apply-templates", "xsl");
     applyT->setEmpty(true);
     applyT->addAttribut("select", "nombre");
 
 	ul->addElement(applyT);
+    body->addElement(dataB);
 	body->addElement(ul);
 	html->addElement(body);
 	template1->addElement(html);
@@ -55,7 +59,7 @@ int main()
 	
 	Balise *li = new Balise("li", "");
     Balise *valueOf = new Balise("value-of", "xsl");
-    valueOf->addAttribut("select",".");
+    valueOf->addAttribut("select","nombreDix");
     valueOf->setEmpty(true);
     
 	li->addElement(valueOf);
@@ -70,15 +74,19 @@ int main()
     //Arbre XML
     /*
      <liste_nombres>
-     <nombre>dix</nombre>
-     <nombre>zéro</nombre>
+        <nombre>
+            <nombreDix>dix</nombreDix>
+        </nombre>
+        <nombre>zero</nombre>
      </liste_nombres>
      */
     Balise *listeNombres = new Balise("liste_nombres","");
     
     Balise *nombreDix = new Balise("nombre","");
+    Balise *nombreDix2 = new Balise("nombreDix","");
     Data *dataDix = new Data("dix");
-    nombreDix->addElement(dataDix);
+    nombreDix2->addElement(dataDix);
+    nombreDix->addElement(nombreDix2);
     Balise *nombreZero = new Balise("nombre","");
     Data *dataZero = new Data("zero");
     nombreZero->addElement(dataZero);
@@ -95,6 +103,15 @@ int main()
     
     HTMLProc *docHTML = new HTMLProc(arbreXML, arbreXSL);
     docHTML->Print();
+    
+    /*//test findFils
+    cout << "test de findFils(): value-of select='nombreDix'" << endl;
+    bool erreur = false;
+    Data *data = docHTML->findFils("nombreDix", arbreXML->GetRoot(), erreur);
+    if(erreur)
+        cout << "erreur" << endl;
+    else
+        cout << "data : " << data->GetValue() << endl;*/
     
     
     

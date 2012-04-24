@@ -10,11 +10,12 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
+#include <iostream>
+using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "Balise.h"
-#include <iostream>
-using namespace std;
+
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -92,8 +93,8 @@ void Balise::Print ()
         cout << ">\r\n";
     
     //elements display
-	for (vecE::iterator it = elements->begin(); it!=elements->end(); ++it) {
-    		(*it)->Print();
+	for (vecE::iterator it = elements->begin(); it!=elements->end(); ++it) {	
+        (*it)->Print();
 	}
     
     cout << "</";

@@ -39,14 +39,14 @@ class HTMLProc { //abstract
 		HTMLProc(DocXML *unDocXML, DocXML *unDocXSL);
 		virtual ~HTMLProc();
 		void Print();
-		void findTemplate(Balise *balXMLCourante, Balise *balHTMLCourante);
+		void findTemplate(Element *balXMLCourante, Balise *balHTMLCourante);
+        Data *findFils(string nom, Element *baliseCourante, bool &erreur);
 	private:
-		//void findXSLMatch();
-		//void parcoursFilsXML(Balise * uneBaliseXML);
 		void construireHTML(Balise *balXMLCourante, Balise *balHTMLCourante, Balise *balXSLCourante);
 		DocXML *docHTML;
 		Balise *rootXML;
 		Balise *rootXSL;
+        bool erreur;
 };
 
 #endif // HTMLPROC_H

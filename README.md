@@ -5,17 +5,22 @@ This is a trivial academic project using Bison (GNU parser generator to work wit
 *Warning : for now, we only verify that each tag has the right children,
 but we do not verify the correctness of attributes. (and we do not verify many other things for sure ...)*
 
-##Compiling AnalyseurXML
-    cd src/AnalyseurXML && make
+## Compiling (The long way)
 
-##Compiling AnalyseurDTD
-    cd src/AnalyseurDTD && make
+###Compiling AnalyseurXML
+    cd src/AnalyseurXML && make clean && make
 
-##Building AnalyseurXMLDTD
+###Compiling AnalyseurDTD
+    cd src/AnalyseurDTD && make clean && make
+
+###Building AnalyseurXMLDTD
     cd src/ && make
+    
+## Compiling (The sort way)
+    cd src && make clean && ./build
 
 ##Starting
-Write a example.xml file containing a reference toward its DTD.
+Write an example.xml file containing a reference toward its DTD.
 This reference should be like the following line :
     <!DOCTYPE example SYSTEM "example.dtd">
 

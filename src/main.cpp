@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 
 	printf("Parsing XML\n");
 
-	//xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
+	xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
 	DocXML * doc;
 
 	//debug = 1; // pour désactiver l'affichage de l'exécution du parser LALR, commenter cette ligne

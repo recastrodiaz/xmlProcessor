@@ -43,7 +43,7 @@ using namespace std;
 //{
 //} //----- fin de Nom
 
-DocXML::DocXML()
+DocXML::DocXML() : root( NULL )
 {
 }
 

@@ -71,6 +71,7 @@ declarations_opt
 
 attributs_opt
  : attributs_opt IDENT EQ STRING { $$ = $1; (*$$)[string($2)] = string($4); free($2); free($4) }
+ | attributs_opt NSIDENT EQ STRING { $$ = $1; (*$$)[string($2)] = string($4); free($2); free($4) }
  | /*empty*/ { $$ = new mapSS();}
 ;
 

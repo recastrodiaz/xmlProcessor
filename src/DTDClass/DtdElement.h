@@ -52,6 +52,10 @@ class DtdElement : public DtdBalise
 
 		void Print();
 		std::string GetName();
+
+		/*
+		 * Return instance's regular expression (recursively)
+		 */
 		std::string GetRe();
 
 	protected:

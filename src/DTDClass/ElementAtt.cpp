@@ -42,30 +42,11 @@
 
 void ElementAtt::Print()
 {
-	std::cout << contentSpec ;
-
-    char card = '\0';
-    switch(mCardinality)
-    {
-    	case ElementAttBase::C_NONE:
-			break;
-    	case ElementAttBase::C_AST:
-    		card = '*';
-    		break;
-    	case ElementAttBase::C_PLUS:
-    	    card = '+';
-    		break;
-    	case ElementAttBase::C_QMARK:
-    	    card = '?';
-    		break;
-    }
-	if (mCardinality != ElementAttBase::C_NONE)
-	{
-		std::cout << card;
-	}
-
+	std::cout << contentSpec + GetCardinality();
 
 } //----- fin de ElementAtt::Print()
+
+
 ElementAtt::ElementAtt (std::string content, ElementAttBase::Cardinality card )
 	: ElementAttBase(card), contentSpec( content )
 // Algorithme :
@@ -81,20 +62,7 @@ ElementAtt::~ElementAtt ()
 
 std::string ElementAtt::GetRe()
 {
-	std::string contentSpecWithCardinality = "(" + contentSpec + ")";
-	switch (mCardinality) {
-	case ElementAttBase::C_NONE:
-		break;
-	case ElementAttBase::C_AST:
-		contentSpecWithCardinality += '*';
-		break;
-	case ElementAttBase::C_PLUS:
-		contentSpecWithCardinality += '+';
-		break;
-	case ElementAttBase::C_QMARK:
-		contentSpecWithCardinality += '?';
-		break;
-	}
+	std::string contentSpecWithCardinality = "(" + contentSpec + ")" + GetCardinality();
     return contentSpecWithCardinality;
 }
 

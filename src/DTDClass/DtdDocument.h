@@ -46,16 +46,26 @@ class DtdDocument
 		void setBalises( std::list<DtdBalise *> * balises );
 		void addElementByName( std::string elementName, DtdElement * element );
 		void Print();
+
+		/*
+		 * Generate mRe (a map matching the names of dtd elements
+		 * with their regular expression)
+		 */
 		void GenerateRE();
+
 		std::map<std::string,regex_t> & getMRe();
-    
+
+		/*
+		 * Check if xmlString is matching with the regular expression associated
+		 * with the DtdElement whose name is dtdElementName.
+		 */
 		bool CheckXmlElementValidity(std::string dtdElementName, std::string xmlString );
 
 	private:
 	
 		std::list<DtdBalise *> * mBalises;
 		
-		// a map matching the names of dtd elements with their RE
+		// a map matching the names of dtd elements with their regular expression
 		std::map<std::string,regex_t> mRe;
 
 		// Contains all DtdElements, searchable by name
@@ -63,6 +73,3 @@ class DtdDocument
 };
 
 #endif // DTD_DOCUMENT_H
-
-
-

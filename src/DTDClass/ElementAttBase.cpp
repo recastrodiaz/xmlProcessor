@@ -64,3 +64,20 @@ void ElementAttBase::setCardinality( ElementAttBase::Cardinality cardinality )
 {
 	mCardinality = cardinality;
 }
+
+std::string ElementAttBase::GetCardinality()
+{
+	std::string card = "";
+	switch (mCardinality) {
+		case ElementAttBase::C_AST:
+			card += "*";
+			break;
+		case ElementAttBase::C_PLUS:
+			card += "+";
+			break;
+		case ElementAttBase::C_QMARK:
+			card += "?";
+			break;
+		}
+	return card;
+}

@@ -46,7 +46,13 @@ class ElementAttList : public ElementAttBase
 		
 		void Print();
 		void push_back(ElementAttBase * elem);
+
+
+		/*
+		 * Return instance's regular expression (recursively)
+		 */
 		std::string GetRe();
+
 	private:
 		ElementAttList::TypeAgregat mTypeAgregat;
 		std::list <ElementAttBase*> mElementAttBase;

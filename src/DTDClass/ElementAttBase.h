@@ -45,9 +45,16 @@ class ElementAttBase
 	    ElementAttBase();
 		ElementAttBase( ElementAttBase::Cardinality cardinality );
 		virtual ~ElementAttBase();
+
 		// Devrait être redéfinie dans les sous-classes
 		virtual void Print() = 0;
+
+		/*
+		 * Return instance's regular expression (recursively)
+		 */
 		virtual std::string GetRe() = 0;
+
+		std::string GetCardinality();
 
 		void setCardinality( ElementAttBase::Cardinality cardinality );
 

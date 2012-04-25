@@ -57,6 +57,7 @@ ElementAttList::~ElementAttList ()
     }
 } //----- fin de ElementAtt::~ElementAtt
 
+
 std::string ElementAttList::GetRe()
 { 
     std::string agregat;
@@ -77,18 +78,9 @@ std::string ElementAttList::GetRe()
           re += agregat;
     }
     re += ")";
-    // Affichage de la cardinalite
-	switch (mCardinality) {
-	case ElementAttBase::C_AST:
-		re += "*";
-		break;
-	case ElementAttBase::C_PLUS:
-		re += "+";
-		break;
-	case ElementAttBase::C_QMARK:
-		re += "?";
-		break;
-	}
+
+	re += GetCardinality();
+
     return re;
 }
 
@@ -116,21 +108,8 @@ void ElementAttList::Print()
 		}
 		(*it)->Print();
 	}
-	std::cout << ")";
+	std::cout << ")" + GetCardinality();
 
-	// Affichage de la cardinalite
-	switch (mCardinality)
-	{ 
-		case ElementAttBase::C_AST:
-			std::cout << "*";
-			break;
-		case ElementAttBase::C_PLUS:
-			std::cout << "+";
-			break;
-		case ElementAttBase::C_QMARK:
-			std::cout << "?";
-			break;
-	}
 } //----- fin de ElementAttList::Print()
 
 void ElementAttList::push_back(ElementAttBase * elem)

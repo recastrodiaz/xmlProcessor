@@ -41,7 +41,7 @@ class DtdBalise
 		
 		// Affichage des éléments sur la sortie standard
 		// Doit être redéfini dans les classes filles
-		virtual void Print() {}// = 0;
+		virtual void Print() {} // = 0;
 
 
 };

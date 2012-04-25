@@ -41,6 +41,10 @@ class ElementAtt : public ElementAttBase
 		virtual ~ElementAtt();
 		
 		void Print();
+
+		/*
+		 * Return instance's regular expression (recursively)
+		 */
 		std::string GetRe();
 
 

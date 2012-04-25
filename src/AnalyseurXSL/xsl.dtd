@@ -1,0 +1,9 @@
+<!ELEMENT xsl:stylesheet (xsl:template)*>
+<!ELEMENT xsl:template ANY>
+<!ELEMENT xsl:apply-templates EMPTY>
+<!ELEMENT xsl:value-of EMPTY>
+
+<!ATTLIST xsl:stylesheet version CDATA #IMPLIED>
+<!ATTLIST xsl:stylesheet xmlns:xsl CDATA #IMPLIED>
+<!ATTLIST xsl:template match CDATA #IMPLIED>
+<!ATTLIST xsl:value-of select CDATA #IMPLIED>

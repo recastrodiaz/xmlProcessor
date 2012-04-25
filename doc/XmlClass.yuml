@@ -1,0 +1,11 @@
+// Definition
+[Balise|mapAttribut;nom;ns;empty]
+[Data|value]
+[DocXML|keyword;dtdUrl]
+[Element]
+// Héritage
+[Element]^-[Balise]
+[Element]^-[Data]
+// Association
+[DocXML]1->1[Balise]
+[Balise]1->*[Element] 

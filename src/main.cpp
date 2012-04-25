@@ -41,6 +41,10 @@ void testPrintBalise()
 
 int parseDoc(char * docToParse, DocXML *&doc, DtdDocument *dtdDocument, int &err){
 	bool xsl = false;
+	int index;
+	string filePath;
+	string dtdURL;
+	
 	if(std::string(docToParse).substr(strlen(docToParse)-3,strlen(docToParse)-1) == "xsl")
 		xsl = true;
 	
@@ -60,8 +64,16 @@ int parseDoc(char * docToParse, DocXML *&doc, DtdDocument *dtdDocument, int &err
 		printf("Parse ended with success\n", err);
 		doc->Print();
 		if(!xsl){
-			printf("dtdurl : %s\n",(doc->GetDtdUrl()).c_str());
-			dtdin = fopen((doc->GetDtdUrl()).c_str(),"r+");
+			
+			index = string(docToParse).find_last_of("/");
+			filePath.assign(docToParse,index+1);
+			cout<<"filepath : "<<filePath<<endl;
+			
+			dtdURL = filePath + doc->GetDtdUrl();
+
+			printf("dtdurl : %s\n",dtdURL.c_str());
+			
+			dtdin = fopen(dtdURL.c_str(),"r+");
 			
 			if (dtdin != NULL)
 			{
@@ -110,7 +122,7 @@ int main(int argc, char **argv)
 	DocXML * doc;
 	DocXML * stylesheetXSL;
 
-	//dtddebug = 1; // pour désactiver l'affichage de l'exécution du parser LALR, commenter cette ligne
+	//debug = 1; // pour désactiver l'affichage de l'exécution du parser LALR, commenter cette ligne
 	DtdDocument dtdDocument;
 	cout << "argc :" << argc << endl;
 	if (argc == 2)
@@ -159,11 +171,6 @@ int main(int argc, char **argv)
 				parseDoc(argv[2], stylesheetXSL, &dtdDocument, err);
 				if(err == 0)
 				{
-					cout << "HTML" << endl;
-					if (doc->GetRoot() == NULL)
-					{
-						cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
-					}
 					HTMLProc *docHTML = new HTMLProc(doc, stylesheetXSL);
 					docHTML->Print();
 				}

@@ -57,7 +57,6 @@ Constructeur de Balise:
 
 Balise::~Balise ()
 // Algorithme : Destructeur
-//
 {
 	vecE::iterator it;
 	for (vecE::iterator it = elements->begin(); it!=elements->end(); ++it) {
@@ -80,7 +79,7 @@ void Balise::Print ()
         cout << this->ns<<":";
     }
     cout << this->nom;
-    //attributs display
+    // Affichage des attributs
     for (mapSS::iterator it=attributs->begin(); it != attributs->end(); it++)
     {
         cout << " "<<it->first << "=\"" << it->second << "\""; 
@@ -92,12 +91,14 @@ void Balise::Print ()
     {
         cout << ">\r\n";
     
-    //elements display
+    	// Affichage des noeuds fils 
 	for (vecE::iterator it = elements->begin(); it!=elements->end(); ++it) {	
         (*it)->Print();
 	}
     
     cout << "</";
+
+    // Affichage du namespace 
     if (this->ns != ""){
         cout << this->ns<<":";
     }        
@@ -134,8 +135,8 @@ void Balise::addListAttributs (mapSS *uneListeAttributs)
 
 void Balise::addContent (vecE* elem)
 /* Algorithme :
- Ajout d'une suite d'éléments dans le corps de la balise
- - eleme: tableau contenant les éléments à ajouter au corps de la balise
+ Ajout d'une suite d'elements dans le corps de la balise
+ - elem: tableau contenant les elements a ajouter au corps de la balise
 */
 {
 	for ( vecE::iterator it = (*elem).begin(); it != (*elem).end(); it++)
@@ -143,9 +144,7 @@ void Balise::addContent (vecE* elem)
 } //----- fin de addContent
 
 void Balise::addElement(Element *elem)
-/* Algorithme :
- Ajoute un element
-*/
+// Algorithme : trivial
 {
 	elements->push_back(elem);
 } //----- fin de addElement
@@ -153,52 +152,52 @@ void Balise::addElement(Element *elem)
 
 void Balise::setEmpty(bool unEmpty)
 /* Algorithme :
- Indique que la balise ne contient aucun élément en mettant à jour l'attribut.
+ Indique que la balise ne contient aucun element en mettant a jour l'attribut.
 */
 {
 	this->empty = unEmpty;
 } //----- fin de setEmpty
 
 bool Balise::GetEmpty()
-/* Algorithme :
+/* Algorithme : trivial
 */
 {
 	return this->empty;
-} //----- fin de setEmpty
+} //----- fin de GetEmpty
 
 string Balise::GetNom()
 {
 	return this->nom;
-}
+} //----- fin de GetNom
 
 void Balise::SetNom(string unNom)
 {
 	this->nom = unNom;
-}
+} //----- fin de SetNom
 
 mapSS& Balise::GetAttributs()
 {
 	return *attributs;
-}
+} //----- fin de GetAttributs
 
 string Balise::GetNs()
 {
 	return this->ns;
-}
+} //----- fin de GetNs
 
 void Balise::SetNs(string unNs)
 {
 	this->ns = unNs;
-}
+} //----- fin de SetNs
 
 vecE& Balise::GetElem()
 {
 	return *elements;
-}
+} //----- fin de GetElem
 
 bool Balise::verifyValidity(DtdDocument & docDtd)
 {
-	// First, we verify this node
+	// Verification du noeud *this*
 	std::string stringToMatch = "";
 	if (this->empty)
 	{
@@ -215,9 +214,9 @@ bool Balise::verifyValidity(DtdDocument & docDtd)
 		std::cout<< "The \"" + nom + "\" tag is not valid" << endl;
 		return false;
 	}
-	// *this* node is OK
+	// *this* est valide
 
-	//we are going to check its children
+	// Verification des noeuds fils
 	for (vecE::iterator it = elements->begin(); it != elements->end(); it++) {
 		if (!(**it).verifyValidity(docDtd))
 		{
@@ -225,5 +224,4 @@ bool Balise::verifyValidity(DtdDocument & docDtd)
 		}
 	}
 	return true;
-
-}
+} //----- fin de verifyValidity

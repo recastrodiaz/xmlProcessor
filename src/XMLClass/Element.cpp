@@ -41,16 +41,12 @@
 //} //----- fin de Nom
 
 Element::Element ()
-// Algorithme :
-//
 {
-} //----- fin de Nom
+} //----- fin de Constructeur
 
 Element::~Element ()
-// Algorithme :
-//
 {
-} //----- fin de Nom
+} //----- fin de Destructeur
 
 
 

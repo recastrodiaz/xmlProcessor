@@ -48,44 +48,47 @@ DocXML::DocXML() : root(NULL)
 }
 
 DocXML::DocXML (Balise* unRoot, string unKeyword, string uneUrl) : root(unRoot), keyword(unKeyword), dtdUrl(uneUrl) 
-// Algorithme :
-//
+/* Algorithme :
+   - unRoot : pointe vers la balise racine du document xml
+   - unKeyword : SYSTEM eventuellement
+   - uneUrl : url de la dtd correspondant au document xml
+*/
 {
-} //----- fin de Nom
+} //----- fin de Constructeur
 
 DocXML::~DocXML ()
-// Algorithme :
-//
+// Algorithme : trivial
 {
-} //----- fin de Nom
+} //----- fin de Destructeur
 
 
 void DocXML::Print()
-// Algorithme :
-//
+// Algorithme : trivial
 {
 	if(root != NULL)
     	this->root->Print();
 	else
 		std::cout << "ROOT IS NULL" << std::endl;
-} //----- fin de Nom
+} //----- fin de Print
 
 
 bool DocXML::verifyValidity(DtdDocument & docDtd)
+// Algorithme : Verification recursive de la validite
+// de tous les noeuds du document xml
 {
 	return root->verifyValidity(docDtd);
-}
+} //----- fin de verifyValidity
 
 
 Balise* DocXML::GetRoot(){
 	return this->root;
-}
+} //----- fin de GetRoot
 
 void DocXML::SetRoot(Balise* uneBalise){
 	this->root = uneBalise;
-}
+} //----- fin de SetRoot
 
 string DocXML::GetDtdUrl(){
 	return dtdUrl;
-}
+} //----- fin de GetDtdUrl
 

@@ -36,13 +36,16 @@ class Element { //abstract
 	public:
 		Element();
 		virtual ~Element();
-		virtual void Print() = 0; //pour récupérer le CDATA
+		virtual void Print() = 0; 
+		// Mode d'emploi : Affichera le contenu du noeud *this*
 
-		// Return the name of the node.
-		// NB : the name of a data node is #PCDATA
 		virtual std::string GetNom() = 0;
+		// Mode d'emploi : Renvoie le nom du noeud xml *this*
+		// NB : le nom d'un noeud de type Data est "#PCDATA"
 
 		virtual bool verifyValidity(DtdDocument & docDtd)=0;
+		// Mode d'emploi : Verifiera la validite du noeud xml 
+		// par rapport a la dtd
 };
 
 #endif // ELEMENT_H

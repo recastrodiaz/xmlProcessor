@@ -42,102 +42,43 @@ using namespace std;
 class Balise: public Element {
 public:
 	Balise(string unNom, string unNs = "");
-	// Mode d'emploi :
-	//
-	// Contrat :
-	//
-
 	virtual ~Balise();
-	// Mode d'emploi :
-	//
-	// Contrat :
-	//
 
 	void Print();
-	// Mode d'emploi :
-	//
-	// Contrat :
-	//
 
 	void addAttribut(string label, string value);
-	// Mode d'emploi :
-	//
-	// Contrat :
-	//
+	// Mode d'emploi : Ajoute un attribut label="value"
 
 	void addListAttributs(mapSS *uneListeAttributs);
-	// Mode d'emploi :
-	//
-	// Contrat :
-	//
-
-	void addContent(vecE* elem);
-	// Mode d'emploi :
-	//
-	// Contrat :
-	//
+	// Mode d'emploi : Ajoute une map<string,string> 
+	// d'attribut label="value"
 
 	void addElement(Element* elem);
-	// Mode d'emploi :
-	//
-	// Contrat :
-	//
+	// Mode d'emploi : Ajoute un element fils
+
+	void addContent(vecE* elem);
+	// Mode d'emploi : Ajoute un vecteur<Element>
+	// d'elements fils
 
 	void setEmpty(bool unEmpty);
-	// Mode d'emploi :
-	//
-	// Contrat :
-	//
+	// Mode d'emploi : Indique s'il s'agit d'une
+	// balise vide
 
 	bool GetEmpty();
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
 	string GetNom();
-	// Mode d'emploi :
-	//
-	// Contrat :
-	//
-
-
 	void SetNom(string unNom);
-	// Mode d'emploi :
-	//
-	// Contrat :
-	//
-
-	mapSS& GetAttributs();
-	// Mode d'emploi :
-	//
-	// Contrat :
-	//
-
 	string GetNs();
-	// Mode d'emploi :
-	//
-	// Contrat :
-	//
+	// Mode d'emploi : Renvoie le namespace
 
 	void SetNs(string unNs);
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
+	mapSS& GetAttributs();
 	vecE& GetElem();
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 	
 	bool verifyValidity(DtdDocument & docDtd);
-    // Mode d'emploi :
-	//
-	// Contrat :
-	//
-
+	// Mode d'emploi : Verifie la validite d'un 
+	// noeud xml par rapport a la dtd du document
 
 	private:
 	mapSS *attributs;

@@ -40,17 +40,29 @@ class DocXML {
 		DocXML();
 		DocXML(Balise* unRoot, string unKeyword, string uneUrl);
 		virtual ~DocXML();
-		Balise *GetRoot();
-		void SetRoot(Balise* uneBalise);
-        	void Print();
-		bool verifyValidity(DtdDocument & docDtd);
-		string GetDtdUrl();
 
+		Balise *GetRoot();
+		// Mode d'emploi : Renvoie un pointeur sur la balise
+		// racine du document
+
+		void SetRoot(Balise* uneBalise);
+
+        	void Print();
+		// Mode d'emploi : Affiche le document
+
+		bool verifyValidity(DtdDocument & docDtd);
+		// Mode d'emploi : Verifie la validite d'un document
+		// xml par rapport a sa dtd
+
+		string GetDtdUrl();
     
     private:
         Balise* root;
+	// Balise racine du document xml
+
         string keyword;
         string dtdUrl;
+	// Url de la dtd utilisee
 };
 
 #endif // DOCXML_H

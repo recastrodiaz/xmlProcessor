@@ -39,16 +39,22 @@ class Data : public Element {
 	public:
 		Data(string uneValue);
 		virtual ~Data();
-		void Print(); //pour récupérer le CDATA
-		string GetValue();
+		void Print(); 
+		// Mode d'emploi : Affiche le #PCDATA
 
-		// Return #PCDATA
+		string GetValue();
+		// Mode d'emploi : Renvoie le #PCDATA
+
 		std::string GetNom();
+		// Mode d'emploi : Renvoie "#PCDATA"
 
 		bool verifyValidity(DtdDocument & docDtd);
+		// Mode d'emploi : Verifie la validite d'un 
+		// noeud xml par rapport a la dtd du document
 
 	private:
 		string value;
+		// #PCDATA
 };
 
 #endif // ELEMENT_H

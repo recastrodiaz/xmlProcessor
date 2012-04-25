@@ -169,6 +169,9 @@ bool DtdDocument::CheckXmlElementValidity(std::string dtdElementName, std::strin
 		return false;
 	}
 
+	//DEBUG
+	//cout << "xmlString :" + xmlString << endl;
+
 	// We have found the dtdElementName
 	regex_t regex = dtdElementNameIt->second;
 

@@ -9,7 +9,7 @@
 using namespace std;
 
 
-    bool empty=false;
+bool empty=false;
 string dtdURL;
 extern FILE* xmlin;
 int xmlwrap(void);
@@ -89,7 +89,7 @@ empty_or_content
 close_content_and_end
  : CLOSE content_opt END { $$ = $2; }
  | CLOSE content_opt NSEND { $$ = $2; }
- | CLOSE content_opt error { $$ = $2; printf("Une erreur\n"); /*TODO: Traiter l'erreur! */ }
+ | CLOSE content_opt error { $$ = $2; printf("Une balise n'est pas fermee\n"); /* On informe l'utilisateur */ }
  ;
 content_opt 
  : content_opt DATA	{ $$ = $1; (*$$).push_back(new Data(string($2))); }

@@ -1,4 +1,6 @@
 #!/bin/bash
+# On clean
+make clean
 # On construit l'analyseur XML
 cd AnalyseurXML
 make

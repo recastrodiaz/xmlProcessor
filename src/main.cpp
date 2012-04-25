@@ -39,15 +39,17 @@ void testPrintBalise()
 int main(int argc, char **argv)
 {
 	int err;
+	string filePath;
+	int index;
 //*	
 	//testPrintBalise();
 
 	printf("Parsing XML\n");
 
-	xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
+	//xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
 	DocXML * doc;
 
-	//dtddebug = 1; // pour désactiver l'affichage de l'exécution du parser LALR, commenter cette ligne
+	//debug = 1; // pour désactiver l'affichage de l'exécution du parser LALR, commenter cette ligne
 	DtdDocument dtdDocument;
 
 	if (argv[1] != NULL)
@@ -57,6 +59,10 @@ int main(int argc, char **argv)
 			 std::string(argv[1]).substr(strlen(argv[1])-3,strlen(argv[1])-1) == "xsl" )
 		{
 			std::cout << "On va parser du XML!" << std::endl;
+			index = string(argv[1]).find_last_of("/");
+			filePath.assign(argv[1],index+1);
+			cout<<"filepath : "<<filePath<<endl;
+
 			xmlin = fopen(argv[1],"r+");
 			if (xmlin == NULL)
 				return -1;
@@ -71,6 +77,8 @@ int main(int argc, char **argv)
   			else  
 			{
 				printf("Parse ended with success\n", err);
+				dtdURL = filePath + dtdURL;
+
 				printf("dtdurl : %s\n",dtdURL.c_str());
 				dtdin = fopen(dtdURL.c_str(),"r+");
 	

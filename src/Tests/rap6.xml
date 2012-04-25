@@ -1,0 +1,32 @@
+<!DOCTYPE rapport SYSTEM "rap6.dtd">
+<rapport>
+  <titre>R�aliser un compilateur</titre>
+  <img />
+  <auteur>
+    <prenom> Nino </prenom>
+    <nom> Silverio </nom>
+  </auteur>
+    <auteur>
+    <prenom> Nino2 </prenom>
+    <nom> Silverio2 </nom>
+  </auteur>
+  <resume> Ceci est extrait du livre "R�aliser un compilateur : 
+	les outils Lex et Yacc" de Nino Silverio. </resume>
+  <chapitre>
+    <titre> Introduction : concepts de base </titre>
+    <section>
+      <titre>Fonctions et structure d'un compilateur</titre>
+      <p>Tout programme r�dig� dans un langage de programmation de haut niveau 
+	tel que Pascal ou C ne peut �tre ex�cut� par un ordinateur que s'il 
+	est traduit en instructions ex�cutables par l'ordinateur, g�n�ralement 
+	des instruction en langage machine. L'ordinateur qui doit ex�cuter 
+	le programme ainsi traduit est appel� machine cible.</p>
+    </section>
+    <section>
+      <titre>R�alisation d'un compilateur</titre>
+      <p>Comme l'�criture d'un compilateur est une t�che fort complexe, 
+	le programmateur a tout int�r�t � travailler en utilisant un langage 
+	de programmation de haut niveau.</p>
+    </section>
+  </chapitre>
+</rapport>

@@ -34,11 +34,7 @@
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-//type Nom ( liste de paramètres )
-// Algorithme :
-//
-//{
-//} //----- fin de Nom
+
 
 DtdBalise::DtdBalise () 
 // Algorithme :

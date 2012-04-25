@@ -3,7 +3,7 @@
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par fduranton, dbrian, recastrodiaz
-    e-mail               : $EMAIL$
+    e-mail               : 
 *************************************************************************/
 
 //---------- Interface du module <AttDef>  -------------------------------
@@ -45,15 +45,17 @@ class AttDef
 		AttDef( std::string elementName, std::string aAttType, std::string aDefaultDec );
 		~AttDef();
 		
+		
 		void Print();
-		//enum AttType { TODO };
-		//enum DefaultDec { IMPLIED, REQUIRED };
+		// Mode d'emploi: 
+		// Affiche sur la sortie standard la définition de l'attribut: mElementName,
+		// mAttType, mDefaultDec
 
 	private:
-		DtdElement * mElement;
-		std::string mElementName;
-		std::string mAttType;
-		std::string mDefaultDec;
+		DtdElement * mElement; // Element de référence
+		std::string mElementName; // Nom de l'Element
+		std::string mAttType; // Type de l'attribut
+		std::string mDefaultDec; 
 		
 		friend class DtdDocument;
 };

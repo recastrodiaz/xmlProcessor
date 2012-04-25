@@ -53,7 +53,7 @@ DtdDocument::DtdDocument ()
 // Algorithme :
 //
 {
-} //----- fin de ~Element
+} //----- fin de ~DtdDocument
 
 DtdDocument::~DtdDocument ()
 // Algorithme :
@@ -77,7 +77,9 @@ DtdDocument::~DtdDocument ()
 	}
 
 
-} //----- fin de ~Element
+} //----- fin de ~DtdDocument
+
+
 
 void DtdDocument::setBalises( std::list<DtdBalise *> * balises )
 {
@@ -105,7 +107,7 @@ void DtdDocument::setBalises( std::list<DtdBalise *> * balises )
 		}
 	}
 
-}
+}//----- fin de setBalises
 
 void DtdDocument::addElementByName ( std::string elementName, DtdElement * element )
 // Algorithme :

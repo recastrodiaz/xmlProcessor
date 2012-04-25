@@ -3,7 +3,7 @@
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par fduranton, dbrian, recastrodiaz
-    e-mail               : $EMAIL$
+    e-mail               : 
 *************************************************************************/
 
 //---------- Réalisation du module <AttDef> (fichier AttDef.cpp) -----
@@ -34,39 +34,43 @@
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-//type Nom ( liste de paramètres )
-// Algorithme :
-//
-//{
-//} //----- fin de Nom
+
+// Affiche sur la sortie standard la définition de l'attribut: mElementName,
+// mAttType, mDefaultDec
 void AttDef::Print()
+// Algorithme : Trivial
+//
 {
 	if( !mElementName.empty() )
 		std::cout << mElementName;
 	else
 		std::cout << "NULL";
 	std::cout << " " << mAttType << " " << mDefaultDec;
-}
+} //----- fin de AttDef
+
+// Constructeur par défaut
 AttDef::AttDef ()
-// Algorithme :
+// Algorithme : Trivial
 //
 {
 
-} //----- fin de DtdElement
+} //----- fin de AttDef
+
 
 AttDef::AttDef( std::string elementName, std::string aAttType, std::string aDefaultDec ) 
 	: mElement(NULL), mElementName(elementName), mAttType(aAttType), mDefaultDec(aDefaultDec)
-// Algorithme :
+// Algorithme : Trivial
 //
 {
-} //----- fin de DtdElement
+} //----- fin de AttDef
+
 
 AttDef::~AttDef ()
-// Algorithme :
+// Algorithme : Trivial
 //
 {
 	// mElement sera détruit par DtdDocument
 	mElement = NULL;
-} //----- fin de ~DtdElement
+} //----- fin de ~AttDef
 
 

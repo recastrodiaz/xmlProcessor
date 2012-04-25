@@ -38,6 +38,8 @@ class DtdBalise
 		DtdBalise();
 
 		virtual ~DtdBalise();
+		
+		// Affichage des éléments sur la sortie standard
 		// Doit être redéfini dans les classes filles
 		virtual void Print() {}// = 0;
 

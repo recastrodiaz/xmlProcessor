@@ -3,7 +3,7 @@
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par fduranton, dbrian, recastrodiaz
-    e-mail               : $EMAIL$
+    e-mail               : 
 *************************************************************************/
 
 //---------- Réalisation du module <ATT_LIST> (fichier AttList.cpp) -----
@@ -34,18 +34,9 @@
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-//type Nom ( liste de paramètres )
-// Algorithme :
-//
-//{
-//} //----- fin de Nom
-
 void AttList::Print()
 {
 	std::cout << "<!ATTLIST ";
-	// FIXME: DEBUG	--> C'est un mElementName qu'il faut
-	//std::cout << "Dans AttList::Print(), IDENT = " << mElementName << std::endl;
-	// FIXME: FIN DEBUG
 	if( !mElementName.empty() )
 	{
 		std::cout << mElementName << " ";
@@ -54,22 +45,20 @@ void AttList::Print()
 	{
 		std::cout << "NULL ";
 	}
-	// FIXME: DEBUG
-	//std::cout << "[" << mAttDefs->size() << "]" << std::endl;
-	// FIXME: FIN DEBUG
+
 	for(std::list <AttDef*>::iterator i = mAttDefs->begin(); i != mAttDefs->end(); i++)
 	{
        (*i)->Print();
 	}
 	std::cout << ">";
-}
+} //----- fin de Print
 
 AttList::AttList(std::string elementName, std::list<AttDef*> * aAttDefs) 
 	: DtdBalise(), mElement(NULL), mElementName(elementName), mAttDefs (aAttDefs)
 // Algorithme :
 //
 {
-} //----- fin de DtdElement
+} //----- fin de AttList
 
 AttList::~AttList ()
 // Algorithme :
@@ -77,7 +66,8 @@ AttList::~AttList ()
 {
 	// mElement est détruit par DtdDocument
 	mElement = NULL;
-
+    
+    //Suppression des éléments AttDef de la liste
 	if( mAttDefs )
 	{
 		for(std::list <AttDef*>::iterator it = mAttDefs->begin(); it != mAttDefs->end(); it++)
@@ -87,12 +77,13 @@ AttList::~AttList ()
 		delete mAttDefs;
 	}
 	
-} //----- fin de ~DtdElement
+} //----- fin de ~AttList
+
 
 const std::list<AttDef*> * AttList::getAttDefs() const
 {
 	return mAttDefs;
-}
+} //----- fin de getAttDefs
 
 
 

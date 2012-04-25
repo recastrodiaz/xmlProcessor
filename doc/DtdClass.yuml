@@ -1,0 +1,21 @@
+// Definition
+[AttDef|mElementName;mAttType;mDefaultDec]
+[AttList|mElementName]
+[Abstract DtdBalise]
+[DtdDocument]
+[DtdElement|mIdent]
+[Abstract ElementAttBase|mCardinality]
+[ElementAtt|contentSpec]
+[ElementAttList|mTypeAgregat]
+// Héritage
+[Abstract DtdBalise]^-[AttList]
+[Abstract DtdBalise]^-[DtdElement]
+[Abstract ElementAttBase]^-[ElementAtt]
+[Abstract ElementAttBase]^-[ElementAttList]
+// Association
+[DtdDocument]1->*[Abstract DtdBalise]
+[DtdElement]1<->1[Abstract ElementAttBase]
+[DtdElement]1<->*[AttList]
+[DtdElement]1<->*[AttDef]
+[AttList]1->*[AttDef]
+

@@ -8,10 +8,6 @@
 #include "../XMLClass/Data.h"
 #include "xml.tab.h"
 
-void initialise(void) {
-	BEGIN(INITIAL);
-}
-
 static char* skipSpace(char *s) {
   char *buf;
   int i,lastnonspace;
@@ -119,3 +115,7 @@ closespecial "?>"{nl}?
 
 .			{ fprintf(stderr, "!ERROR(%c)\n", *xmltext);}
 
+%%
+void initialise(void) {
+ BEGIN(INITIAL);
+}

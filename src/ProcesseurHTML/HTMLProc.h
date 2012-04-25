@@ -43,6 +43,7 @@ class HTMLProc { //abstract
         Data *findFils(string nom, Element *baliseCourante, bool &erreur);
 	private:
 		void construireHTML(Balise *balXMLCourante, Balise *balHTMLCourante, Balise *balXSLCourante);
+        void findXSL(Element *elementXML, Balise *balHTMLCourante);
 		DocXML *docHTML;
 		Balise *rootXML;
 		Balise *rootXSL;

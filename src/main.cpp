@@ -6,17 +6,14 @@
 #include <cstring>
 
 #include "commun.h"
-//#include "XMLClass/Element.h"
 #include "XMLClass/DocXML.h"
 #include "XMLClass/Balise.h"
-//#include "XMLClass/Data.h"
 
 #include "DTDClass/DtdDocument.h"
 #include "ProcesseurHTML/HTMLProc.h"
 
 using namespace std;
 
-//extern string dtdURL;
 extern int xmldebug;
 extern int dtddebug;
 int xmlparse(DocXML ** doc);
@@ -113,12 +110,10 @@ int parseDoc(char * docToParse, DocXML *&doc, DtdDocument *dtdDocument, int &err
 int main(int argc, char **argv)
 {
 	int err = 0;
-//*	
-	//testPrintBalise();
 
 	printf("Parsing XML\n");
 
-	//xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
+	xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
 	DocXML * doc;
 	DocXML * stylesheetXSL;
 

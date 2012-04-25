@@ -54,7 +54,6 @@ Constructeur de HTMLProc:
     rootXML = docXML;
     docHTML = new DocXML();
 	docHTML->SetRoot(NULL);
-	//construireHTML(docXML, docHTML->GetRoot(), rootXSL);
 	findTemplate(rootXML, docHTML->GetRoot());
 } //----- fin de Constructeur
 
@@ -85,7 +84,7 @@ Data * HTMLProc::findFils(string nom, Element *baliseCourante, bool &erreur){
             Data *result;
             for(itFils=(baliseC->GetElem()).begin();itFils!=(baliseC->GetElem()).end();itFils++){
                 result = findFils(nom, (*itFils), erreur); 
-                if(result != NULL || erreur)//choix de retourner le contenu de la première balise rencontrée 
+                if(result != NULL || erreur)//choix de retourner le contenu de la première balise rencontrée même si c'est une erreur
                     return result;
             }
             return result;
@@ -96,10 +95,10 @@ Data * HTMLProc::findFils(string nom, Element *baliseCourante, bool &erreur){
 
 void HTMLProc::construireHTML(Balise *balXMLCourante, Balise *balHTMLCourante, Balise *balXSLCourante){
 	vecE::iterator itFils;
-    //bool erreur = false;
+    //
 	for(itFils=(balXSLCourante->GetElem()).begin();itFils != (balXSLCourante->GetElem()).end();itFils++){ //pour tous les fils de la balise XSL courante
 		if((*itFils)->GetNom() == "apply-templates") 
-			 findTemplate(balXMLCourante, balHTMLCourante);
+            findTemplate(balXMLCourante, balHTMLCourante);
 		else if((*itFils)->GetNom() == "value-of"){
             if(((Balise*)(*itFils))->GetAttributs()["select"] == balXMLCourante->GetNom() || ((Balise*)(*itFils))->GetAttributs()["select"] == "."){ //<xsl:value-of select="NomBaliseCourante" >
                 Data *DToAdd = dynamic_cast<Data*>(balXMLCourante->GetElem().front());
@@ -108,14 +107,17 @@ void HTMLProc::construireHTML(Balise *balXMLCourante, Balise *balHTMLCourante, B
                 }else{
                     //Erreur on ne rajoute pas uniquement une Data
                     cout << "Erreur on ne rajoute pas seulement une DATA" << endl;
+                    erreur = true;
                 }
             }else{ //<xsl:value-of select="NomBaliseFille">
-                Data *DToAdd = findFils(((Balise*)(*itFils))->GetAttributs()["select"], balXMLCourante, erreur);
+                bool erreurXSL = false;
+                Data *DToAdd = findFils(((Balise*)(*itFils))->GetAttributs()["select"], balXMLCourante, erreurXSL);
                 if(DToAdd != NULL)
                     balHTMLCourante->addElement(DToAdd);
-                else if (erreur){
+                else if (erreurXSL){
                     //Erreur on ne rajoute pas uniquement une Data
                     cout << "Erreur on ne rajoute pas seulement une DATA" << endl;
+                    erreur = true;
                 }else{
                     //Balise non trouvée
                     cout << "Erreur balise non trouvée" << endl;
@@ -126,14 +128,14 @@ void HTMLProc::construireHTML(Balise *balXMLCourante, Balise *balHTMLCourante, B
 			if(Bfils == 0) { //balise = data
 				balHTMLCourante->addElement(*itFils);
 			}else{ //balise avec des fils
-				if (balHTMLCourante == NULL){
+				if (balHTMLCourante == NULL){//on initialise l'arbre HTML comme c'est la première balise
 					balHTMLCourante = new Balise(Bfils->GetNom(), Bfils->GetNs());
                     docHTML->SetRoot(balHTMLCourante);
 					construireHTML(balXMLCourante, balHTMLCourante, Bfils);
-				}else{
+				}else{//l'arbre HTML a déjà été initialisé on ajoute à la suite
                     Balise *nvelleBalHTML = new Balise(Bfils->GetNom(), Bfils->GetNs());
 					construireHTML(balXMLCourante, nvelleBalHTML, Bfils); 
-					balHTMLCourante->addElement(nvelleBalHTML);
+					balHTMLCourante->addElement(nvelleBalHTML);//on ajoute la balise fille au contenu
 				}
 			}
 		}
@@ -170,5 +172,5 @@ void HTMLProc::Print ()
 //
 {
     docHTML->Print();
-        
+    
 } //----- fin de Print

@@ -17,5 +17,4 @@ cd ../AnalyseurDTD
 make clean
 cd ..
 # Un test pour lire les DTD
-./analyseXMLDTD rap1.xml
 

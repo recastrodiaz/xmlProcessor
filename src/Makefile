@@ -1,11 +1,11 @@
 XMLPATH := AnalyseurXML/
 DTDPATH := AnalyseurDTD/
-SRC:= main.cpp XMLClass/*.cpp DTDClass/*.cpp
-OBJ:= main.o Element.o DocXML.o Balise.o Data.o DtdDocument.o DtdBalise.o DtdElement.o AttList.o AttDef.o ElementAttBase.o ElementAtt.o ElementAttList.o
+SRC:= main.cpp XMLClass/*.cpp DTDClass/*.cpp ProcesseurHTML/HTMLProc.cpp
+OBJ:= main.o Element.o DocXML.o Balise.o Data.o DtdDocument.o DtdBalise.o DtdElement.o AttList.o AttDef.o ElementAttBase.o ElementAtt.o ElementAttList.o HTMLProc.o
 
 all: analyseXMLDTD
 
-analyseXMLDTD: ${SRC} main.h  
+analyseXMLDTD: ${SRC} 
 	
 	@make -C ${XMLPATH} 
 	@make -C ${DTDPATH} 
@@ -21,6 +21,11 @@ clean:
 Test :
 	@echo "\nTest rap1.xml\n"
 	./analyseXMLDTD Tests/rap1.xml
+	@echo "============================================================================================================================================================================================================================================================================================================================================================================"
+	
+	@echo "\nTest rap1.xml rap1.xsl\n"
+	./analyseXMLDTD Tests/rap1.xml Tests/rap1.xsl
+	@echo "============================================================================================================================================================================================================================================================================================================================================================================"
 
 	@echo "\nTest rap2.xml\n"
 	./analyseXMLDTD Tests/rap2.xml

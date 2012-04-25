@@ -2,8 +2,10 @@ This is a trivial academic project using Bison (GNU parser generator to work wit
 
 #Validating a XML file with a reference to its DTD
 
-*Warning : for now, we only verify that each tag has the right children,
-but we do not verify the correctness of attributes. (and we do not verify many other things for sure ...)*
+**Warning :** for now, we only verify that each tag has the right children,
+but we do not verify the correctness of attributes. (and we do not verify many other things for sure ...).
+
+**SO DO NOT USE THIS PROJECT FOR PRODUCTION CODE**
 
 ## Compiling (The long way)
 
@@ -16,8 +18,8 @@ but we do not verify the correctness of attributes. (and we do not verify many o
 ###Building AnalyseurXMLDTD
     cd src/ && make
     
-## Compiling (The sort way)
-    cd src && make clean && ./build
+## Compiling (The short way)
+    cd src && make
 
 ##Starting
 Write an example.xml file containing a reference toward its DTD.

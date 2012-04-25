@@ -49,7 +49,7 @@ int xmllex(void);
 %%
 
 main
- : document   { *doc = $1; } // recopie du poly mais pas trop compris
+ : document   { *doc = $1; }
 ;
 
 document
@@ -84,11 +84,12 @@ start
  ;
 empty_or_content
 : SLASH CLOSE	{ $$ = new vecE(); empty=true;}
-| close_content_and_end CLOSE { $$ = $1; empty=false;} 
+| close_content_and_end CLOSE { $$ = $1; empty=false;}
  ;
 close_content_and_end
  : CLOSE content_opt END { $$ = $2; }
  | CLOSE content_opt NSEND { $$ = $2; }
+ | CLOSE content_opt error { $$ = $2; printf("Une erreur\n"); /*TODO: Traiter l'erreur! */ }
  ;
 content_opt 
  : content_opt DATA	{ $$ = $1; (*$$).push_back(new Data(string($2))); }

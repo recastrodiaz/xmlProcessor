@@ -48,11 +48,13 @@ Constructeur de HTMLProc:
 {
 	
 	Balise *docXML = new Balise("docXML","");
-    docXML->addElement(unDocXML->GetRoot());
+	Balise *root = new Balise("/","");
+	root->addElement(unDocXML->GetRoot());
+    docXML->addElement(root);
     rootXML = docXML;
-    
     docHTML = new DocXML();
 	docHTML->SetRoot(NULL);
+	//construireHTML(docXML, docHTML->GetRoot(), rootXSL);
 	findTemplate(rootXML, docHTML->GetRoot());
 } //----- fin de Constructeur
 

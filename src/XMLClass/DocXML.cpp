@@ -43,7 +43,7 @@ using namespace std;
 //{
 //} //----- fin de Nom
 
-DocXML::DocXML()
+DocXML::DocXML() : root(NULL)
 {
 }
 
@@ -83,5 +83,9 @@ Balise* DocXML::GetRoot(){
 
 void DocXML::SetRoot(Balise* uneBalise){
 	this->root = uneBalise;
+}
+
+string DocXML::GetDtdUrl(){
+	return dtdUrl;
 }
 

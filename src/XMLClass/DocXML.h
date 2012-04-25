@@ -42,8 +42,9 @@ class DocXML {
 		virtual ~DocXML();
 		Balise *GetRoot();
 		void SetRoot(Balise* uneBalise);
-        void Print();
+        	void Print();
 		bool verifyValidity(DtdDocument & docDtd);
+		string GetDtdUrl();
 
     
     private:

@@ -200,9 +200,16 @@ bool Balise::verifyValidity(DtdDocument & docDtd)
 {
 	// First, we verify this node
 	std::string stringToMatch = "";
-	for ( vecE::iterator it = elements->begin(); it != elements->end(); it++)
+	if (this->empty)
 	{
-		stringToMatch += (**it).GetNom();
+		stringToMatch = "EMPTY";
+	}
+	else
+	{
+		for (vecE::iterator it = elements->begin(); it != elements->end();
+				it++) {
+			stringToMatch += (**it).GetNom();
+		}
 	}
 	if (!docDtd.CheckXmlElementValidity(nom,stringToMatch)){
 		std::cout<< "The \"" + nom + "\" tag is not valid" << endl;
@@ -210,7 +217,7 @@ bool Balise::verifyValidity(DtdDocument & docDtd)
 	}
 	// *this* node is OK
 
-	//we are going to check his children
+	//we are going to check its children
 	for (vecE::iterator it = elements->begin(); it != elements->end(); it++) {
 		if (!(**it).verifyValidity(docDtd))
 		{

@@ -3,7 +3,7 @@
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par fduranton, dbrian, recastrodiaz
-    e-mail               : $EMAIL$
+    e-mail               : 
 *************************************************************************/
 
 //---------- Réalisation du module <DtdElement> (fichier DtdElement.cpp) -----
@@ -40,13 +40,15 @@
 //{
 //} //----- fin de Nom
 
+// Methode d'affichage d'un element
 void DtdElement::Print()
 {
 	std::cout << "<!ELEMENT " << mIdent << " ";
 	mAttributeReference->Print();
 	std::cout << ">";
-}//----- DtdElement::Print()
+}//----- fin de Print()
 
+// Constructeur par defaut de DtdElement
 DtdElement::DtdElement () 
 	: DtdBalise(), mAttList (), mAttDef ()
 // Algorithme :
@@ -55,6 +57,7 @@ DtdElement::DtdElement ()
 	mAttributeReference = 0;
 } //----- fin de DtdElement
 
+// Constructeur avec parametre de DtdElement
 DtdElement::DtdElement (std::string aIdent, ElementAttBase * aAttributeReference, std::list <AttList*> aAttList, std::list <AttDef*> aAttDef)
 	: DtdBalise(),mIdent(aIdent), mAttList (aAttList), mAttDef (aAttDef), mAttributeReference(aAttributeReference)
 // Algorithme :
@@ -63,6 +66,7 @@ DtdElement::DtdElement (std::string aIdent, ElementAttBase * aAttributeReference
 
 } //----- fin de DtdElement
 
+// Destructeur de DtdElement
 DtdElement::~DtdElement ()
 // Algorithme :
 //
@@ -75,11 +79,11 @@ DtdElement::~DtdElement ()
 std::string DtdElement::GetName()
 {
     return mIdent;
-}
+} //----- fin de GetName()
 
 std::string DtdElement::GetRe()
 {
     return mAttributeReference->GetRe();
-}
+} //----- fin de GetRe()
 
 

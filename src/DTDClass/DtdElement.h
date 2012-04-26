@@ -12,7 +12,8 @@
 
 //------------------------------------------------------------------------
 // Rôle du module <DtdElement>
-//
+// Classe qui represente un element d'une DTD. C'est a dire le composant
+// contenu entre les balises <!ELEMENT>
 //
 //------------------------------------------------------------------------
 
@@ -53,19 +54,17 @@ class DtdElement : public DtdBalise
 		void Print();
 		std::string GetName();
 
-		/*
-		 * Return instance's regular expression (recursively)
-		 */
+		// Retourne l'instance de l'expression reguliere (recursivement)
 		std::string GetRe();
 
 	protected:
-		// Attribute name of the DtdElement
+		// Nom de l'attribut de l'element DTD
 		ElementAttBase * mAttributeReference;
-		// List of attributes of the DtdElement
+		// Liste des attributs de l'element DTD
 		std::list <AttList*> mAttList;
-		// Vector of attributes definitions of the DtdElement
+		// Liste des definitions d'attributs de l'element DTD
 		std::list <AttDef*> mAttDef;
-		// String that identify the DtdElement
+		// String d'identification d'un element DTD
 		std::string mIdent;
 };
 

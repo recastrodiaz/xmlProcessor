@@ -3,7 +3,7 @@
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par fduranton, dbrian, recastrodiaz
-    e-mail               : $EMAIL$
+    e-mail               : 
 *************************************************************************/
 
 //---------- Interface du module <DtdDocument> ---------------------------
@@ -12,7 +12,8 @@
 
 //------------------------------------------------------------------------
 // Rôle du module <DTD_DOCUMENT>
-//
+// Classe qui represente notre DTD au niveau le plus haut. Elle est compose
+// de balises.
 //
 //------------------------------------------------------------------------
 
@@ -31,7 +32,7 @@
 #include "DtdElement.h"
 //------------------------------------------------------------- Constantes
 
-//------------------------------------------------------------------td::list<DtdBalise* Types
+//------------------------------------------------------------------ Types
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
@@ -47,28 +48,25 @@ class DtdDocument
 		void addElementByName( std::string elementName, DtdElement * element );
 		void Print();
 
-		/*
-		 * Generate mRe (a map matching the names of dtd elements
-		 * with their regular expression)
-		 */
+		// Genere mRe (une std::map qui fait correspondre les noms des elements
+		// de la DTD avec leurs expressions regulieres.
 		void GenerateRE();
 
 		std::map<std::string,regex_t> & getMRe();
 
-		/*
-		 * Check if xmlString is matching with the regular expression associated
-		 * with the DtdElement whose name is dtdElementName.
-		 */
+		// Verifier si <xmlString> correspond a l'expression reguliere associee a
+		// l'element DTD dont le nom est <dtdElementName>
 		bool CheckXmlElementValidity(std::string dtdElementName, std::string xmlString );
 
 	private:
 	
+		// La liste des balises du document
 		std::list<DtdBalise *> * mBalises;
 		
-		// a map matching the names of dtd elements with their regular expression
+		// Une map qui fait la correspondance entre les noms des elements DTD et leur REGEX
 		std::map<std::string,regex_t> mRe;
 
-		// Contains all DtdElements, searchable by name
+		// Contient tous les elements DTD qu'on peut chercher par leur nom
 		std::map<std::string, DtdElement *>  mElementsByName;
 };
 

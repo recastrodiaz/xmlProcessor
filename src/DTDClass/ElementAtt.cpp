@@ -3,7 +3,7 @@
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par recastrodiaz, fduranton, dbrian
-    e-mail               : $EMAIL$
+    e-mail               : 
 *************************************************************************/
 
 //---------- Réalisation du module <ElementAtt> (fichier ElementAtt.cpp) -----
@@ -40,31 +40,33 @@
 //{
 //} //----- fin de Nom
 
+// Affichage de ElementAtt sur la sortie standard
 void ElementAtt::Print()
 {
 	std::cout << contentSpec + GetCardinality();
 
-} //----- fin de ElementAtt::Print()
+} //----- fin de Print()
 
-
+// Constructeur avec arguments de ElementAtt
 ElementAtt::ElementAtt (std::string content, ElementAttBase::Cardinality card )
 	: ElementAttBase(card), contentSpec( content )
 // Algorithme :
 //
 {
-} //----- fin de ElementAtt::ElementAtt
+} //----- fin de ElementAtt
 
+// Destructeur de ElementAtt
 ElementAtt::~ElementAtt ()
 // Algorithme :
 //
 {
-} //----- fin de ElementAtt::~ElementAtt
+} //----- fin de ~ElementAtt
 
 std::string ElementAtt::GetRe()
 {
 	std::string contentSpecWithCardinality = "(" + contentSpec + ")" + GetCardinality();
     return contentSpecWithCardinality;
-}
+} //----- fin de GetRe()
 
 
 

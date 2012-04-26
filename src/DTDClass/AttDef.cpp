@@ -56,7 +56,7 @@ AttDef::AttDef ()
 
 } //----- fin de AttDef
 
-
+// Constructeur avec parametres
 AttDef::AttDef( std::string elementName, std::string aAttType, std::string aDefaultDec ) 
 	: mElement(NULL), mElementName(elementName), mAttType(aAttType), mDefaultDec(aDefaultDec)
 // Algorithme : Trivial
@@ -64,7 +64,7 @@ AttDef::AttDef( std::string elementName, std::string aAttType, std::string aDefa
 {
 } //----- fin de AttDef
 
-
+// Destructeur
 AttDef::~AttDef ()
 // Algorithme : Trivial
 //

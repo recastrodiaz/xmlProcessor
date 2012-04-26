@@ -40,18 +40,21 @@
 //{
 //} //----- fin de Nom
 
+// Constructeur par defaut de ElementAttBase
 ElementAttBase::ElementAttBase () : mCardinality(ElementAttBase::C_NONE)
 // Algorithme :
 //
 {
-} //----- fin de ~ElementAttBase
+} //----- fin de ElementAttBase
 
+// Constructeur avec parametre de ElementAttBase
 ElementAttBase::ElementAttBase (ElementAttBase::Cardinality cardinality) : mCardinality(cardinality)
 // Algorithme :
 //
 {
-} //----- fin de ~ElementAttBase
+} //----- fin de ElementAttBase
 
+// Destructeur de ElementAttBase
 ElementAttBase::~ElementAttBase ()
 // Algorithme :
 //
@@ -59,12 +62,13 @@ ElementAttBase::~ElementAttBase ()
 	mOwner = NULL;
 } //----- fin de ~ElementAttBase
 
-
+// Methode de modification de la cardinalite
 void ElementAttBase::setCardinality( ElementAttBase::Cardinality cardinality )
 {
 	mCardinality = cardinality;
-}
+} //----- fin de setCardinality
 
+// Methode qui retourne la cardinalite
 std::string ElementAttBase::GetCardinality()
 {
 	std::string card = "";
@@ -80,4 +84,4 @@ std::string ElementAttBase::GetCardinality()
 			break;
 		}
 	return card;
-}
+} //----- fin de GetCardinality

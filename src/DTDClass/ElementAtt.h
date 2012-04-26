@@ -12,7 +12,9 @@
 
 //------------------------------------------------------------------------
 // Rôle du module <ELEMENTATT>
-//
+// Classe qui modelise un attribut unique d'un element. Cela signifie que
+// la balise <!ELEMENT> a laquelle est ratachee <!ATTLIST> n'a que cette 
+// derniere rattachee a elle.
 //
 //------------------------------------------------------------------------
 
@@ -42,9 +44,7 @@ class ElementAtt : public ElementAttBase
 		
 		void Print();
 
-		/*
-		 * Return instance's regular expression (recursively)
-		 */
+		// Retourne l'instance de l'expression reguliere (recursivement)
 		std::string GetRe();
 
 

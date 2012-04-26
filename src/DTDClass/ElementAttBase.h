@@ -12,7 +12,9 @@
 
 //------------------------------------------------------------------------
 // Rôle du module <ELEMENT_ATT_BASE>
-//
+// Classe abstraite qui represente un element d'une DTD. Cette classe permet
+// le polymorphisme et de ce fait, de traiter a la fois les elements qui ont
+// plusieurs attributs et ceux qui n'en n'ont qu'un seul.
 //
 //------------------------------------------------------------------------
 
@@ -49,9 +51,7 @@ class ElementAttBase
 		// Devrait être redéfinie dans les sous-classes
 		virtual void Print() = 0;
 
-		/*
-		 * Return instance's regular expression (recursively)
-		 */
+		// Retourne l'expression reguliere (recursivement)
 		virtual std::string GetRe() = 0;
 
 		std::string GetCardinality();
@@ -60,7 +60,6 @@ class ElementAttBase
 
 
 	protected:
-		// DtdElement parent
 		DtdElement * mOwner;
 		ElementAttBase::Cardinality mCardinality;
 };

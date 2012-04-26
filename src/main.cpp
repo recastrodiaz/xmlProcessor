@@ -46,9 +46,12 @@ int parseDoc(char * docToParse, DocXML *&doc, DtdDocument *dtdDocument, int &err
 		xsl = true;
 	
 	std::cout << "On va parser le " << std::string(docToParse).substr(strlen(docToParse)-3,strlen(docToParse)-1) << "..." << std::endl;
+	
 	xmlin = fopen(docToParse,"r+");
+
 	if (xmlin == NULL)
 		return -1;
+	
 	initialise();
 	err = xmlparse(&doc);
 	cout<<"doc print"<<endl;
@@ -113,7 +116,7 @@ int main(int argc, char **argv)
 
 	printf("Parsing XML\n");
 
-	xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
+	//xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
 	DocXML * doc;
 	DocXML * stylesheetXSL;
 
@@ -158,13 +161,18 @@ int main(int argc, char **argv)
 	}
 	else if (argc == 3)
 	{
+		// Sert a capter les return -1 de parseDoc();
+		int resultatParsing;
+
 		if (std::string(argv[1]).substr(strlen(argv[1])-3,strlen(argv[1])-1) == "xml")
 		{
-			parseDoc(argv[1], doc, &dtdDocument, err);
+			// On recupere le retour de parseDoc()
+			resultatParsing = parseDoc(argv[1], doc, &dtdDocument, err);
 			if(err == 0 && std::string(argv[2]).substr(strlen(argv[2])-3,strlen(argv[2])-1) == "xsl")
 			{
-				parseDoc(argv[2], stylesheetXSL, &dtdDocument, err);
-				if(err == 0)
+				// On recupere le retour de parseDoc()
+				resultatParsing = parseDoc(argv[2], stylesheetXSL, &dtdDocument, err);
+				if(err == 0 && resultatParsing != -1)
 				{
 					HTMLProc *docHTML = new HTMLProc(doc, stylesheetXSL);
 					docHTML->Print();
@@ -172,7 +180,7 @@ int main(int argc, char **argv)
 			}
 		}
 	}	
-	
+	cout << "Fin" << endl;
 	return 0;
 }
 

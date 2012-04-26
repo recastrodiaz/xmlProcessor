@@ -12,7 +12,7 @@
 
 //------------------------------------------------------------------------
 // Rôle du module <ATT_LIST>
-//
+// La classe AttList represente une liste d'attribut associee a un element.
 //
 //------------------------------------------------------------------------
 

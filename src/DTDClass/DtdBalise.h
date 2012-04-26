@@ -3,7 +3,7 @@
                              -------------------
     début                : 02/04/2012
     copyright            : (C) 2012 par fduranton, dbrian, recastrodiaz
-    e-mail               : $EMAIL$
+    e-mail               : 
 *************************************************************************/
 
 //---------- Interface du module <DtdBalise> -----------------------------
@@ -12,7 +12,8 @@
 
 //------------------------------------------------------------------------
 // Rôle du module <DTD_BALISE>
-//
+// La classe DtdBalise represente une balise DTD de la maniere la plus
+// generale possible.
 //
 //------------------------------------------------------------------------
 
@@ -41,9 +42,7 @@ class DtdBalise
 		
 		// Affichage des éléments sur la sortie standard
 		// Doit être redéfini dans les classes filles
-		virtual void Print() {} // = 0;
-
-
+		virtual void Print() = 0;
 };
 
 #endif // DTD_BALISE_H

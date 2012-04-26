@@ -12,7 +12,9 @@
 
 //------------------------------------------------------------------------
 // Rôle du module <ATT_DEF>
-//
+// La classe AttDef modelise la definition d'un attribut, ie la balise 
+// <!ATTLIST>. Notamment, il enregistre l'element auquel fait reference
+// cet attribut et le type de cet attribut.
 //
 //------------------------------------------------------------------------
 

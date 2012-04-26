@@ -12,7 +12,8 @@
 
 //------------------------------------------------------------------------
 // Rôle du module <ELEMENTATTLIST>
-//
+// Classe representant une liste de balises <!ATTLIST> reliees a une balise
+// <!ELEMENT>.
 //
 //------------------------------------------------------------------------
 
@@ -47,10 +48,7 @@ class ElementAttList : public ElementAttBase
 		void Print();
 		void push_back(ElementAttBase * elem);
 
-
-		/*
-		 * Return instance's regular expression (recursively)
-		 */
+		// Retourne l'expression reguliere (recursivement)
 		std::string GetRe();
 
 	private:

@@ -40,6 +40,15 @@
 //{
 //} //----- fin de Nom
 
+// Constructeur par defaut de ElementAttList
+ElementAttList::ElementAttList()
+	: ElementAttBase()
+// Algorithme :
+//
+{
+} //----- fin de ElementAtt::ElementAtt
+
+// Constructeur avec arguments de ElementAttList
 ElementAttList::ElementAttList(ElementAttList::TypeAgregat typeAgregat, std::list <ElementAttBase*> elementAttBase, ElementAttBase::Cardinality card)
 	: ElementAttBase(card), mTypeAgregat( typeAgregat ), mElementAttBase ( elementAttBase )
 // Algorithme :
@@ -47,6 +56,7 @@ ElementAttList::ElementAttList(ElementAttList::TypeAgregat typeAgregat, std::lis
 {
 } //----- fin de ElementAtt::ElementAtt
 
+// Destructeur de ElementAttList
 ElementAttList::~ElementAttList ()
 // Algorithme :
 //
@@ -112,15 +122,8 @@ void ElementAttList::Print()
 
 } //----- fin de ElementAttList::Print()
 
+// Methode d'ajout de <elem> dans la liste d'attributs
 void ElementAttList::push_back(ElementAttBase * elem)
 {
 	mElementAttBase.push_back(elem);
 }
-
-ElementAttList::ElementAttList()
-	: ElementAttBase()
-// Algorithme :
-//
-{
-}
-

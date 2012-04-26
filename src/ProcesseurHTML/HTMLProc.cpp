@@ -95,7 +95,6 @@ Data * HTMLProc::findFils(string nom, Element *baliseCourante, bool &erreur){
 
 void HTMLProc::construireHTML(Balise *balXMLCourante, Balise *balHTMLCourante, Balise *balXSLCourante){
 	vecE::iterator itFils;
-    //
 	for(itFils=(balXSLCourante->GetElem()).begin();itFils != (balXSLCourante->GetElem()).end();itFils++){ //pour tous les fils de la balise XSL courante
 		if((*itFils)->GetNom() == "apply-templates") 
             findTemplate(balXMLCourante, balHTMLCourante);
@@ -151,8 +150,6 @@ void HTMLProc::findTemplate(Element *balXMLCourante, Balise *balHTMLCourante){
         vecE::iterator itXSL;
         Balise *baliseC = dynamic_cast<Balise*>(balXMLCourante);
         for(itFilsXML=(baliseC->GetElem()).begin();itFilsXML != (baliseC->GetElem()).end();itFilsXML++){ //parcours des balises XML (fils de la balise courante)
-            if((baliseC->GetElem()).size() != 0)
-                findTemplate((Balise *)*itFilsXML, balHTMLCourante); //récursion pour les fils
             for(itXSL=(rootXSL->GetElem()).begin();itXSL!=(rootXSL->GetElem()).end();itXSL++){ //recherche d'une règle s'appliquant à la balise XML courante
                 Balise *BXSL = dynamic_cast<Balise*>(*itXSL); //verification pour voir s'il s'agît bien d'une balise, ça aurait pu etre un data
                 if(BXSL != 0) { //c'est une balise

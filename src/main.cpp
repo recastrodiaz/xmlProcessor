@@ -23,19 +23,6 @@ void initialise(void);
 extern FILE * xmlin;
 extern FILE * dtdin;
 
-void testPrintBalise()
-{
-	Balise* b1 = new Balise ("test", "eheh");
-	mapSS* attr = new mapSS();
-	(*attr)["id1"]="kikoo";
-	(*attr)["id2"]="lol";
-	b1->addListAttributs (attr);
-	b1->setEmpty(false);
-	cout<<"b1 : "<<endl;
-	b1->Print();
-}
-
-
 int parseDoc(char * docToParse, DocXML *&doc, DtdDocument *dtdDocument, int &err){
 	bool xsl = false;
 	int index;
@@ -54,24 +41,24 @@ int parseDoc(char * docToParse, DocXML *&doc, DtdDocument *dtdDocument, int &err
 	
 	initialise();
 	err = xmlparse(&doc);
-	cout<<"doc print"<<endl;
+
 	if (err != 0)
 	{
-		printf("Parse ended with %d error(s)\n", err);
+		std::cout << "Parse ended with " << err << " error(s)" << std::endl;
 	}
 	else  
 	{
-		printf("Parse ended with success\n", err);
+		std::cout << "Parse ended with success" << std::endl;
 		doc->Print();
 		if(!xsl){
 			
 			index = string(docToParse).find_last_of("/");
 			filePath.assign(docToParse,index+1);
-			cout<<"filepath : "<<filePath<<endl;
+			std::cout << "filepath : " << filePath << std::endl;
 			
 			dtdURL = filePath + doc->GetDtdUrl();
 
-			printf("dtdurl : %s\n",dtdURL.c_str());
+			std::cout << "dtdurl : " << dtdURL << std::endl;
 			
 			dtdin = fopen(dtdURL.c_str(),"r+");
 			
@@ -80,27 +67,27 @@ int parseDoc(char * docToParse, DocXML *&doc, DtdDocument *dtdDocument, int &err
 				err = dtdparse( dtdDocument );
 				if (err != 0) 
 				{
-					printf("Parse ended with %d error(s)\n", err);
+					std::cout << "Parse ended with " << err << "error(s)" << std::endl;
 				}
 				else
 				{
-					printf("Parse ended with success\n", err);
+					std::cout << "Parse ended with success" << std::endl;
 					dtdDocument->Print();
 					dtdDocument->GenerateRE();
 					if (doc->verifyValidity(*dtdDocument))
 					{
-						cout << "THE XML DOC IS VALID !" << endl;
+						std::cout << "THE XML DOC IS VALID !" << std::endl;
 					}
 					else
 					{
-						cout << "THE XML DOC IS *NOT* VALID" << endl;
+						std::cout << "THE XML DOC IS *NOT* VALID" << std::endl;
 						err = -1;
 					}
 				}
 			}
 			else 
 			{
-				printf("dtd invalide\n");
+				std::cout << "dtd invalide" << std::endl;
 				err = -1;
 			}
 			fclose(dtdin);
@@ -114,7 +101,7 @@ int main(int argc, char **argv)
 {
 	int err = 0;
 
-	printf("Parsing XML\n");
+	std::cout << "Parsing XML" << std::endl;
 
 	//xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
 	DocXML * doc;
@@ -122,7 +109,7 @@ int main(int argc, char **argv)
 
 	//debug = 1; // pour désactiver l'affichage de l'exécution du parser LALR, commenter cette ligne
 	DtdDocument dtdDocument;
-	cout << "argc :" << argc << endl;
+
 	if (argc == 2)
 	{
 		// On a passe un fichier .xml en parametre
@@ -143,17 +130,17 @@ int main(int argc, char **argv)
 				err = dtdparse( &dtdDocument );
 				if (err != 0) 
 				{
-					printf("Parse ended with %d error(s)\n", err);
+					std::cout << "Parse ended with " << err << "error(s)" << std::endl;
 				}
 				else
 				{
-					printf("Parse ended with success\n", err);
+					std::cout << "Parse ended with success" << std::endl;
 					dtdDocument.Print();
 				}
 			}
 			else
 			{
-				printf("dtd invalide\n");
+				std::cout << "dtd invalide" << std::endl;
 				return -1;
 			}
 			fclose(dtdin);
@@ -179,8 +166,7 @@ int main(int argc, char **argv)
 				}
 			}
 		}
-	}	
-	cout << "Fin" << endl;
+	}
 	return 0;
 }
 

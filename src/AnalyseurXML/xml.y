@@ -8,9 +8,10 @@
 #include <string.h>
 using namespace std;
 
-
+//on estime qu'une balise est par défaut une balise de ce type <balise></balise> et non de ce type <balise />
 bool empty=false;
-string dtdURL;
+//booléen pour permettre d'identifier l'erreur de la balise non fermée
+bool closed=true;
 extern FILE* xmlin;
 int xmlwrap(void);
 void xmlerror(DocXML** doc, char *msg);
@@ -24,9 +25,9 @@ int xmllex(void);
    ElementName * en;  /* le nom d'un element avec son namespace */
    DocXML * doc;
    Balise * tag;
-   vecS * dec_opt;
-   mapSS * att_opt;
-   vecE * cont_opt;
+   vecS * dec_opt; /* vector<string> */
+   mapSS * att_opt; /* map<string, string> */
+   vecE * cont_opt; /* vector<Element*> */
 
 }
 
@@ -48,77 +49,82 @@ int xmllex(void);
 
 %%
 
+/* transformation afin de n'avoir qu'un seul objet à droite */
 main
  : document   { *doc = $1; }
-;
+ ;
 
 document
-: declarations_opt xml_element misc_seq_opt    { $$ = new DocXML($2, ((vecS)(*$1))[0], ((vecS)(*$1))[1]); }
+/* création d'un nouveau document XML qui contiendra l'arbre XML à partir des informations récupérée sur le doctype */
+ : declarations_opt xml_element misc_seq_opt    { $$ = new DocXML($2, ((vecS)(*$1))[0], ((vecS)(*$1))[1]); }
  ;
 
 misc_seq_opt
+/* on ne prend pas en compte les différents options de la balise <? ?> */
  : misc_seq_opt comment
  | /*empty*/
  ;
-comment
+comment 
+/* les commentaires ne seront également pas pris en compte dans l'arbre XML */
  : COMMENT
  ;
 
 declarations_opt
- : DOCTYPE IDENT IDENT STRING CLOSE { dtdURL=string($4); $$ = new vecS(); (*$$).push_back(string($3)); (*$$).push_back(string($4)); free($3); free($4); }
+/* on fait remonter un vecteur de string contenant les informations concernant le doctype: l'url du doctype,le motClé SYSTEM ou bien le FPI si le mot clé est PUBLIC */
+ : DOCTYPE IDENT IDENT STRING CLOSE { $$ = new vecS(); (*$$).push_back(string($3)); if(string($4)=="SYSTEM"){(*$$).push_back(string($4));}else{(*$$).push_back(string($5));free($5);} free($3); free($4); }
+/* s'il n'y a pas de déclaration de doctype on fait remonter des chaines vides */
  | /*empty*/ { $$ = new vecS(); $$->push_back(""); $$->push_back(""); }
  ;
 
 attributs_opt
+/* on ajoute à la map l'attribut et sa valeur pour le cas où il n'y a pas de namespace */
  : attributs_opt IDENT EQ STRING { $$ = $1; (*$$)[string($2)] = string($4); free($2); free($4) }
+/* on ajoute à la map l'attribut et sa valeur pour le cas où il y a un de namespace */
  | attributs_opt NSIDENT EQ STRING { $$ = $1; (*$$)[string($2)] = string($4); free($2); free($4) }
+/* on crée une nouvelle map qui contiendra tous les attributs et leur valeur */
  | /*empty*/ { $$ = new mapSS();}
-;
+ ;
 
 xml_element
-: start attributs_opt empty_or_content      { $$ = new Balise($1->second, $1->first); (*$$).addListAttributs($2); (*$$).addContent($3); $$->setEmpty(empty);} 
+/* on crée une nouvelle balise à partir de son nom et de son namespace, on lui ajoute la liste d'atributs récupérée, on lui ajoute le contenu récupéré et on indique si elle est vide ( c'est à dire de ce type : <balise />) ou non. Si elle n'a pas été fermée on l'indique à l'utilisateur */
+: start attributs_opt empty_or_content      { if(!closed){printf("La balise %s n'a pas été fermée", ($1->second).c_str())}$$ = new Balise($1->second, $1->first); (*$$).addListAttributs($2); (*$$).addContent($3); $$->setEmpty(empty);} 
  ;
+
 start
+/* on renvoit une paire avec le nom et comme namespace une chaine vide */
  : START	{ $$ =  $1; }	
+/* on renvoit une paire avec le nom et le namespace */
  | NSSTART	{ $$ = $1; }
  ;
+
 empty_or_content
-: SLASH CLOSE	{ $$ = new vecE(); empty=true;}
-| close_content_and_end CLOSE { $$ = $1; empty=false;}
+/* la balise est vide donc on met à jour emty et on passe un vecteur vide */
+ : SLASH CLOSE	{ $$ = new vecE(); empty=true;}
+/* la balise a un contenu donc on met à jour le empty à false et on passe le contenu */
+ | close_content_and_end CLOSE { $$ = $1; empty=false;}
  ;
+
 close_content_and_end
- : CLOSE content_opt END { $$ = $2; }
- | CLOSE content_opt NSEND { $$ = $2; }
- | CLOSE content_opt error { $$ = $2; printf("Une balise n'est pas fermee\n"); /* On informe l'utilisateur */ }
+/* on renvoit le contenu dans le cas où c'est une balise "normale" */
+ : CLOSE content_opt END { $$ = $2; closed=true; }
+/* on renvoit le contenu dans le cas où c'est une balise avec un namespace */
+ | CLOSE content_opt NSEND { $$ = $2; closed=true; }
+/* on se trouve dans le cas où une balise n'a pas été fermée donc on prévient l'utilisateur tout en continuant l'exécution => le résultat de l'analyse indiquera qu'il y a une erreur dans le parsing */
+ | CLOSE content_opt error { $$ = $2; closed=false; /*printf("Une balise n'est pas fermee\n");*/ }
  ;
-content_opt 
+
+content_opt
+/* on ajoute au vecteur la donnée et on renvoit le vecteur */
  : content_opt DATA	{ $$ = $1; (*$$).push_back(new Data(string($2))); }
+/* on ne prend pas en compte les commentaires donc on ne fait que renvoyer simplement la donnée */
  | content_opt comment	{ $$ = $1; }
+/* on ajoute la balise fille au vecteur et on renvoit le vecteur d'éléments */
  | content_opt xml_element   { $$ = $1; (*$$).push_back($2); }
+/* on crée le vecteur qui contiendra tous les éléments appartenant à la balise en cours */
  | /*empty*/	{ $$ = new vecE(); }
  ;
+
 %%
-
-
-/*
-int main(int argc, char **argv)
-{
-  int err;
-  FILE * file;
-  if (argv[1] != NULL)
-  {
-  	xmlin = fopen(argv[1],"r+");
-	if (xmlin == NULL)
-		return -1;
-  }
-  xmldebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
-  err = xmlparse();
-  if (err != 0) printf("Parse ended with %d error(s)\n", err);
-  	else  printf("Parse ended with success\n", err);
-  fclose(xmlin);
-  return 0;
-}
-*/
 
 int xmlwrap(void)
 {

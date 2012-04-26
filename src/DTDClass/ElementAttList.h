@@ -52,7 +52,9 @@ class ElementAttList : public ElementAttBase
 		std::string GetRe();
 
 	private:
+		// Type d'aggregat de la liste
 		ElementAttList::TypeAgregat mTypeAgregat;
+		// Liste des balises d'attribut reliees a l'element
 		std::list <ElementAttBase*> mElementAttBase;
 };
 

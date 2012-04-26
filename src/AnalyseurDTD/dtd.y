@@ -45,10 +45,12 @@ int dtdlex(void);
 %type <tAttDefList> att_definition_opt
 %type <tAttDef> attribute
 %type <s> att_type
-/*%type <??> enumerate 
+/* Commente car la grammaire DTD est simplifiee
+%type <s> enumerate 
 %type <tListAttType> enum_list_plus
 %type <tListAttType> enum_list
-%type <s> item_enum */
+%type <s> item_enum 
+//*/
 %type <tDtdBalise> elementspec
 %type <tElementAttBase> contentspec
 %type <tElementAttList> mixed
@@ -103,25 +105,18 @@ attribute													// <attribute> est construit par l'appel a AttDef
 ;
 
 // Type d'un attribut <attribute>
-att_type													// TODO:Passer a strdup()
-															// Dans le cas de CDATA, <att_type> va valoir "CDATA"
-: CDATA    												{	/*$$ = new std::list<std::string>();
-															$$->push_back( std::string("CDATA") );*/
-															char * str = (char*)malloc( 5 + 1 );
+att_type													// Dans le cas de CDATA, <att_type> va valoir "CDATA"
+: CDATA    												{	char * str = (char*)malloc( 5 + 1 );
 															strcpy( str, "CDATA"); 
 															$$ = str; }
 															// On affecte TOKENTYPE a <att_type>
-| TOKENTYPE												{	/*$$ = new std::list<std::string>();
-															$$->push_back( std::string($1) );*/
-															$$ = $1;
-															/*free( $1 );*/ }
-/*| enumerate												{	$$ = $1; }	/* N'est jamais utilisé */
+| TOKENTYPE												{	$$ = $1; }
+/*| enumerate												 N'est jamais utilisé */
 ;
 
 // Definition des declarations par defaut
 default_declaration											// <default_declaration> prend la valeur de DECLARATION
-: DECLARATION											{	$$ = $1;	
-															/*free($1);*/	}
+: DECLARATION											{	$$ = $1;	}
 															// <default_declaration> prend la valeur de STRING
 | STRING     											{	$$ = $1;	}
 															// On construit la chaine de caractere suivante: "FIXED " + STRING
@@ -131,29 +126,27 @@ default_declaration											// <default_declaration> prend la valeur de DECLAR
 															// On affecte str a <default_declaration>
 															$$ = str;
 															// On vide la memoire
-															free($2); /* TODO free STRINGs OK ???*/ }
+															free($2);}
 ;
 
 
 /* 
-// N'est pas utilise, commente pour eviter les conflits et permettre la compilation
+// N'est pas utilise en raison de la simplification de la DTD.
+// Commente pour eviter les conflits et permettre la compilation.
 enumerate
-: OPENPAR enum_list_plus CLOSEPAR						{	$$ = $2 ); }
+: OPENPAR enum_list_plus CLOSEPAR
 ;
 
 enum_list_plus
-: enum_list PIPE item_enum								{	$$ = $1;
-															$1->push_back( std::string($3)); }
+: enum_list PIPE item_enum
 ;
 enum_list
-: item_enum              								{	$$ = new std::list<std::string>();
-															$$->push_back( std::string($1) ); }
-| enum_list PIPE item_enum								{	$$ = $1;
-															$$->push_back( std::string($3) ); }
+: item_enum
+| enum_list PIPE item_enum
 ;
 
 item_enum
-: IDENT													{ 	$$ = $1; }
+: IDENT
 ;
 //*/
 
@@ -180,10 +173,8 @@ contentspec													// <contentspec> va etre construit comme un ElementAtt a
 
 // Definition d'un contenu de type 'mixed'
 mixed
-: OPENPAR PCDATA list_mixed_plus CLOSEPAR AST			{	// $$ = new ElementAttList( ElementAttList::A_NONE );
-															// On definit la cardinalite C_AST pour <mixed>
-															$$->setCardinality( ElementAttList::C_AST );
-															/* $$->push_back( $3 ); */}
+: OPENPAR PCDATA list_mixed_plus CLOSEPAR AST			{	// On definit la cardinalite C_AST pour <mixed>
+															$$->setCardinality( ElementAttList::C_AST ); }
 															// On construit <mixed> comme une liste d'element de cardinalite nulle
 | OPENPAR PCDATA CLOSEPAR								{	$$ = new ElementAttList( ElementAttList::A_NONE ); 
 															// On ajoute a <mixed> un nouvel ElementAtt "PCDATA"
@@ -284,15 +275,13 @@ seq
 // Definition d'une partie de contenu
 cp															// <cp> est mis a jour avec la valeur de <children>
 : children 												{ 	$$ = $1; }
-| IDENT card_opt										{	//$$ = new ElementAttList( ElementAttList::A_NONE ) ;
-															// Initialisation d'un nouvel ElementAtt avec pour valeur <IDENT>
+| IDENT card_opt										{	// Initialisation d'un nouvel ElementAtt avec pour valeur <IDENT>
 															ElementAtt * e = new ElementAtt( std::string($1) );
 															// Reglage de la cardinalite <card_opt>
 															e->setCardinality( $2 );
 															// Mise a jour de <cp> avec le nouvel element
 															$$ = e;
 															free( $1 );
-															//((ElementAttList *)$$)->push_back( e ); 
 														}
 ;
 
@@ -317,23 +306,7 @@ list_seq_opt												// Mise a jour de <liste_seq_opt>
 ;
 
 %%
-/*
-int main(int argc, char **argv)
-{
-	int err;
-	
-	dtddebug = 1; // pour désactiver l'affichage de l'exécution du parser LALR, commenter cette ligne
-	
-	DtdDocument dtdDocument();
-	err = dtdparse( &dtdDocument );
-	if (err != 0) printf("Parse ended with %d error(s)\n", err);
-		else  printf("Parse ended with success\n", err);
 
-	delete dtdDocument;
-
-	return 0;
-}
-*/
 int dtdwrap(void)
 {
   return 1;

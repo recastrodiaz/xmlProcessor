@@ -194,13 +194,10 @@ bool DtdDocument::CheckXmlElementValidity(std::string dtdElementName, std::strin
 	reti = regexec(&regex, xmlString.c_str(), 0, NULL,0);
 	if (!reti) {
 		// matching
-		//DEBUG
-		cout << "matched !" << endl;
 		return true;
 
 	} else if (reti == REG_NOMATCH) {
 		// pas de matching
-		cout << "not matched !" << endl;
 		return false;
 
 	} else {

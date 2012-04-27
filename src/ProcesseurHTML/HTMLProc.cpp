@@ -100,27 +100,35 @@ void HTMLProc::construireHTML(Balise *balXMLCourante, Balise *balHTMLCourante, B
 		if((*itFils)->GetNom() == "apply-templates") 
             findTemplate(balXMLCourante, balHTMLCourante);
 		else if((*itFils)->GetNom() == "value-of"){
-            if(((Balise*)(*itFils))->GetAttributs()["select"] == balXMLCourante->GetNom() || ((Balise*)(*itFils))->GetAttributs()["select"] == "."){ //<xsl:value-of select="NomBaliseCourante" >
-                Data *DToAdd = dynamic_cast<Data*>(balXMLCourante->GetElem().front());
-                if ((DToAdd != 0) && (balXMLCourante->GetElem().size() == 1)){ //vérification du contenu à ajouter => il faut que ce soit uniquement une Data
-                    balHTMLCourante->addElement(DToAdd);
-                }else{
-                    //Erreur on ne rajoute pas uniquement une Data
-                    cout << "Erreur on ne rajoute pas seulement une DATA" << endl;
-                    erreur = true;
-                }
-            }else{ //<xsl:value-of select="NomBaliseFille">
-                bool erreurXSL = false;
-                Data *DToAdd = findFils(((Balise*)(*itFils))->GetAttributs()["select"], balXMLCourante, erreurXSL);
-                if(DToAdd != NULL)
-                    balHTMLCourante->addElement(DToAdd);
-                else if (erreurXSL){
-                    //Erreur on ne rajoute pas uniquement une Data
-                    cout << "Erreur on ne rajoute pas seulement une DATA" << endl;
-                    erreur = true;
-                }else{
-                    //Balise non trouvée
-                    cout << "Erreur balise non trouvée" << endl;
+            if(((Balise*)(*itFils))->GetAttributs()["select"].at(0) == '@')
+            {
+                string attribut = ((Balise*)(*itFils))->GetAttributs()["select"];
+                attribut.erase(0,1);
+                Data* DToAdd = new Data(balXMLCourante->GetAttributs()[attribut]);
+                balHTMLCourante->addElement(DToAdd);
+            }else{
+                if(((Balise*)(*itFils))->GetAttributs()["select"] == balXMLCourante->GetNom() || ((Balise*)(*itFils))->GetAttributs()["select"] == "."){ //<xsl:value-of select="NomBaliseCourante" >
+                    Data *DToAdd = dynamic_cast<Data*>(balXMLCourante->GetElem().front());
+                    if ((DToAdd != 0) && (balXMLCourante->GetElem().size() == 1)){ //vérification du contenu à ajouter => il faut que ce soit uniquement une Data
+                        balHTMLCourante->addElement(DToAdd);
+                    }else{
+                        //Erreur on ne rajoute pas uniquement une Data
+                        cout << "Erreur on ne rajoute pas seulement une DATA" << endl;
+                        erreur = true;
+                    }
+                }else{ //<xsl:value-of select="NomBaliseFille">
+                    bool erreurXSL = false;
+                    Data *DToAdd = findFils(((Balise*)(*itFils))->GetAttributs()["select"], balXMLCourante, erreurXSL);
+                    if(DToAdd != NULL)
+                        balHTMLCourante->addElement(DToAdd);
+                    else if (erreurXSL){
+                        //Erreur on ne rajoute pas uniquement une Data
+                        cout << "Erreur on ne rajoute pas seulement une DATA" << endl;
+                        erreur = true;
+                    }else{
+                        //Balise non trouvée
+                        cout << "Erreur balise non trouvée" << endl;
+                    }
                 }
             }
         }else{  //c'est une element HTML

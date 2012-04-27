@@ -49,7 +49,9 @@ int parseDoc(char * docToParse, DocXML *&doc, DtdDocument *dtdDocument, int &err
 	else  
 	{
 		std::cout << "Parse ended with success" << std::endl;
+        std::cout << "===============================================" << std::endl;
 		doc->Print();
+        std::cout << "===============================================" << std::endl;
 		if(!xsl){
 			
 			index = string(docToParse).find_last_of("/");
@@ -72,7 +74,9 @@ int parseDoc(char * docToParse, DocXML *&doc, DtdDocument *dtdDocument, int &err
 				else
 				{
 					std::cout << "Parse ended with success" << std::endl;
+                    std::cout << "=================== DTD ========================" << std::endl;
 					dtdDocument->Print();
+                    std::cout << "=================== DTD ========================" << std::endl;
 					dtdDocument->GenerateRE();
 					if (doc->verifyValidity(*dtdDocument))
 					{
@@ -162,7 +166,9 @@ int main(int argc, char **argv)
 				if(err == 0 && resultatParsing != -1)
 				{
 					HTMLProc *docHTML = new HTMLProc(doc, stylesheetXSL);
+                    std::cout << "=================== HTML ========================" << std::endl;
 					docHTML->Print();
+                    std::cout << "=================== HTML ========================" << std::endl;
 				}
 			}
 		}
